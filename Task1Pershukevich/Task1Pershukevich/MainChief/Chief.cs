@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Task1Pershukevich.Interfaces;
 using Task1Pershukevich.Ingridients;
+using Task1Pershukevich.MainSalad;
 
-namespace Task1Pershukevich
+namespace Task1Pershukevich.MainChief
 {
     public class Chief : IChief
     {

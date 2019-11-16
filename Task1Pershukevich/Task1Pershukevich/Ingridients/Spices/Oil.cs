@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Task1Pershukevich.Ingridients;
 
-namespace Task1Pershukevich.Ingridients.Addition
+namespace Task1Pershukevich.Ingridients.Spices
 {
     public enum OilType
     {
@@ -13,7 +13,7 @@ namespace Task1Pershukevich.Ingridients.Addition
     }
 
 
-    public class Oil : Spices
+    public class Oil : Spice
     {
         private OilType oilType { get; set; }
 

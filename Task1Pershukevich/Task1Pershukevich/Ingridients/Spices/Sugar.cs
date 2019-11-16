@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Task1Pershukevich.Ingridients.Addition
+namespace Task1Pershukevich.Ingridients.Spices
 {
     public enum SugarType
     {
@@ -12,7 +12,7 @@ namespace Task1Pershukevich.Ingridients.Addition
         Brown
     }
 
-    public class Sugar : Spices
+    public class Sugar : Spice
     {
         private SugarType sugarType { get; set; }
 

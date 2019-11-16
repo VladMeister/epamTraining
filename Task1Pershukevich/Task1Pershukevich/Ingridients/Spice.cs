@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Task1Pershukevich.Ingridients
 {
-    public abstract class Spices : Ingridient
+    public abstract class Spice : Ingridient
     {
-       public Spices(string name, double weight, double callories) : base(name, weight, callories)
+       public Spice(string name, double weight, double callories) : base(name, weight, callories)
         {
 
         }

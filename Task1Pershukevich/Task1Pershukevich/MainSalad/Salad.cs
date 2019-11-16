@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Task1Pershukevich.Interfaces;
 using Task1Pershukevich.Ingridients;
 using System.Linq;
 
-namespace Task1Pershukevich
+namespace Task1Pershukevich.MainSalad
 {
     public class Salad : IIngridientManage, IVegetablesFilter, ISortable
     {
