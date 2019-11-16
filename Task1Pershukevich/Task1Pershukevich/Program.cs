@@ -18,12 +18,12 @@ namespace Task1Pershukevich
 
             Salad salad = new Salad("TestName", ingridients);    //create
 
-            //salad.AddIngridient(new Cabbage("Cabbage", 35.2, 25, CabbageType.Red));   //fill    
-            //salad.AddIngridient(new Potato("Potato", 57.8, 23.2));                    //callories value for 100g of product
-            //salad.AddIngridient(new Tomato("Tomato", 21, 35.5, false));
-            //salad.AddIngridient(new Cucumber("Cucumber", 31, 11.3, false));
-            //salad.AddIngridient(new Oil("Oil", OilType.Olive, 20, 50.5));
-            //salad.AddIngridient(new Salt("Salt", 3.2, 10));
+            salad.AddIngridient(new Cabbage("Cabbage", 35.2, 25, CabbageType.Red));   //fill    
+            salad.AddIngridient(new Potato("Potato", 57.8, 23.2));                    //callories value for 100g of product
+            salad.AddIngridient(new Tomato("Tomato", 21, 35.5, TomatoType.Cherry));
+            salad.AddIngridient(new Cucumber("Cucumber", 31, 11.3, CucumberType.Persian));
+            salad.AddIngridient(new Oil("Oil", OilType.Olive, 20));
+            salad.AddIngridient(new Salt("Salt", 3.2));
 
 
             chief.CheckEveryIngridient(salad);    //Creating salad
@@ -34,7 +34,7 @@ namespace Task1Pershukevich
 
             Console.WriteLine('\n' + "Sorted by weight vegetables: ");
 
-            foreach (Vegetable v in salad.SortVegetablesByCallories())   //sort by weight
+            foreach (Vegetable v in salad.SortVegetablesByWeight())   //sort by weight
             {
                 Console.WriteLine($"{v.Name} - {v.Weight}");
             }

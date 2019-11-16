@@ -9,6 +9,7 @@ namespace Task1Pershukevich.MainSalad
     {
         IEnumerable<Ingridient> GetAllIngridients();
         void AddIngridient(Ingridient ingridient);
-        void RemoveAllIngridients(); //clear
+        void RemoveIngridient(Ingridient ingridient);
+        void ClearIngridients(); 
     }
 }

@@ -16,7 +16,7 @@ namespace Task1Pershukevich.Ingridients.Spices
     {
         public SugarType SugarType { get; private set; }
 
-        public Sugar(string name, double weight, double callories, SugarType sugartype) : base(name, weight, callories)
+        public Sugar(string name, double weight, SugarType sugartype) : base(name, weight)
         {
             SugarType = sugartype;
         }

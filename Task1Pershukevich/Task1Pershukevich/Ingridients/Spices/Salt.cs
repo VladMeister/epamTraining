@@ -6,7 +6,7 @@ namespace Task1Pershukevich.Ingridients.Spices
 {
     public class Salt : Spice
     {
-        public Salt(string name, double weight, double callories) : base(name, weight, callories)
+        public Salt(string name, double weight) : base(name, weight)
         {
 
         }

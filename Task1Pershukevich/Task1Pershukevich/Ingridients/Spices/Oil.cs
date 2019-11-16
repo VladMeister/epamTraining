@@ -17,7 +17,7 @@ namespace Task1Pershukevich.Ingridients.Spices
     {
         public OilType OilType { get; private set; }
 
-        public Oil(string name, OilType oiltype, double weight, double callories) : base(name, weight, callories)
+        public Oil(string name, OilType oiltype, double weight) : base(name, weight)
         {
             OilType = oiltype;
         }

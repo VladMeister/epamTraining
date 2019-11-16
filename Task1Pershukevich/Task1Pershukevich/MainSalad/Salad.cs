@@ -22,7 +22,12 @@ namespace Task1Pershukevich.MainSalad
             ingridients.Add(ingridient);
         }
 
-        public void RemoveAllIngridients()
+        public void RemoveIngridient(Ingridient ingridient)
+        {
+            ingridients.Remove(ingridient);
+        }
+
+        public void ClearIngridients()
         {
             ingridients.Clear();
         }
