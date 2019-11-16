@@ -23,7 +23,7 @@ namespace Task1Pershukevich
             salad.AddIngridient(new Tomato("Tomato", 21, 35.5, TomatoType.Cherry));
             salad.AddIngridient(new Cucumber("Cucumber", 31, 11.3, CucumberType.Persian));
             salad.AddIngridient(new Oil("Oil", OilType.Olive, 20));
-            salad.AddIngridient(new Salt("Salt", 3.2));
+            salad.AddIngridient(new Salt("Salt", 3.5));
 
 
             chief.CheckEveryIngridient(salad);    //Creating salad
