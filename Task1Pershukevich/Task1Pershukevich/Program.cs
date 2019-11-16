@@ -18,7 +18,6 @@ namespace Task1Pershukevich
 
             salad.AddIngridient(new Cabbage("Cabbage", 35.2, 25, CabbageType.Red));   //fill    
             salad.AddIngridient(new Potato("Potato", 57.8, 23.2));                    //callories value for 100g of product
-            salad.AddIngridient(new Green("Green", 14, 7.4));
             salad.AddIngridient(new Tomato("Tomato", 21, 35.5, false));
             salad.AddIngridient(new Cucumber("Cucumber", 31, 11.3, false));
             salad.AddIngridient(new Oil("Oil", OilType.Olive, 20, 50.5));
@@ -33,7 +32,7 @@ namespace Task1Pershukevich
 
             Console.WriteLine('\n' + "Sorted by weight vegetables: ");
 
-            foreach (Vegetable v in salad.SortVegetablesByWeight())    //sort by weight
+            foreach (Vegetable v in salad.SortVegetablesByCallories())   //sort by weight
             {
                 Console.WriteLine($"{v.Name} - {v.Weight}");
             }

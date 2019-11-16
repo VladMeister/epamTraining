@@ -7,32 +7,32 @@ using System.Linq;
 
 namespace Task1Pershukevich
 {
-    public class Salad : IIngridientManage, IFilterVegetables, ISortable
+    public class Salad : IIngridientManage, IVegetablesFilter, ISortable
     {
-        private IList<Ingridient> Ingridients { get; set; }
+        private IList<Ingridient> ingridients { get; set; }
         public string Name { get; private set; }
 
         public Salad(string name, IList<Ingridient> ingridients)
         {
             Name = name;
-            Ingridients = ingridients;
+            this.ingridients = ingridients;
         }
 
         public void AddIngridient(Ingridient ingridient)
         {
-            Ingridients.Add(ingridient);
+            ingridients.Add(ingridient);
         }
 
         public void RemoveAllIngridients()
         {
-            Ingridients.Clear();
+            ingridients.Clear();
         }
 
         public double CountAllCallories()
         {
             double allCallories = 0;
 
-            foreach(Ingridient i in Ingridients)
+            foreach(Ingridient i in ingridients)
             {
                 allCallories += i.GetCallories();
             }
@@ -42,14 +42,14 @@ namespace Task1Pershukevich
 
         public IEnumerable<Ingridient> GetAllIngridients()
         {
-            return Ingridients;
+            return ingridients;
         }
 
         private IEnumerable<Vegetable> GetVegetables()
         {
             IList<Vegetable> vegetables = new List<Vegetable>();
 
-            foreach (Ingridient i in Ingridients)
+            foreach (Ingridient i in ingridients)
             {
                 if (i is Vegetable)
                 {

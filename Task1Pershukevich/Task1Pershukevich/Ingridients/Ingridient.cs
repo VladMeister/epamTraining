@@ -8,18 +8,18 @@ namespace Task1Pershukevich.Ingridients
     {
         public string Name { get; private set; }
         public double Weight { get; private set; }
-        private double CalloriesFor100gr { get; set; }
+        private double NumberOfCallories { get; set; }
 
         public Ingridient(string name, double weight, double callories)
         {
             Name = name;
             Weight = weight;
-            CalloriesFor100gr = callories;
+            NumberOfCallories = callories;
         }
 
-        public virtual double GetCallories() //полиморфизм
+        public virtual double GetCallories() //abstraction
         {
-            return CalloriesFor100gr;
+            return NumberOfCallories;
         }
     }
 }

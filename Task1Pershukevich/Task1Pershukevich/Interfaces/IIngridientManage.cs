@@ -9,6 +9,6 @@ namespace Task1Pershukevich.Interfaces
     {
         IEnumerable<Ingridient> GetAllIngridients();
         void AddIngridient(Ingridient ingridient);
-        void RemoveAllIngridients();
+        void RemoveAllIngridients(); //clear
     }
 }

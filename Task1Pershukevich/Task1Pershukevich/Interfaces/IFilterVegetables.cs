@@ -5,7 +5,7 @@ using Task1Pershukevich.Ingridients;
 
 namespace Task1Pershukevich.Interfaces
 {
-    interface IFilterVegetables
+    interface IVegetablesFilter
     {
         IEnumerable<Vegetable> GetVegetablesByCallories(double minCal, double maxCal);
     }

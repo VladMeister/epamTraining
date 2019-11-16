@@ -13,11 +13,11 @@ namespace Task1Pershukevich.Ingridients.Vegetables
 
     public class Cabbage : Vegetable
     {
-        private CabbageType cabbageType { get; set; }
+        public CabbageType CabbageType { get; private set; }
 
         public Cabbage(string name, double weight, double callories, CabbageType cabbagetype) : base(name, weight, callories)
         {
-            cabbageType = cabbagetype;
+            CabbageType = cabbagetype;
         }
     }
 }
