@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Task1Pershukevich.MainSalad
 {
-    public class Salad : IIngridientManage, IVegetablesFilter, ISortable
+    public class Salad : IIngridientsManager, IVegetablesFilter, ISortable
     {
         private IList<Ingridient> ingridients { get; set; }
         public string Name { get; private set; }

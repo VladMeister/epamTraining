@@ -13,11 +13,11 @@ namespace Task1Pershukevich.Ingridients.Vegetables
 
     public class Pepper : Vegetable
     {
-        private PepperType pepperType { get; set; }
+        private PepperType PepperType { get; set; }
 
         public Pepper(string name, double weight, double callories, PepperType peppertype) : base(name, weight, callories)
         {
-            pepperType = peppertype;
+            PepperType = peppertype;
         }
     }
 }

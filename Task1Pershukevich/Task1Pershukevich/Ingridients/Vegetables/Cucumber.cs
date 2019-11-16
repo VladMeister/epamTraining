@@ -4,13 +4,20 @@ using System.Text;
 
 namespace Task1Pershukevich.Ingridients.Vegetables
 {
+    public enum CucumberType
+    {
+        Persian,
+        Long,
+        English
+    }
+
     public class Cucumber : Vegetable
     {
-        //private bool isPickled { get; set; }
+        public CucumberType CucumberType { get; private set; }
 
-        public Cucumber(string name, double weight, double callories, bool ispickled) : base(name, weight, callories)
+        public Cucumber(string name, double weight, double callories, CucumberType cucumbertype) : base(name, weight, callories)
         {
-            isPickled = ispickled;
+            CucumberType = cucumbertype;
         }
     }
 }

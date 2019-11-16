@@ -4,13 +4,20 @@ using System.Text;
 
 namespace Task1Pershukevich.Ingridients.Vegetables
 {
+    public enum TomatoType
+    {
+        Plum,
+        Yellow,
+        Cherry
+    }
+
     public class Tomato : Vegetable
     {
-        //private bool isPickled { get; set; }
+        public TomatoType TomatoType { get; private set; }
 
-        public Tomato(string name, double weight, double callories, bool ispickled) : base(name, weight, callories)
+        public Tomato(string name, double weight, double callories, TomatoType tomatotype) : base(name, weight, callories)
         {
-            isPickled = ispickled;
+            TomatoType = tomatotype;
         }
     }
 }

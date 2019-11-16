@@ -14,13 +14,11 @@ namespace Task1Pershukevich.Ingridients.Vegetables
 
     public class Onion : Vegetable
     {
-        //private bool isFried { get; set; }
-        private OnionType onionType { get; set; }
+        public OnionType OnionType { get; private set; }
 
-        public Onion(string name, double weight, double callories, bool isfried, OnionType oniontype) : base(name, weight, callories)
+        public Onion(string name, double weight, double callories, OnionType oniontype) : base(name, weight, callories)
         {
-            isFried = isfried;
-            onionType = oniontype;
+            OnionType = oniontype;
         }
     }
 }

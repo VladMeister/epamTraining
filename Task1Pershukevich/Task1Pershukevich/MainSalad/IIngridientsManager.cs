@@ -5,7 +5,7 @@ using Task1Pershukevich.Ingridients;
 
 namespace Task1Pershukevich.MainSalad
 {
-    interface IIngridientManage
+    interface IIngridientsManager
     {
         IEnumerable<Ingridient> GetAllIngridients();
         void AddIngridient(Ingridient ingridient);
