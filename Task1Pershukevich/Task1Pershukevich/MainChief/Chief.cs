@@ -14,17 +14,15 @@ namespace Task1Pershukevich.MainChief
             Console.WriteLine($"Adding {ingridient.Name} to salad");
         }
 
-        public void CheckEveryIngridient(Salad salad) //not correct
+        public Salad MakeSalad(SaladBuilder builder) 
         {
-            foreach(Ingridient i in salad.GetAllIngridients())
+            foreach (Ingridient i in builder.salad.GetAllIngridients())
             {
                 AddIngridientToSalad(i);
             }
-            Console.WriteLine($"Salad {salad.Name} is ready!");
-        }
 
-        public Salad MakeSalad(SaladBuilder builder) //fill
-        {
+            Console.WriteLine($"Salad {builder.salad.Name} is ready!");
+
             return builder.salad;
         }
     }

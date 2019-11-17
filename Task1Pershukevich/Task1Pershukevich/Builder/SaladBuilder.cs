@@ -7,6 +7,6 @@ namespace Task1Pershukevich.Builder
 {
     public class SaladBuilder : ISaladBuilder
     {
-        public Salad salad { get; private set; }
+        public Salad salad { get; set; }
     }
 }
