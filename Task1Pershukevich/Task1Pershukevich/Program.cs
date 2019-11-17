@@ -32,7 +32,7 @@ namespace Task1Pershukevich
             Salad salad = chief.MakeSalad(saladBuilder);    //Creating salad
 
   
-            Console.WriteLine($"\nCounted all callories in salad: {salad.CountAllCallories()}");    //count callority of salad
+            Console.WriteLine($"\nAll callories counted in salad: {salad.CountAllCallories()}");    //count callority of salad
 
 
             Console.WriteLine('\n' + "Sorted by weight vegetables: ");
