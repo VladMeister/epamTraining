@@ -4,7 +4,7 @@ using Task1Pershukevich.Ingridients.Vegetables;
 using Task1Pershukevich.Ingridients.Spices;
 using Task1Pershukevich.MainChief;
 using Task1Pershukevich.MainSalad;
-using Task1Pershukevich.Builder;
+using Task1Pershukevich.Builders;
 using System.Collections.Generic;
 
 namespace Task1Pershukevich
@@ -15,12 +15,9 @@ namespace Task1Pershukevich
         {
             Chief chief = new Chief();
 
-            List<Ingridient> ingridients = new List<Ingridient>();
-
             VitaminSaladBuilder vitaminSaladBuilder = new VitaminSaladBuilder();
 
-            vitaminSaladBuilder.salad  = new Salad("Vitamin Salad", ingridients);   //create builder
-
+            vitaminSaladBuilder.Create("Vitamin Salad");  //create builder
 
             Salad salad = chief.MakeVitaminSalad(vitaminSaladBuilder);    //Creating salad
 

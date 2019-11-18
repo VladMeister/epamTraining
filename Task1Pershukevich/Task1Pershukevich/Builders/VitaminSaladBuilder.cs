@@ -4,7 +4,7 @@ using System.Text;
 using Task1Pershukevich.Ingridients.Vegetables;
 using Task1Pershukevich.Ingridients.Spices;
 
-namespace Task1Pershukevich.Builder
+namespace Task1Pershukevich.Builders
 {
     public class VitaminSaladBuilder : SaladBuilder
     {
