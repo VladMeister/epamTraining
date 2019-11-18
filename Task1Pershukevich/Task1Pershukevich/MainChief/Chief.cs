@@ -9,17 +9,27 @@ namespace Task1Pershukevich.MainChief
 {
     public class Chief : IChief
     {
-        private void AddIngridientToSalad(Ingridient ingridient) 
+        public Salad MakeVitaminSalad(VitaminSaladBuilder builder) 
         {
-            Console.WriteLine($"Adding {ingridient.Name} to salad");
+            builder.AddCabbage();
+            builder.AddCarrot();
+            builder.AddOnion();
+            builder.AddPepper();
+            builder.AddSalt();
+            builder.AddSugar();
+
+            Console.WriteLine($"Salad '{builder.salad.Name}' is ready!");
+
+            return builder.salad;
         }
 
-        public Salad MakeSalad(SaladBuilder builder) 
+        public Salad MakeMonomakhSalad(MonomakhSaladBuilder builder)
         {
-            foreach (Ingridient i in builder.salad.GetAllIngridients())
-            {
-                AddIngridientToSalad(i);
-            }
+            builder.AddCabbage();
+            builder.AddCucumber();
+            builder.AddOil();
+            builder.AddPepper();
+            builder.AddSalt();
 
             Console.WriteLine($"Salad {builder.salad.Name} is ready!");
 

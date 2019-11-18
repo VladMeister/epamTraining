@@ -8,6 +8,7 @@ namespace Task1Pershukevich.MainChief
 {
     interface IChief
     {
-        Salad MakeSalad(SaladBuilder builder);
+        Salad MakeVitaminSalad(VitaminSaladBuilder builder);
+        Salad MakeMonomakhSalad(MonomakhSaladBuilder builder);
     }
 }
