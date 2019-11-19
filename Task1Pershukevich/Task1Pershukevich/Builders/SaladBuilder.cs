@@ -8,19 +8,19 @@ namespace Task1Pershukevich.Builders
 {
     public abstract class SaladBuilder : ISaladBuilder
     {
-        public Salad salad { get; set; }
+        public Salad Salad { get; set; }
 
         public void AddIngridientToSalad(Ingridient ingridient)
         {
-            Console.WriteLine($"Adding {ingridient.Name} to salad '{salad.Name}'");
-            salad.AddIngridient(ingridient);
+            Console.WriteLine($"Adding {ingridient.Name} to salad '{Salad.Name}'");
+            Salad.AddIngridient(ingridient);
         }
 
         public void Create(string name)
         {
             List<Ingridient> ingridients = new List<Ingridient>();
 
-            salad = new Salad(name, ingridients);
+            Salad = new Salad(name, ingridients);
         }
     }
 }

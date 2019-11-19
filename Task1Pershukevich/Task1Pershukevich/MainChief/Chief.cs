@@ -18,9 +18,9 @@ namespace Task1Pershukevich.MainChief
             builder.AddSalt();
             builder.AddSugar();
 
-            Console.WriteLine($"Salad '{builder.salad.Name}' is ready!");
+            Console.WriteLine($"Salad '{builder.Salad.Name}' is ready!");
 
-            return builder.salad;
+            return builder.Salad;
         }
 
         public Salad MakeMonomakhSalad(MonomakhSaladBuilder builder)
@@ -31,9 +31,9 @@ namespace Task1Pershukevich.MainChief
             builder.AddPepper();
             builder.AddSalt();
 
-            Console.WriteLine($"Salad {builder.salad.Name} is ready!");
+            Console.WriteLine($"Salad {builder.Salad.Name} is ready!");
 
-            return builder.salad;
+            return builder.Salad;
         }
     }
 }
