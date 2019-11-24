@@ -8,5 +8,11 @@ namespace Task2Pershukevich.Parser
 {
     public class Parser
     {
+        private string path { get; } 
+
+        public Parser(string source)
+        {
+            path = source;
+        }
     }
 }

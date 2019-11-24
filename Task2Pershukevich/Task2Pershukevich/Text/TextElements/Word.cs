@@ -8,5 +8,11 @@ namespace Task2Pershukevich.Text.TextElements
 {
     public class Word
     {
+        private char[] symbols { get; }
+
+        public Word(char[] symbols)
+        {
+            this.symbols = symbols;
+        }
     }
 }
