@@ -43,14 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Parser\IParser.cs" />
-    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="MainParser\IParser.cs" />
+    <Compile Include="MainParser\Parser.cs" />
+    <Compile Include="MainText\TextElements\SentenceElements\Symbol.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Text\TextElements\PunctuationMark.cs" />
-    <Compile Include="Text\TextElements\Sentence.cs" />
-    <Compile Include="Text\Text.cs" />
-    <Compile Include="Text\TextElements\Word.cs" />
+    <Compile Include="MainText\TextElements\SentenceElements\PunctuationMark.cs" />
+    <Compile Include="MainText\TextElements\Sentence.cs" />
+    <Compile Include="MainText\Text.cs" />
+    <Compile Include="MainText\TextElements\SentenceElements\Word.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

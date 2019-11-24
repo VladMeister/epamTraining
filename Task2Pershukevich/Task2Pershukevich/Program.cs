@@ -10,7 +10,7 @@ namespace Task2Pershukevich
     {
         static void Main(string[] args)
         {
-            string sourcePath = "../../text.txt";
+            //string sourcePath = "../../text.txt";
         }
     }
 }

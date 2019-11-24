@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Task2Pershukevich.Text.TextElements;
+using Task2Pershukevich.MainText.TextElements;
 
-namespace Task2Pershukevich.Text
+namespace Task2Pershukevich.MainText
 {
     public class Text
     {
