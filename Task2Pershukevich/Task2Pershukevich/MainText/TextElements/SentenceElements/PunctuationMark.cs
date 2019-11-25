@@ -8,11 +8,11 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
     public class PunctuationMark
     {
-        private Symbol punctuationMark { get; }
+        private char punctuationMark { get; }
 
         public PunctuationMark(Symbol mark)
         {
-            punctuationMark = mark;
+            punctuationMark = mark._Symbol;
         }
     }
 }

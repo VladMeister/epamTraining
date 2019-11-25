@@ -18,7 +18,7 @@ namespace Task2Pershukevich.MainText.TextElements
     public class Sentence
     {
         private IList<Word> words { get; set; }
-        private IList<PunctuationMark> punctuationMarks { get; set; }
+        private Dictionary<int, PunctuationMark> punctuationMarks { get; set; }
         public SentenceType SentenceType { get; private set; }
 
         public void AddWordToSentence(IList<Symbol> word)
@@ -27,10 +27,10 @@ namespace Task2Pershukevich.MainText.TextElements
             words.Add(newWord);
         }
 
-        public void AddPunctuationToSentence(Symbol mark)
+        public void AddPunctuationToSentence(Symbol mark, int position)
         {
             PunctuationMark punctuationMark = new PunctuationMark(mark);
-            punctuationMarks.Add(punctuationMark);
+            punctuationMarks.Add(position, punctuationMark);
         }
 
     }

@@ -9,6 +9,6 @@ namespace Task2Pershukevich.MainParser
 {
     public interface IParser
     {
-        Text Parse(string path);
+        Text Parse();
     }
 }
