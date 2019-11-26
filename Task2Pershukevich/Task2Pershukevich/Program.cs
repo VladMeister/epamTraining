@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +14,16 @@ namespace Task2Pershukevich
         {
             string sourcePath = "../../text.txt";
 
-            Parser parser = new Parser(sourcePath);
-            parser.Parse();
+            Parser parser = new Parser();
 
-            Console.ReadKey();
+            using (FileStream fs = File.Open(sourcePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (BufferedStream bs = new BufferedStream(fs))
+            using (StreamReader sr = new StreamReader(bs))
+            {
+                parser.Parse(sr);
+            }
+
+                Console.ReadKey();
         }
     }
 }

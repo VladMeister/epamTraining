@@ -11,27 +11,15 @@ namespace Task2Pershukevich.MainParser
 {
     public class Parser :IParser
     {
-        private string path { get; } 
-
-        public Parser(string source)
-        {
-            path = source;
-        }
-
-        public Text Parse()
+        public Text Parse(StreamReader sr)
         {
             Text text = new Text();
 
-            using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (BufferedStream bs = new BufferedStream(fs))
-            using (StreamReader sr = new StreamReader(bs))
-            {
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
                     Console.WriteLine(Regex.Replace(line, "[ ]+", " "));
                 }
-            }
 
             return text;
         }
