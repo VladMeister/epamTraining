@@ -17,21 +17,28 @@ namespace Task2Pershukevich.MainText.TextElements
 
     public class Sentence
     {
-        private IList<Word> words { get; set; }
-        private Dictionary<int, PunctuationMark> punctuationMarks { get; set; }
+        public IList<Word> Words { get; private set; }
+        public Dictionary<int, PunctuationMark> PunctuationMarks { get; private set; }
         public SentenceType SentenceType { get; private set; }
 
-        public void AddWordToSentence(IList<Symbol> word)
+        public void AddWordToSentence(char[] word)
         {
             Word newWord = new Word(word);
-            words.Add(newWord);
+            Words.Add(newWord);
         }
 
-        public void AddPunctuationToSentence(Symbol mark, int position)
+        public void AddPunctuationToSentence(char mark, int position)
         {
             PunctuationMark punctuationMark = new PunctuationMark(mark);
-            punctuationMarks.Add(position, punctuationMark);
+            PunctuationMarks.Add(position, punctuationMark);
         }
 
+        public void GetAllWordsFromSentence()
+        {
+            foreach(Word w in Words)
+            {
+                Console.WriteLine(w.Symbols);
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace Task2Pershukevich
             using (BufferedStream bs = new BufferedStream(fs))
             using (StreamReader sr = new StreamReader(bs))
             {
-                parser.Parse(sr);
+                parser.ParseText(sr);
             }
 
                 Console.ReadKey();

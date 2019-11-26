@@ -12,7 +12,7 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 
         protected Symbol(char symbol)
         {
-            this._Symbol = symbol;
+            _Symbol = symbol;
         }
     }
 }

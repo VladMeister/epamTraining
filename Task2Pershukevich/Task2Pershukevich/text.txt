@@ -1,2 +1,2 @@
-hello in this string its all ok
-int this there are two  spaces
+Hello, in this string its all ok.
+    Int this there are two  spaces?

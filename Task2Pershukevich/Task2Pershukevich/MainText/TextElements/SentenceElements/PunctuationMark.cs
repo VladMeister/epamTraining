@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
-    public class PunctuationMark
+    public class PunctuationMark : Symbol
     {
-        private char punctuationMark { get; }
+        //private char punctuationMark { get; }
 
-        public PunctuationMark(Symbol mark)
+        public PunctuationMark(char symbol) : base(symbol)
         {
-            punctuationMark = mark._Symbol;
+            
         }
     }
 }

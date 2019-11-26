@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="MainParser\IParser.cs" />
     <Compile Include="MainParser\Parser.cs" />
+    <Compile Include="MainText\ISentencesManager.cs" />
     <Compile Include="MainText\TextElements\SentenceElements\Symbol.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

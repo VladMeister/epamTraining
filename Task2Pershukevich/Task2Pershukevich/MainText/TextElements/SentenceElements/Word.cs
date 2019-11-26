@@ -8,11 +8,11 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
     public class Word
     {
-        private IList<Symbol> symbols { get; }
+        public char[] Symbols { get; }
 
-        public Word(IList<Symbol> symbols)
+        public Word(char[] symbols)
         {
-            this.symbols = symbols;
+            Symbols = symbols;
         }
     }
 }
