@@ -16,15 +16,19 @@ namespace Task2Pershukevich.MainText.TextElements
     }
 
     public class Sentence
-    {
-        public IList<Word> Words { get; private set; }
+    { 
+        public IList<Word> Words { get; private set; } // докинуть вывод предложений Tostring
         public Dictionary<int, PunctuationMark> PunctuationMarks { get; private set; }
         public SentenceType SentenceType { get; private set; }
 
-        public void AddWordToSentence(char[] word)
+        public Sentence(IList<Word> words)
         {
-            Word newWord = new Word(word);
-            Words.Add(newWord);
+            Words = words;
+        }
+
+        public void AddWordToSentence(Word word)
+        {
+            Words.Add(word);
         }
 
         public void AddPunctuationToSentence(char mark, int position)

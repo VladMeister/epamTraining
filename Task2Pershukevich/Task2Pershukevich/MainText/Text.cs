@@ -9,7 +9,7 @@ namespace Task2Pershukevich.MainText
 {
     public class Text : ISentencesManager
     {
-        public IList<Sentence> Sentences { get; private set; }
+        public IList<Sentence> Sentences { get; private set; } //весб текст Tostring
 
         public Text(IList<Sentence> sentences)
         {
@@ -34,6 +34,11 @@ namespace Task2Pershukevich.MainText
         public void ClearAllSentences()
         {
             Sentences.Clear();
+        }
+
+        public IEnumerable<Sentence> SentencesByCountOfWords()
+        {
+            return Sentences.OrderBy(x => x.Words.Count);
         }
      }
 }

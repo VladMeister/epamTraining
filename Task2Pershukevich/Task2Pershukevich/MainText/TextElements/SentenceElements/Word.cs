@@ -8,9 +8,11 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
     public class Word
     {
-        public char[] Symbols { get; }
+        public static string[] WordsSeparators = { ",", " – ", " - ", " ", ".", "!", "?", "...", "?!", "!?" };
 
-        public Word(char[] symbols)
+        public string Symbols { get; }
+
+        public Word(string symbols)
         {
             Symbols = symbols;
         }

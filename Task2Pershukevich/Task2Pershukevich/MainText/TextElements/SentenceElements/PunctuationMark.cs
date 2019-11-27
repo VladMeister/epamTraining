@@ -8,8 +8,6 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
     public class PunctuationMark : Symbol
     {
-        //private char punctuationMark { get; }
-
         public PunctuationMark(char symbol) : base(symbol)
         {
             
