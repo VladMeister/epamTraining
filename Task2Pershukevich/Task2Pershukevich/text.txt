@@ -1,1 +1,21 @@
-You’ve seen the craze for learning code. But what exactly is coding? Coding is what makes it possible for us to create computer software, apps and websites. Your browser, your OS, the apps on your phone, Facebook, and this website – they’re all made with code.
+You’ve seen the craze for learning code.
+But what exactly is coding?
+Coding is what makes it possible for us to create computer software, apps and websites.
+Your browser, your OS, the apps on your phone, Facebook, and this website – they’re all made with code.
+To put it very simply, the code is what tells your computer what to do.
+To go a bit deeper, computers don’t understand words.
+They only understand the concepts of on and off.
+The capabilities of a computer are guided by on and off switches or transistors.
+Binary code represents these on and off transistors as the digits 1 and 0.
+An infinite number of combinations of these codes make your computer work.
+In order to make binary code manageable, computer programming languages were formed.
+These languages each serve different purposes, but they all allow programmers to translate important commands into binary code.
+The benefits of learning to code are actually quite vast.
+No longer do we live in a time when only tech professionals are using this useful language.
+Being able to utilize the commands of code yourself will enable you to have more control of the technology you depend upon.
+For example, whether it’s for personal or professional use, more and more people are writing blogs and creating websites to share their message or skills with the world.
+Being able to understand basic code would allow you to make tweaks to the design of your site without having to pay a webmaster to do it for you or to wait for someone from IT to take care of the ticket you submitted ages ago.
+A knowledge of code can take you even further if you decide to pursue it.
+Some in-depth study will provide you with the skills to build a website to your own specifications and to fit your desired needs.
+If you find you have a passion for technology and a talent for navigating the in-depth nature of computer languages, you could go on to become a professional coder and work for a tech company or even start your own business venture or launch a best-selling idea.
+The job market is opening up for technologically savvy professionals.

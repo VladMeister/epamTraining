@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,38 +8,103 @@ using Task2Pershukevich.MainText.TextElements;
 
 namespace Task2Pershukevich.MainText
 {
-    public class Text : ISentencesManager
+    public class Text : ICollection<Sentence>
     {
-        public IList<Sentence> Sentences { get; private set; } //весб текст Tostring
+        public int Count => sentences.Count;
 
-        public Text(IList<Sentence> sentences)
+        public bool IsReadOnly => throw new NotImplementedException(); //no implementation
+
+
+        private IList<Sentence> sentences; //весб текст Tostring
+
+        public Text(IList<Sentence> _sentences)
         {
-            Sentences = sentences;
+            sentences = _sentences;
         }
 
         public Text()
         {
-
+            sentences = new List<Sentence>();
         }
 
-        public void AddSentenceToText(Sentence sentence)
+        public IEnumerable<Sentence> OrderSentencesByCountOfWords() //1
         {
-            Sentences.Add(sentence);
+            return sentences.OrderBy(x => x.GetAllWordsFromSentence().Count);
         }
 
-        public void RemoveSentenceFromText(Sentence sentence)
+        public IEnumerable<Sentence> GetWordsFromInterrogativeSentences(int wordLenght) //2
         {
-            Sentences.Remove(sentence);
+            return sentences.Where(x => x.SentenceType == SentenceType.Interrogative);
+                //.Where(s => s.Words.Where(w => w.Symbols.Count == lenght));
         }
 
-        public void ClearAllSentences()
+        //public IEnumerable<Sentence> DeleteWordsStartingFromConsonant(int wordLenght) //3
+        //{
+        //    return sentences.Where(x => x.Words.Where(w => w.Symbols.Count == wordLenght));
+        //}
+
+        //public IEnumerable<Sentence> ChangeWordInConcreteSentence(int numberOfSentence, int wordsLenght, string subString) //4
+        //{
+
+        //}
+
+        public ICollection<Sentence> GetAllSentencesFromText()
         {
-            Sentences.Clear();
+            return sentences;
         }
 
-        public IEnumerable<Sentence> SentencesByCountOfWords()
+        public void Add(Sentence sentence)
         {
-            return Sentences.OrderBy(x => x.Words.Count);
+            sentences.Add(sentence);
         }
-     }
+
+        public void RemoveSentence(Sentence sentence)
+        {
+            sentences.Remove(sentence);
+        }
+
+        public void Clear()
+        {
+            sentences.Clear();
+        }
+
+        public bool Contains(Sentence item)
+        {
+            bool isContaining = false;
+
+            if(sentences.Contains(item))
+            {
+                isContaining = true;
+            }
+
+            return isContaining;
+        }
+
+        public void CopyTo(Sentence[] array, int arrayIndex)
+        {
+            sentences.CopyTo(array, arrayIndex);
+        }
+
+        bool ICollection<Sentence>.Remove(Sentence item)
+        {
+            bool isRemoved = false;
+
+            if(sentences.Remove(item))
+            {
+                isRemoved = true;
+            }
+
+            return isRemoved;
+        }
+
+        public IEnumerator<Sentence> GetEnumerator()
+        {
+            return GetAllSentencesFromText().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 }

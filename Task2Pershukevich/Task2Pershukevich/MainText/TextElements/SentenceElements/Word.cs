@@ -6,15 +6,40 @@ using System.Threading.Tasks;
 
 namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
-    public class Word
+    public class Word : SentenceElement
     {
-        public static string[] WordsSeparators = { ",", " – ", " - ", " ", ".", "!", "?", "...", "?!", "!?" };
+        private IList<Symbol> symbols;
 
-        public string Symbols { get; }
-
-        public Word(string symbols)
+        public Word(IList<Symbol> _symbols)
         {
-            Symbols = symbols;
+            symbols = _symbols;
+        }
+
+        public Word()
+        {
+            symbols = new List<Symbol>();
+        }
+
+        public void AddSymbolToWord(Symbol symbol)
+        {
+            symbols.Add(symbol);
+        }
+
+        public override char GetFirstSymbol()
+        {
+            return symbols[0]._Symbol;
+        }
+
+        public override string ToString()
+        {
+            string outputString = "";
+
+            foreach(Symbol s in symbols)
+            {
+                outputString += s._Symbol;
+            }
+
+            return outputString;
         }
     }
 }

@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
-    public class Symbol
+    public abstract class SentenceElement
     {
-        public char _Symbol { get; private set; }
-
-        public Symbol(char symbol)
-        {
-            _Symbol = symbol;
-        }
+        public abstract char GetFirstSymbol();
     }
 }

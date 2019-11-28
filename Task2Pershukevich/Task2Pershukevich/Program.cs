@@ -17,29 +17,30 @@ namespace Task2Pershukevich
         {
             string sourcePath = "../../text.txt";
 
-            Parser parser = new Parser();
+            TextParser parser = new TextParser(sourcePath);
             
             Text text = new Text();
 
-            using (FileStream fs = File.Open(sourcePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (BufferedStream bs = new BufferedStream(fs))
-            using (StreamReader sr = new StreamReader(fs))
+            //using (FileStream fs = File.Open(sourcePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            //using (BufferedStream bs = new BufferedStream(fs))
+            using (parser.SR = new StreamReader(parser.SourcePath))
             {
-                text = parser.ParseText(sr);
+                text = parser.ParseText();
             }
 
-            //Console.WriteLine(text.Sentences.Count);
+            foreach (Sentence sent in text.GetAllSentencesFromText())  //every word output
+            {
+                foreach (Word word in sent)
+                {
+                    Console.Write(word.ToString());
+                }
+            }
 
-            //foreach (Sentence sent in text.Sentences) //all words returning
+            //foreach (Sentence sent in text.OrderSentencesByCountOfWords()) //filter by count of words
             //{
+            //    Console.WriteLine($"Count of words in this sentence: {sent.GetAllWordsFromSentence().Count}");
             //    sent.GetAllWordsFromSentence();
             //}
-
-            foreach (Sentence sent in text.SentencesByCountOfWords()) //filter by count of words
-            {
-                Console.WriteLine($"Count of words in this sentence: {sent.Words.Count}");
-                sent.GetAllWordsFromSentence();
-            }
 
             Console.ReadKey();
         }

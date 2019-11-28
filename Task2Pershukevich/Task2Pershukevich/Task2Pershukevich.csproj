@@ -45,8 +45,11 @@
   <ItemGroup>
     <Compile Include="MainParser\IParser.cs" />
     <Compile Include="MainParser\Parser.cs" />
-    <Compile Include="MainText\ISentencesManager.cs" />
+    <Compile Include="MainParser\TextParser.cs" />
+    <Compile Include="MainText\TextElements\SentenceElements\SentenceElement.cs" />
     <Compile Include="MainText\TextElements\SentenceElements\Symbol.cs" />
+    <Compile Include="MainWriter\IWriter.cs" />
+    <Compile Include="MainWriter\Writer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MainText\TextElements\SentenceElements\PunctuationMark.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,23 +13,29 @@ namespace Task2Pershukevich.MainText.TextElements
         Declarative, //.
         Interrogative, //?
         Exclamatory, //!
-        Continious //...
     }
 
-    public class Sentence
-    { 
-        public IList<Word> Words { get; private set; } // докинуть вывод предложений Tostring
+    public class Sentence : ICollection<Word>
+    {
+        public int Count => words.Count;
+
+        public bool IsReadOnly => throw new NotImplementedException();
+
+        public static string[] WordsSeparators = { ",", " – ", " - ", " ", ".", "!", "?" };
+
+
+        private IList<Word> words; 
         public Dictionary<int, PunctuationMark> PunctuationMarks { get; private set; }
         public SentenceType SentenceType { get; private set; }
 
-        public Sentence(IList<Word> words)
+        public Sentence(IList<Word> _words)
         {
-            Words = words;
+            words = _words;
         }
 
-        public void AddWordToSentence(Word word)
+        public Sentence()
         {
-            Words.Add(word);
+            words = new List<Word>();
         }
 
         public void AddPunctuationToSentence(char mark, int position)
@@ -37,12 +44,58 @@ namespace Task2Pershukevich.MainText.TextElements
             PunctuationMarks.Add(position, punctuationMark);
         }
 
-        public void GetAllWordsFromSentence()
+        public ICollection<Word> GetAllWordsFromSentence()
         {
-            foreach(Word w in Words)
+            return words;
+        }
+
+        public void Add(Word word)
+        {
+            words.Add(word);
+        }
+
+        public void Clear()
+        {
+            words.Clear();
+        }
+
+        public bool Contains(Word item)
+        {
+            bool isContaining = false;
+
+            if (words.Contains(item))
             {
-                Console.WriteLine(w.Symbols);
+                isContaining = true;
             }
+
+            return isContaining;
+        }
+
+        public void CopyTo(Word[] array, int arrayIndex)
+        {
+            words.CopyTo(array, arrayIndex);
+        }
+
+        public bool Remove(Word item)
+        {
+            bool isRemoved = false;
+
+            if (words.Remove(item))
+            {
+                isRemoved = true;
+            }
+
+            return isRemoved;
+        }
+
+        public IEnumerator<Word> GetEnumerator()
+        {
+            return GetAllWordsFromSentence().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

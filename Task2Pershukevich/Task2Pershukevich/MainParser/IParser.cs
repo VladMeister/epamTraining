@@ -11,6 +11,6 @@ namespace Task2Pershukevich.MainParser
 {
     public interface IParser
     {
-        Text ParseText(StreamReader sr);
+        Text ParseText();
     }
 }
