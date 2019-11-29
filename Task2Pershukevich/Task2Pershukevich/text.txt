@@ -1,7 +1,6 @@
 You’ve   seen the craze for learning code.
-But what exactly is coding?
+But what    exactly is coding?
 Coding is what makes it possible for us to create computer software, apps and websites.
-Your browser, your OS, the apps on your phone, Facebook, and this website – they’re all made with code.
 To put it very simply, the code is what tells your computer what to do!
 To go a bit deeper, computers don’t understand words.
 They only understand the concepts of on and off?

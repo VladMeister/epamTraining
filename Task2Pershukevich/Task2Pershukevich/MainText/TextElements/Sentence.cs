@@ -21,9 +21,9 @@ namespace Task2Pershukevich.MainText.TextElements
 
         public bool IsReadOnly => throw new NotImplementedException();
 
-        private IList<Word> words; 
-        private Dictionary<int, PunctuationMark> punctuationMarks { get; set; } 
-        private SentenceType sentenceType { get; set; }
+        private IList<Word> words;
+        private IList<PunctuationMark> punctuationMarks;
+        private SentenceType sentenceType;
 
         public Sentence(IList<Word> _words)
         {
@@ -33,17 +33,23 @@ namespace Task2Pershukevich.MainText.TextElements
         public Sentence()
         {
             words = new List<Word>();
-        }
-
-        public void AddPunctuationToSentence(char mark, int position)
-        {
-            PunctuationMark punctuationMark = new PunctuationMark(mark);
-            punctuationMarks.Add(position, punctuationMark);
+            punctuationMarks = new List<PunctuationMark>();
         }
 
         public ICollection<Word> GetAllWordsFromSentence()
         {
             return words;
+        }
+
+        public ICollection<PunctuationMark> GetPunctuationMarks()
+        {
+            return punctuationMarks;
+        }
+
+        public void AddPunctuationToSentence(char punctMark, int position)
+        {
+            PunctuationMark punctuationMark = new PunctuationMark(punctMark, position);
+            punctuationMarks.Add(punctuationMark);
         }
 
         public void SetTypeOfSentence(SentenceType sentType)
@@ -109,9 +115,14 @@ namespace Task2Pershukevich.MainText.TextElements
         {
             string outputString = "";
 
-            foreach(Word word in words)
+            foreach (Word word in words)
             {
                 outputString += word.ToString() + " ";
+            }
+
+            foreach (PunctuationMark punctMark in punctuationMarks)
+            {
+                outputString = outputString.Insert(punctMark.GetPositionInSentence(), Convert.ToString(punctMark.GetFirstSymbol()));
             }
 
             return outputString;

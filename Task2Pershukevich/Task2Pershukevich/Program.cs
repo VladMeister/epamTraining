@@ -21,19 +21,24 @@ namespace Task2Pershukevich
             
             Text text = new Text();
 
-            //using (FileStream fs = File.Open(sourcePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            //using (BufferedStream bs = new BufferedStream(fs))
-
             using (parser.SR = new StreamReader(parser.SourcePath))
             {
                 text = parser.ParseText();
-                //parser.Dispose();
+                parser.Dispose();
             }
 
-            //foreach (Sentence sent in text.GetAllSentencesFromText())  //every sentence to string
+            //foreach(Sentence sent in text.GetAllSentencesFromText())  //every punctuation mark
             //{
-            //    Console.WriteLine(sent.ToString());
+            //    foreach(PunctuationMark pm in sent.GetPunctuationMarks())
+            //    {
+            //        Console.WriteLine(pm.GetFirstSymbol());
+            //    }
             //}
+
+            foreach (Sentence sent in text.GetAllSentencesFromText())  //every sentence to string
+            {
+                Console.WriteLine(sent.ToString());
+            }
 
             //foreach (Sentence sent in text.GetAllSentencesFromText()) //amount of words in every sent
             //{

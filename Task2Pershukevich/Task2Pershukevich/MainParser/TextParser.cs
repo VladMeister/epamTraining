@@ -32,15 +32,13 @@ namespace Task2Pershukevich.MainParser
 
             while((sentence = SR.ReadLine()) != null)
             {
-                FixSpacesAndTabulation(sentence);
-
                 Sentence textSentence = new Sentence();
+
+                sentence = FixSpacesAndTabulation(sentence);
+
                 textSentence.SetTypeOfSentence(GetTypeOfSentence(sentence.Last()));  //setting type of sentence
 
-                Match[] sentencePunctuation = 
-                    Regex.Matches(sentence, ConfigurationManager.AppSettings["sentencePunctuationMarks"]) // getting punctuation
-                       .Cast<Match>()  
-                       .ToArray(); 
+                GetPunctuationFromSentence(textSentence, sentence); //getting punct marks and their positions
 
                 string[] arrayWords = sentence.Split(ConfigurationManager.AppSettings["wordsSeparators"]
                     .Split('/'), StringSplitOptions.RemoveEmptyEntries);
@@ -66,9 +64,10 @@ namespace Task2Pershukevich.MainParser
         }
 
 
-        private void FixSpacesAndTabulation(string line)
+        private string FixSpacesAndTabulation(string line)
         {
             line = Regex.Replace(line, @"\s+", " ");
+            return line;
         }
 
         private SentenceType GetTypeOfSentence(char lastSymbol)
@@ -92,6 +91,17 @@ namespace Task2Pershukevich.MainParser
             }
 
             return sentType;
+        }
+
+        private void GetPunctuationFromSentence(Sentence textSentence, string sentence)  //вот тут ошибка в indexOf - видит первую и все
+        {
+            foreach (char symb in sentence)
+            {
+                if (ConfigurationManager.AppSettings["sentencePunctuationMarks"].Contains(symb))
+                {
+                    textSentence.AddPunctuationToSentence(symb, sentence.IndexOf(symb)); //<--
+                }
+            }
         }
 
         public void Dispose(bool disposing)
