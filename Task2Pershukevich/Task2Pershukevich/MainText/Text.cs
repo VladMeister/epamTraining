@@ -34,7 +34,7 @@ namespace Task2Pershukevich.MainText
 
         public IEnumerable<Sentence> GetWordsFromInterrogativeSentences(int wordLenght) //2
         {
-            return sentences.Where(x => x.SentenceType == SentenceType.Interrogative);
+            return sentences.Where(x => x.ReturnSentenceType() == SentenceType.Interrogative);
                 //.Where(s => s.Words.Where(w => w.Symbols.Count == lenght));
         }
 

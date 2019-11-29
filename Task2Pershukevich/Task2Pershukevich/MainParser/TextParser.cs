@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Configuration;
 using System.Threading.Tasks;
 using Task2Pershukevich.MainText;
 using Task2Pershukevich.MainText.TextElements.SentenceElements;
@@ -11,14 +12,16 @@ using Task2Pershukevich.MainText.TextElements;
 
 namespace Task2Pershukevich.MainParser
 {
-    public class TextParser : Parser
+    public class TextParser : Parser, IDisposable
     {
         public string SourcePath { get; }
         public StreamReader SR { get; set; }
+        private bool disposed = false;
 
         public TextParser(string path)
         {
             SourcePath = path;
+            SR = new StreamReader(SourcePath);
         }
 
         public override Text ParseText() 
@@ -32,8 +35,15 @@ namespace Task2Pershukevich.MainParser
                 FixSpacesAndTabulation(sentence);
 
                 Sentence textSentence = new Sentence();
+                textSentence.SetTypeOfSentence(GetTypeOfSentence(sentence.Last()));  //setting type of sentence
 
-                string[] arrayWords = sentence.Split(Sentence.WordsSeparators, StringSplitOptions.RemoveEmptyEntries);
+                Match[] sentencePunctuation = 
+                    Regex.Matches(sentence, ConfigurationManager.AppSettings["sentencePunctuationMarks"]) // getting punctuation
+                       .Cast<Match>()  
+                       .ToArray(); 
+
+                string[] arrayWords = sentence.Split(ConfigurationManager.AppSettings["wordsSeparators"]
+                    .Split('/'), StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (string word in arrayWords)
                 {
@@ -52,9 +62,6 @@ namespace Task2Pershukevich.MainParser
                 text.Add(textSentence);
             }
 
-            //string[] arraySentences = Regex.Split(allText, @"(?<=[\.\!\?])", RegexOptions.IgnoreCase);//<-
-            //Array.Resize(ref arraySentences, arraySentences.Length - 1); //баш с нулевым предложением в конце текста исправление
-
             return text;
         }
 
@@ -62,6 +69,51 @@ namespace Task2Pershukevich.MainParser
         private void FixSpacesAndTabulation(string line)
         {
             line = Regex.Replace(line, @"\s+", " ");
+        }
+
+        private SentenceType GetTypeOfSentence(char lastSymbol)
+        {
+            SentenceType sentType = SentenceType.Declarative;
+
+            switch(lastSymbol)
+            {
+                case '.':
+                    sentType = SentenceType.Declarative;
+                    break;
+                case '?':
+                    sentType = SentenceType.Interrogative;
+                    break;
+                case '!':
+                    sentType = SentenceType.Exclamatory;
+                    break;
+                default:
+                    sentType = SentenceType.Declarative;
+                    break;
+            }
+
+            return sentType;
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if(!disposed)
+            {
+                if(disposing)
+                {
+                    if(SR != null)
+                    {
+                        SR.Dispose();
+                    }
+                }
+
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -21,12 +21,9 @@ namespace Task2Pershukevich.MainText.TextElements
 
         public bool IsReadOnly => throw new NotImplementedException();
 
-        public static string[] WordsSeparators = { ",", " – ", " - ", " ", ".", "!", "?" };
-
-
         private IList<Word> words; 
-        public Dictionary<int, PunctuationMark> PunctuationMarks { get; private set; }
-        public SentenceType SentenceType { get; private set; }
+        private Dictionary<int, PunctuationMark> punctuationMarks { get; set; } 
+        private SentenceType sentenceType { get; set; }
 
         public Sentence(IList<Word> _words)
         {
@@ -41,12 +38,22 @@ namespace Task2Pershukevich.MainText.TextElements
         public void AddPunctuationToSentence(char mark, int position)
         {
             PunctuationMark punctuationMark = new PunctuationMark(mark);
-            PunctuationMarks.Add(position, punctuationMark);
+            punctuationMarks.Add(position, punctuationMark);
         }
 
         public ICollection<Word> GetAllWordsFromSentence()
         {
             return words;
+        }
+
+        public void SetTypeOfSentence(SentenceType sentType)
+        {
+            sentenceType = sentType;
+        }
+
+        public SentenceType ReturnSentenceType()
+        {
+            return sentenceType;
         }
 
         public void Add(Word word)
@@ -96,6 +103,18 @@ namespace Task2Pershukevich.MainText.TextElements
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            string outputString = "";
+
+            foreach(Word word in words)
+            {
+                outputString += word.ToString() + " ";
+            }
+
+            return outputString;
         }
     }
 }

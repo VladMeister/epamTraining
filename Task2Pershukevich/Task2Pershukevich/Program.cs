@@ -13,7 +13,7 @@ namespace Task2Pershukevich
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args) //закинуть все по методам
         {
             string sourcePath = "../../text.txt";
 
@@ -23,18 +23,30 @@ namespace Task2Pershukevich
 
             //using (FileStream fs = File.Open(sourcePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             //using (BufferedStream bs = new BufferedStream(fs))
+
             using (parser.SR = new StreamReader(parser.SourcePath))
             {
                 text = parser.ParseText();
+                //parser.Dispose();
             }
 
-            foreach (Sentence sent in text.GetAllSentencesFromText())  //every word output
-            {
-                foreach (Word word in sent)
-                {
-                    Console.Write(word.ToString());
-                }
-            }
+            //foreach (Sentence sent in text.GetAllSentencesFromText())  //every sentence to string
+            //{
+            //    Console.WriteLine(sent.ToString());
+            //}
+
+            //foreach (Sentence sent in text.GetAllSentencesFromText()) //amount of words in every sent
+            //{
+            //    Console.WriteLine(sent.GetAllWordsFromSentence().Count);
+            //}
+
+            //foreach (Sentence sent in text.GetAllSentencesFromText())  //every word output
+            //{
+            //    foreach (Word word in sent)
+            //    {
+            //        Console.WriteLine(word.ToString());
+            //    }
+            //}
 
             //foreach (Sentence sent in text.OrderSentencesByCountOfWords()) //filter by count of words
             //{
