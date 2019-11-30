@@ -13,7 +13,7 @@ namespace Task2Pershukevich
 {
     class Program
     {
-        static void Main(string[] args) //закинуть все по методам
+        static void Main(string[] args) 
         {
             string sourcePath = "../../text.txt";
 
@@ -21,45 +21,82 @@ namespace Task2Pershukevich
             
             Text text = new Text();
 
-            using (parser.SR = new StreamReader(parser.SourcePath))
+            try
             {
-                text = parser.ParseText();
-                parser.Dispose();
+                using (parser.SR = new StreamReader(parser.SourcePath))
+                {
+                    text = parser.ParseText();
+                    parser.Dispose();
+                }
+            }
+            catch(ArgumentException ae)
+            {
+                Console.WriteLine(ae.Message);
             }
 
-            //foreach(Sentence sent in text.GetAllSentencesFromText())  //every punctuation mark
-            //{
-            //    foreach(PunctuationMark pm in sent.GetPunctuationMarks())
-            //    {
-            //        Console.WriteLine(pm.GetFirstSymbol());
-            //    }
-            //}
+            //FilterSentencesByCountOfWords(text);  //filter by count of words (1 exercise)
 
-            foreach (Sentence sent in text.GetAllSentencesFromText())  //every sentence to string
+
+
+
+            //OutoutEveryPunctuationMark(text);  //every punctuation mark
+
+            OutputEverySentence(text);  //every sentence to string
+
+            //OutputAmountOfWordsInEverySentence(text);  //amount of words in every sentence
+
+            //OutputEveryWordFromText(text);  //every word output
+
+            Console.ReadKey();
+        }
+
+        static void OutputEverySentence(Text text)
+        {
+            foreach (Sentence sent in text.GetAllSentencesFromText())
             {
                 Console.WriteLine(sent.ToString());
             }
+        }
 
-            //foreach (Sentence sent in text.GetAllSentencesFromText()) //amount of words in every sent
-            //{
-            //    Console.WriteLine(sent.GetAllWordsFromSentence().Count);
-            //}
+        static void OutoutEveryPunctuationMark(Text text)
+        {
+            foreach (Sentence sent in text.GetAllSentencesFromText())  
+            {
+                foreach (PunctuationMark pm in sent.GetPunctuationMarks())
+                {
+                    Console.WriteLine(pm.GetFirstSymbol());
+                }
+            }
+        }
 
-            //foreach (Sentence sent in text.GetAllSentencesFromText())  //every word output
-            //{
-            //    foreach (Word word in sent)
-            //    {
-            //        Console.WriteLine(word.ToString());
-            //    }
-            //}
+        static void OutputAmountOfWordsInEverySentence(Text text)
+        {
+            foreach (Sentence sent in text.GetAllSentencesFromText()) 
+            {
+                Console.WriteLine(sent.GetAllWordsFromSentence().Count);
+            }
+        }
 
-            //foreach (Sentence sent in text.OrderSentencesByCountOfWords()) //filter by count of words
-            //{
-            //    Console.WriteLine($"Count of words in this sentence: {sent.GetAllWordsFromSentence().Count}");
-            //    sent.GetAllWordsFromSentence();
-            //}
+        static void OutputEveryWordFromText(Text text)
+        {
+            foreach (Sentence sent in text.GetAllSentencesFromText())  
+            {
+                foreach (Word word in sent)
+                {
+                    Console.WriteLine(word.ToString());
+                }
+            }
+        }
 
-            Console.ReadKey();
+        static void FilterSentencesByCountOfWords(Text text)
+        {
+            Console.WriteLine("Filtered count of words in every sentence: ");
+
+            foreach (Sentence sent in text.OrderSentencesByCountOfWords())
+            {
+                Console.WriteLine(sent.GetAllWordsFromSentence().Count);
+                sent.GetAllWordsFromSentence();
+            }
         }
     }
 }

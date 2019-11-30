@@ -25,6 +25,16 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
             symbols.Add(symbol);
         }
 
+        public IEnumerable<Symbol> GetSymbolsFromWord()
+        {
+            return symbols;
+        }
+
+        public int GetWordsLenght()
+        {
+            return symbols.Count;
+        }
+
         public override char GetFirstSymbol()
         {
             return symbols[0]._Symbol;

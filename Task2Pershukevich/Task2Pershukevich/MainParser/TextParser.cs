@@ -21,7 +21,11 @@ namespace Task2Pershukevich.MainParser
         public TextParser(string path)
         {
             SourcePath = path;
-            SR = new StreamReader(SourcePath);
+            try
+            {
+                SR = new StreamReader(SourcePath);
+            }
+            catch(ArgumentException ae) { ae.ToString(); }
         }
 
         public override Text ParseText() 
@@ -30,35 +34,39 @@ namespace Task2Pershukevich.MainParser
 
             string sentence; // one line = one sentence
 
-            while((sentence = SR.ReadLine()) != null)
+            try
             {
-                Sentence textSentence = new Sentence();
-
-                sentence = FixSpacesAndTabulation(sentence);
-
-                textSentence.SetTypeOfSentence(GetTypeOfSentence(sentence.Last()));  //setting type of sentence
-
-                GetPunctuationFromSentence(textSentence, sentence); //getting punct marks and their positions
-
-                string[] arrayWords = sentence.Split(ConfigurationManager.AppSettings["wordsSeparators"]
-                    .Split('/'), StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (string word in arrayWords)
+                while ((sentence = SR.ReadLine()) != null)
                 {
-                    Word sentenceWord = new Word();
+                    Sentence textSentence = new Sentence();
 
-                    foreach(char symbol in word)
+                    sentence = FixSpacesAndTabulation(sentence);
+
+                    textSentence.SetTypeOfSentence(GetTypeOfSentence(sentence.Last()));  //setting type of sentence
+
+                    GetPunctuationFromSentence(textSentence, sentence); //getting punct marks and their positions
+
+                    string[] arrayWords = sentence.Split(ConfigurationManager.AppSettings["wordsSeparators"]
+                        .Split('/'), StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (string word in arrayWords)
                     {
-                        Symbol wordSymbol = new Symbol(symbol);
+                        Word sentenceWord = new Word();
 
-                        sentenceWord.AddSymbolToWord(wordSymbol);
+                        foreach (char symbol in word)
+                        {
+                            Symbol wordSymbol = new Symbol(symbol);
+
+                            sentenceWord.AddSymbolToWord(wordSymbol);
+                        }
+
+                        textSentence.Add(sentenceWord);
                     }
 
-                    textSentence.Add(sentenceWord);
+                    text.Add(textSentence);
                 }
-
-                text.Add(textSentence);
             }
+            catch(ArgumentNullException ex) { ex.ToString(); }
 
             return text;
         }
@@ -93,14 +101,16 @@ namespace Task2Pershukevich.MainParser
             return sentType;
         }
 
-        private void GetPunctuationFromSentence(Sentence textSentence, string sentence)  //вот тут ошибка в indexOf - видит первую и все
+        private void GetPunctuationFromSentence(Sentence textSentence, string sentence)  
         {
+            int currentPosition = 0;
             foreach (char symb in sentence)
             {
                 if (ConfigurationManager.AppSettings["sentencePunctuationMarks"].Contains(symb))
                 {
-                    textSentence.AddPunctuationToSentence(symb, sentence.IndexOf(symb)); //<--
+                    textSentence.AddPunctuationToSentence(symb, currentPosition); 
                 }
+                currentPosition++;
             }
         }
 

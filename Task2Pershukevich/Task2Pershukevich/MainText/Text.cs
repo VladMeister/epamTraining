@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task2Pershukevich.MainText.TextElements;
+using Task2Pershukevich.MainText.TextElements.SentenceElements;
 
 namespace Task2Pershukevich.MainText
 {
@@ -15,7 +16,7 @@ namespace Task2Pershukevich.MainText
         public bool IsReadOnly => throw new NotImplementedException(); //no implementation
 
 
-        private IList<Sentence> sentences; //весб текст Tostring
+        private IList<Sentence> sentences; 
 
         public Text(IList<Sentence> _sentences)
         {
@@ -35,7 +36,7 @@ namespace Task2Pershukevich.MainText
         public IEnumerable<Sentence> GetWordsFromInterrogativeSentences(int wordLenght) //2
         {
             return sentences.Where(x => x.ReturnSentenceType() == SentenceType.Interrogative);
-                //.Where(s => s.Words.Where(w => w.Symbols.Count == lenght));
+                //.Where(s => s.GetAllWordsFromSentence().Where(w => w.GetWordsLenght() == wordLenght));
         }
 
         //public IEnumerable<Sentence> DeleteWordsStartingFromConsonant(int wordLenght) //3
