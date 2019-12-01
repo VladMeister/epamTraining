@@ -20,15 +20,15 @@ namespace Task2Pershukevich.MainText.TextElements
     {
         public int Count => words.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false;
 
         private IList<Word> words;
         private IList<PunctuationMark> punctuationMarks;
-        private SentenceType sentenceType;
+        public SentenceType SentenceType { get; set; }
 
-        public Sentence(IList<Word> _words)
+        public Sentence(IList<Word> wordsList)
         {
-            words = _words;
+            words = wordsList;
         }
 
         public Sentence()
@@ -37,7 +37,7 @@ namespace Task2Pershukevich.MainText.TextElements
             punctuationMarks = new List<PunctuationMark>();
         }
 
-        public ICollection<Word> GetAllWordsFromSentence()
+        public ICollection<Word> GetAllWords()
         {
             return words;
         }
@@ -47,20 +47,33 @@ namespace Task2Pershukevich.MainText.TextElements
             return punctuationMarks;
         }
 
-        public void AddPunctuationToSentence(char punctMark, int position)
+        public void AddPunctuation(char punctMark, int position) //создавать пунктмарк в парсере мб
         {
             PunctuationMark punctuationMark = new PunctuationMark(punctMark, position);
             punctuationMarks.Add(punctuationMark);
         }
 
-        public void SetTypeOfSentence(SentenceType sentType)
+        public static SentenceType SetType(char lastSymbol)
         {
-            sentenceType = sentType;
-        }
+            SentenceType sentType = SentenceType.Declarative;
 
-        public SentenceType ReturnSentenceType()
-        {
-            return sentenceType;
+            switch (lastSymbol)
+            {
+                case '.':
+                    sentType = SentenceType.Declarative;
+                    break;
+                case '?':
+                    sentType = SentenceType.Interrogative;
+                    break;
+                case '!':
+                    sentType = SentenceType.Exclamatory;
+                    break;
+                default:
+                    sentType = SentenceType.Declarative;
+                    break;
+            }
+
+            return sentType;
         }
 
         public IEnumerable<Word> GetWordsFromInterrogativeSentences(int lenght)
@@ -68,11 +81,16 @@ namespace Task2Pershukevich.MainText.TextElements
             return words.Where(w => w.GetWordsLenght() == lenght).Distinct(); //distinct is not working
         }
 
-        public IEnumerable<Word> GetWordsStartingFromConsonant(int lenght)
+        public IEnumerable<Word> GetWordsStartingFromConsonant(int lenght, string vowelsAppConfig)
         {
             return words.Where(x => x.GetWordsLenght() == lenght)
-                .Where(w => ConfigurationManager.AppSettings["consonantLetters"].Contains(char.ToLower(w.GetFirstSymbol())));
+                .Where(w => !vowelsAppConfig.Contains(char.ToLower(w.GetFirstSymbol())));
         }
+
+        //public IEnumerable<Word> ChangeWordsToSubstring(int lenght, string subString)
+        //{
+        //    return words.Where(x => x.GetWordsLenght() == lenght).Select(w => { w.PropertyToSet = value; return w; }).ToList();
+        //}
 
         public void Add(Word word)
         {
@@ -115,7 +133,7 @@ namespace Task2Pershukevich.MainText.TextElements
 
         public IEnumerator<Word> GetEnumerator()
         {
-            return GetAllWordsFromSentence().GetEnumerator();
+            return GetAllWords().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -125,11 +143,11 @@ namespace Task2Pershukevich.MainText.TextElements
 
         public override string ToString()
         {
-            string outputString = "";
+            StringBuilder outputString = new StringBuilder();
 
             foreach (Word word in words)
             {
-                outputString += word.ToString() + " ";
+                outputString.Append(word.ToString() + " ");
             }
 
             foreach (PunctuationMark punctMark in punctuationMarks)
@@ -137,7 +155,7 @@ namespace Task2Pershukevich.MainText.TextElements
                 outputString = outputString.Insert(punctMark.GetPositionInSentence(), Convert.ToString(punctMark.GetFirstSymbol()));
             }
 
-            return outputString;
+            return outputString.ToString();
         }
     }
 }

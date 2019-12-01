@@ -10,9 +10,9 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
     {
         private IList<Symbol> symbols;
 
-        public Word(IList<Symbol> _symbols)
+        public Word(IList<Symbol> symbolsList)
         {
-            symbols = _symbols;
+            symbols = symbolsList;
         }
 
         public Word()
@@ -20,12 +20,26 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
             symbols = new List<Symbol>();
         }
 
-        public void AddSymbolToWord(Symbol symbol)
+        public static Word CreateWordFromString(string symbols)
+        {
+            Word word = new Word();
+
+            foreach (char symbol in symbols)
+            {
+                Symbol wordSymbol = new Symbol(symbol);
+
+                word.AddSymbol(wordSymbol);
+            }
+
+            return word;
+        }
+
+        public void AddSymbol(Symbol symbol)
         {
             symbols.Add(symbol);
         }
 
-        public IEnumerable<Symbol> GetSymbolsFromWord()
+        public IEnumerable<Symbol> GetSymbols()
         {
             return symbols;
         }
@@ -37,19 +51,19 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 
         public override char GetFirstSymbol()
         {
-            return symbols[0]._Symbol;
+            return symbols[0].symbolElement;
         }
 
-        public override string ToString()
+        public override string ToString() 
         {
-            string outputString = "";
+            StringBuilder outputString = new StringBuilder();
 
             foreach(Symbol s in symbols)
             {
-                outputString += s._Symbol;
+                outputString.Append(s.symbolElement);
             }
 
-            return outputString;
+            return outputString.ToString();
         }
     }
 }

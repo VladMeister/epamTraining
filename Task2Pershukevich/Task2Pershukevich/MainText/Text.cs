@@ -13,14 +13,14 @@ namespace Task2Pershukevich.MainText
     {
         public int Count => sentences.Count;
 
-        public bool IsReadOnly => throw new NotImplementedException(); //no implementation
+        public bool IsReadOnly => false; 
 
 
         private IList<Sentence> sentences; 
 
-        public Text(IList<Sentence> _sentences)
+        public Text(IList<Sentence> sentencesList)
         {
-            sentences = _sentences;
+            sentences = sentencesList;
         }
 
         public Text()
@@ -30,20 +30,20 @@ namespace Task2Pershukevich.MainText
 
         public IEnumerable<Sentence> OrderSentencesByCountOfWords() 
         {
-            return sentences.OrderBy(x => x.GetAllWordsFromSentence().Count);
+            return sentences.OrderBy(x => x.GetAllWords().Count);
         }
 
         public IEnumerable<Sentence> GetInterrogativeSentences() 
         {
-            return sentences.Where(x => x.ReturnSentenceType() == SentenceType.Interrogative);
+            return sentences.Where(x => x.SentenceType == SentenceType.Interrogative);
         }
 
-        //public IEnumerable<Sentence> ChangeWordInConcreteSentence(int numberOfSentence, int wordsLenght, string subString) 
-        //{
+        public Sentence GetConcreteSentence(int numberOfSentence)
+        {
+            return sentences[numberOfSentence];
+        }
 
-        //}
-
-        public ICollection<Sentence> GetAllSentencesFromText()
+        public ICollection<Sentence> GetAllSentences()
         {
             return sentences;
         }
@@ -94,7 +94,7 @@ namespace Task2Pershukevich.MainText
 
         public IEnumerator<Sentence> GetEnumerator()
         {
-            return GetAllSentencesFromText().GetEnumerator();
+            return GetAllSentences().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

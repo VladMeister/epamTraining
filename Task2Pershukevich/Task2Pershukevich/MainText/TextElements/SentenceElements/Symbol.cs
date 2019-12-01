@@ -8,11 +8,11 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
     public class Symbol
     {
-        public char _Symbol { get; private set; }
+        public char symbolElement { get; private set; }
 
         public Symbol(char symbol)
         {
-            _Symbol = symbol;
+            symbolElement = symbol;
         }
     }
 }

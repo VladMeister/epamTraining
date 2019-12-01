@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using Task2Pershukevich.MainParser;
 using Task2Pershukevich.MainText;
 using Task2Pershukevich.MainText.TextElements;
 using Task2Pershukevich.MainText.TextElements.SentenceElements;
+using Task2Pershukevich.MainWriter;
 
 namespace Task2Pershukevich
 {
@@ -16,6 +18,7 @@ namespace Task2Pershukevich
         static void Main(string[] args) 
         {
             string sourcePath = "../../text.txt";
+            string objectModelPath = "../../objectModel.txt";
 
             TextParser parser = new TextParser(sourcePath);
             
@@ -23,26 +26,35 @@ namespace Task2Pershukevich
 
             try
             {
-                using (parser.SR = new StreamReader(parser.SourcePath))
+                using (parser) //<= ?
                 {
                     text = parser.ParseText();
-                    parser.Dispose();
                 }
             }
-            catch(ArgumentException ae)
+            catch(Exception ex)
             {
-                Console.WriteLine(ae.Message);
+                Console.WriteLine(ex.Message);
             }
 
             //FilterSentencesByCountOfWords(text);  //filter by count of words (1 exercise)
 
             //GetWordsByLenghtFromInterrogativeSentences(text, 6);  //words with given lenght from interrogative sentences (2 exercise)
 
-            GetTextWithDeletedWordsStartingFromConsonant(text, 28);
+            //GetTextWithDeletedWordsStartingFromConsonant(text, 28);
 
-            //
+            // delat bez linq 4
 
 
+            Writer writer = new Writer(objectModelPath);  //object model saving
+
+            //try
+            //{
+            //    writer.Write(text);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
 
 
             //OutoutEveryPunctuationMark(text);  //every punctuation mark
@@ -61,7 +73,7 @@ namespace Task2Pershukevich
 
         static void OutputEverySentence(Text text)
         {
-            foreach (Sentence sent in text.GetAllSentencesFromText())
+            foreach (Sentence sent in text.GetAllSentences())
             {
                 Console.WriteLine(sent.ToString());
             }
@@ -69,7 +81,7 @@ namespace Task2Pershukevich
 
         static void OutoutEveryPunctuationMark(Text text)
         {
-            foreach (Sentence sent in text.GetAllSentencesFromText())  
+            foreach (Sentence sent in text.GetAllSentences())  
             {
                 foreach (PunctuationMark pm in sent.GetPunctuationMarks())
                 {
@@ -80,15 +92,15 @@ namespace Task2Pershukevich
 
         static void OutputAmountOfWordsInEverySentence(Text text)
         {
-            foreach (Sentence sent in text.GetAllSentencesFromText()) 
+            foreach (Sentence sent in text.GetAllSentences()) 
             {
-                Console.WriteLine(sent.GetAllWordsFromSentence().Count);
+                Console.WriteLine(sent.GetAllWords().Count);
             }
         }
 
         static void OutputEveryWordFromText(Text text)
         {
-            foreach (Sentence sent in text.GetAllSentencesFromText())  
+            foreach (Sentence sent in text.GetAllSentences())  
             {
                 foreach (Word word in sent)
                 {
@@ -103,8 +115,8 @@ namespace Task2Pershukevich
 
             foreach (Sentence sent in text.OrderSentencesByCountOfWords())
             {
-                Console.WriteLine(sent.GetAllWordsFromSentence().Count);
-                sent.GetAllWordsFromSentence();
+                Console.WriteLine(sent.GetAllWords().Count);
+                //sent.GetAllWordsFromSentence();
             }
         }
 
@@ -125,16 +137,16 @@ namespace Task2Pershukevich
         {
             Console.WriteLine($"Getting new text after deleting words with lenght = {wordLenght} in every sentence: ");
 
-            foreach (Sentence sent in text.GetAllSentencesFromText())
+            foreach (Sentence sent in text.GetAllSentences())
             {
-                foreach(Word word in sent.GetWordsStartingFromConsonant(wordLenght))
+                foreach(Word word in sent.GetWordsStartingFromConsonant(wordLenght, ConfigurationManager.AppSettings["vowelLetters"]))
                 {
                     //Console.WriteLine(word.ToString());
                     sent.Remove(word);
                 }
             }
 
-            text.GetAllSentencesFromText();
+            text.GetAllSentences();
         }
     }
 }

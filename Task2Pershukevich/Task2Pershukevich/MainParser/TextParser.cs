@@ -14,18 +14,17 @@ namespace Task2Pershukevich.MainParser
 {
     public class TextParser : Parser, IDisposable
     {
+        private string sentencePunctAppConfig = ConfigurationManager.AppSettings["sentencePunctuationMarks"];
+        private string wordsSeparatorsAppConfig = ConfigurationManager.AppSettings["wordsSeparators"];
+
+
         public string SourcePath { get; }
-        public StreamReader SR { get; set; }
+        private StreamReader streamReader; 
         private bool disposed = false;
 
         public TextParser(string path)
         {
             SourcePath = path;
-            try
-            {
-                SR = new StreamReader(SourcePath);
-            }
-            catch(ArgumentException ae) { ae.ToString(); }
         }
 
         public override Text ParseText() 
@@ -36,37 +35,34 @@ namespace Task2Pershukevich.MainParser
 
             try
             {
-                while ((sentence = SR.ReadLine()) != null)
+                using (streamReader = new StreamReader(SourcePath))
                 {
-                    Sentence textSentence = new Sentence();
-
-                    sentence = FixSpacesAndTabulation(sentence);
-
-                    textSentence.SetTypeOfSentence(GetTypeOfSentence(sentence.Last()));  //setting type of sentence
-
-                    GetPunctuationFromSentence(textSentence, sentence); //getting punct marks and their positions
-
-                    string[] arrayWords = sentence.Split(ConfigurationManager.AppSettings["wordsSeparators"]
-                        .Split('/'), StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach (string word in arrayWords)
+                    while ((sentence = streamReader.ReadLine()) != null)
                     {
-                        Word sentenceWord = new Word();
+                        Sentence textSentence = new Sentence();
 
-                        foreach (char symbol in word)
+                        sentence = FixSpacesAndTabulation(sentence);
+
+                        textSentence.SentenceType = Sentence.SetType(sentence.Last());  //setting type of sentence
+
+                        GetPunctuationFromSentence(textSentence, sentence, sentencePunctAppConfig); //getting punct marks and their positions
+
+                        string[] arrayWords = sentence.Split(wordsSeparatorsAppConfig.Split('/'), StringSplitOptions.RemoveEmptyEntries);
+
+                        foreach (string word in arrayWords)
                         {
-                            Symbol wordSymbol = new Symbol(symbol);
+                            Word sentenceWord = new Word();
 
-                            sentenceWord.AddSymbolToWord(wordSymbol);
+                            sentenceWord = Word.CreateWordFromString(word);
+
+                            textSentence.Add(sentenceWord);
                         }
-
-                        textSentence.Add(sentenceWord);
+                        
+                        text.Add(textSentence);
                     }
-
-                    text.Add(textSentence);
                 }
             }
-            catch(ArgumentNullException ex) { ex.ToString(); }
+            catch(Exception ex) { throw ex; }
 
             return text;
         }
@@ -78,37 +74,14 @@ namespace Task2Pershukevich.MainParser
             return line;
         }
 
-        private SentenceType GetTypeOfSentence(char lastSymbol)
-        {
-            SentenceType sentType = SentenceType.Declarative;
-
-            switch(lastSymbol)
-            {
-                case '.':
-                    sentType = SentenceType.Declarative;
-                    break;
-                case '?':
-                    sentType = SentenceType.Interrogative;
-                    break;
-                case '!':
-                    sentType = SentenceType.Exclamatory;
-                    break;
-                default:
-                    sentType = SentenceType.Declarative;
-                    break;
-            }
-
-            return sentType;
-        }
-
-        private void GetPunctuationFromSentence(Sentence textSentence, string sentence)  
+        private void GetPunctuationFromSentence(Sentence textSentence, string sentence, string punctuationAppConfig)  
         {
             int currentPosition = 0;
             foreach (char symb in sentence)
             {
-                if (ConfigurationManager.AppSettings["sentencePunctuationMarks"].Contains(symb))
+                if (punctuationAppConfig.Contains(symb))
                 {
-                    textSentence.AddPunctuationToSentence(symb, currentPosition); 
+                    textSentence.AddPunctuation(symb, currentPosition); 
                 }
                 currentPosition++;
             }
@@ -120,9 +93,9 @@ namespace Task2Pershukevich.MainParser
             {
                 if(disposing)
                 {
-                    if(SR != null)
+                    if(streamReader != null)
                     {
-                        SR.Dispose();
+                        streamReader.Dispose();
                     }
                 }
 
