@@ -36,12 +36,18 @@ namespace Task2Pershukevich
 
             //FilterSentencesByCountOfWords(text);  //filter by count of words (1 exercise)
 
+            //GetWordsByLenghtFromInterrogativeSentences(text, 6);  //words with given lenght from interrogative sentences (2 exercise)
+
+            GetTextWithDeletedWordsStartingFromConsonant(text, 28);
+
+            //
+
 
 
 
             //OutoutEveryPunctuationMark(text);  //every punctuation mark
 
-            OutputEverySentence(text);  //every sentence to string
+            //OutputEverySentence(text);  //every sentence to string
 
             //OutputAmountOfWordsInEverySentence(text);  //amount of words in every sentence
 
@@ -49,6 +55,9 @@ namespace Task2Pershukevich
 
             Console.ReadKey();
         }
+
+
+
 
         static void OutputEverySentence(Text text)
         {
@@ -97,6 +106,35 @@ namespace Task2Pershukevich
                 Console.WriteLine(sent.GetAllWordsFromSentence().Count);
                 sent.GetAllWordsFromSentence();
             }
+        }
+
+        static void GetWordsByLenghtFromInterrogativeSentences(Text text, int wordLenght)
+        {
+            Console.WriteLine($"Words with lenght = {wordLenght} in interrogative sentences: ");
+
+            foreach (Sentence sent in text.GetInterrogativeSentences())
+            {
+                foreach (Word word in sent.GetWordsFromInterrogativeSentences(wordLenght))
+                {
+                    Console.WriteLine(word.ToString());
+                }
+            }
+        }
+
+        static void GetTextWithDeletedWordsStartingFromConsonant(Text text, int wordLenght)
+        {
+            Console.WriteLine($"Getting new text after deleting words with lenght = {wordLenght} in every sentence: ");
+
+            foreach (Sentence sent in text.GetAllSentencesFromText())
+            {
+                foreach(Word word in sent.GetWordsStartingFromConsonant(wordLenght))
+                {
+                    //Console.WriteLine(word.ToString());
+                    sent.Remove(word);
+                }
+            }
+
+            text.GetAllSentencesFromText();
         }
     }
 }

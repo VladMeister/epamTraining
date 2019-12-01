@@ -28,23 +28,17 @@ namespace Task2Pershukevich.MainText
             sentences = new List<Sentence>();
         }
 
-        public IEnumerable<Sentence> OrderSentencesByCountOfWords() //1
+        public IEnumerable<Sentence> OrderSentencesByCountOfWords() 
         {
             return sentences.OrderBy(x => x.GetAllWordsFromSentence().Count);
         }
 
-        public IEnumerable<Sentence> GetWordsFromInterrogativeSentences(int wordLenght) //2
+        public IEnumerable<Sentence> GetInterrogativeSentences() 
         {
             return sentences.Where(x => x.ReturnSentenceType() == SentenceType.Interrogative);
-                //.Where(s => s.GetAllWordsFromSentence().Where(w => w.GetWordsLenght() == wordLenght));
         }
 
-        //public IEnumerable<Sentence> DeleteWordsStartingFromConsonant(int wordLenght) //3
-        //{
-        //    return sentences.Where(x => x.Words.Where(w => w.Symbols.Count == wordLenght));
-        //}
-
-        //public IEnumerable<Sentence> ChangeWordInConcreteSentence(int numberOfSentence, int wordsLenght, string subString) //4
+        //public IEnumerable<Sentence> ChangeWordInConcreteSentence(int numberOfSentence, int wordsLenght, string subString) 
         //{
 
         //}

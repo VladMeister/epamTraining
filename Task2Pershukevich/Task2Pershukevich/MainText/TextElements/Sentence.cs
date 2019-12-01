@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,17 @@ namespace Task2Pershukevich.MainText.TextElements
         public SentenceType ReturnSentenceType()
         {
             return sentenceType;
+        }
+
+        public IEnumerable<Word> GetWordsFromInterrogativeSentences(int lenght)
+        {
+            return words.Where(w => w.GetWordsLenght() == lenght).Distinct(); //distinct is not working
+        }
+
+        public IEnumerable<Word> GetWordsStartingFromConsonant(int lenght)
+        {
+            return words.Where(x => x.GetWordsLenght() == lenght)
+                .Where(w => ConfigurationManager.AppSettings["consonantLetters"].Contains(char.ToLower(w.GetFirstSymbol())));
         }
 
         public void Add(Word word)
