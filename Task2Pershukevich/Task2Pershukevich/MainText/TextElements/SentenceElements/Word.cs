@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task2Pershukevich.MainText.TextElements.SentenceElements
 {
-    public class Word : SentenceElement
+    public class Word : SentenceElement, IEquatable<Word>
     {
         private IList<Symbol> symbols;
 
@@ -64,6 +64,23 @@ namespace Task2Pershukevich.MainText.TextElements.SentenceElements
             }
 
             return outputString.ToString();
+        }
+
+        public bool Equals(Word other)  //for correct distinct working 2)
+        {
+            if(ToString() == other.ToString())
+            {
+                return true;
+            }
+            
+            return false;
+        }
+
+        public override int GetHashCode() //for correct distinct working 1)
+        {
+            int hashString = ToString() == null ? 0 : ToString().GetHashCode();
+
+            return hashString;
         }
     }
 }

@@ -45,15 +45,13 @@ namespace Task2Pershukevich.MainParser
 
                         textSentence.SentenceType = Sentence.SetType(sentence.Last());  //setting type of sentence
 
-                        GetPunctuationFromSentence(textSentence, sentence, sentencePunctAppConfig); //getting punct marks and their positions
+                        GetPunctuationFromSentence(textSentence, sentence, sentencePunctAppConfig);  //getting punct marks and their positions
 
                         string[] arrayWords = sentence.Split(wordsSeparatorsAppConfig.Split('/'), StringSplitOptions.RemoveEmptyEntries);
 
                         foreach (string word in arrayWords)
                         {
-                            Word sentenceWord = new Word();
-
-                            sentenceWord = Word.CreateWordFromString(word);
+                            Word sentenceWord = Word.CreateWordFromString(word);
 
                             textSentence.Add(sentenceWord);
                         }

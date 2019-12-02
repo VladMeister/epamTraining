@@ -1,7 +1,7 @@
-You’ve   seen the craze for learning code.
+You’ve  learning code.
 But what    exactly is coding?
 Coding is what makes it possible for us to create computer software, apps and websites.
-To put it very simply, the code is what tells your computer what to do!
+To put it very simply, the code is what tells your computer what to do.
 To go a bit deeper, computers don’t understand words.
 They only understand the concepts of on and off?
 The capabilities of a computer are guided by on and off switches or transistors.
@@ -15,6 +15,13 @@ Being able to utilize the commands of code yourself will enable you to have more
 For example, whether it’s for personal or professional use, more and more people are writing blogs and creating websites to share their message or skills with the world.
 Being able to understand basic code would allow you to make tweaks to the design of your site without having to pay a webmaster to do it for you or to wait for someone from IT to take care of the ticket you submitted ages ago.
 A knowledge of code can take you even further if you decide to pursue it?
-Some in-depth study will provide you with the skills to build a website to your own specifications and to fit your desired needs!
-If you find you have a passion for technology and a talent for navigating the in-depth nature of computer languages, you could go on to become a professional coder and work for a tech company or even start your own business venture or launch a best-selling idea.
-The job market is opening up for technologically savvy professionals?
+Some study will provide you with the skills to build a website to your own specifications and to fit your desired needs!
+If you find you have a passion for technology and a talent for navigating the nature of computer languages, you could go on to become a professional coder and work for a tech company or even start your own business venture or launch a idea.
+The job market is opening market up for technologically savvy professionals?
+To fully understand the coding background, you need to know that there is a wide range of different types of coders out there.
+Each of them specializes in a different thing, and each of them is required to learn different languages and techniques that allow them to specialize in these things.
+Although a developer is responsible for the major design and interactivity features of a website, the developer is the person who builds the web apps that the website runs on.
+Web apps are complex applications that are designed to do a certain thing and are built into a website’s underlying code.
+Android development is done primarily with Java, one of the most versatile languages in the world.
+To use Java to develop mobile apps you will need to learn how to use a tool called the Android Studio.
+One of the newer programming languages, Kotlin, is beginning to take over from Java and gain a significant market share.

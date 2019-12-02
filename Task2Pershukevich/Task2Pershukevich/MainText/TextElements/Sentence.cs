@@ -19,7 +19,6 @@ namespace Task2Pershukevich.MainText.TextElements
     public class Sentence : ICollection<Word>
     {
         public int Count => words.Count;
-
         public bool IsReadOnly => false;
 
         private IList<Word> words;
@@ -28,7 +27,7 @@ namespace Task2Pershukevich.MainText.TextElements
 
         public Sentence(IList<Word> wordsList)
         {
-            words = wordsList;
+           words = wordsList;
         }
 
         public Sentence()
@@ -47,7 +46,7 @@ namespace Task2Pershukevich.MainText.TextElements
             return punctuationMarks;
         }
 
-        public void AddPunctuation(char punctMark, int position) //создавать пунктмарк в парсере мб
+        public void AddPunctuation(char punctMark, int position) 
         {
             PunctuationMark punctuationMark = new PunctuationMark(punctMark, position);
             punctuationMarks.Add(punctuationMark);
@@ -78,19 +77,47 @@ namespace Task2Pershukevich.MainText.TextElements
 
         public IEnumerable<Word> GetWordsFromInterrogativeSentences(int lenght)
         {
-            return words.Where(w => w.GetWordsLenght() == lenght).Distinct(); //distinct is not working
+            return words.Where(w => w.GetWordsLenght() == lenght).Distinct();
         }
 
-        public IEnumerable<Word> GetWordsStartingFromConsonant(int lenght, string vowelsAppConfig)
-        {
-            return words.Where(x => x.GetWordsLenght() == lenght)
-                .Where(w => !vowelsAppConfig.Contains(char.ToLower(w.GetFirstSymbol())));
-        }
-
-        //public IEnumerable<Word> ChangeWordsToSubstring(int lenght, string subString)
+        //public IEnumerable<Word> GetWordsStartingFromConsonant(int lenght, string vowelsAppConfig)
         //{
-        //    return words.Where(x => x.GetWordsLenght() == lenght).Select(w => { w.PropertyToSet = value; return w; }).ToList();
+        //    return words.Where(x => x.GetWordsLenght() == lenght)
+        //        .Where(w => !vowelsAppConfig.Contains(char.ToLower(w.GetFirstSymbol())));
         //}
+
+        public void ReplaceWordsWithSubstring(int lenght, string subString)
+        {
+            for (int i = 0; i < words.Count; i++)
+            {
+                if (words[i].GetWordsLenght() == lenght)
+                {
+                    words[i] = Word.CreateWordFromString(subString);
+
+                    ReplacingStringPositionChange(lenght, subString.Length);
+                }
+            }
+        }
+        
+        public void DeleteConsonantWords(int lenght, string vowelsAppConfig)
+        {
+            for (int i = 0; i < words.Count(); i++)
+            {
+                if (!vowelsAppConfig.Contains(char.ToLower(words[i].GetFirstSymbol())) && words[i].GetWordsLenght() == lenght)
+                {
+                    words[i] = Word.CreateWordFromString(string.Empty);
+                    ReplacingStringPositionChange(lenght, 0);
+                }
+            }
+        }
+
+        private void ReplacingStringPositionChange(int lenght, int subStringLength)
+        {
+            foreach (PunctuationMark punctMark in punctuationMarks)
+            {
+                punctMark.ChangePositionForReplacing(lenght, subStringLength);
+            }
+        }
 
         public void Add(Word word)
         {
@@ -150,10 +177,14 @@ namespace Task2Pershukevich.MainText.TextElements
                 outputString.Append(word.ToString() + " ");
             }
 
-            foreach (PunctuationMark punctMark in punctuationMarks)
+            try
             {
-                outputString = outputString.Insert(punctMark.GetPositionInSentence(), Convert.ToString(punctMark.GetFirstSymbol()));
+                foreach (PunctuationMark punctMark in punctuationMarks)
+                {
+                    outputString = outputString.Insert(punctMark.GetPositionInSentence(), Convert.ToString(punctMark.GetFirstSymbol()));
+                }
             }
+            catch(ArgumentOutOfRangeException ex) { throw ex; }
 
             return outputString.ToString();
         }

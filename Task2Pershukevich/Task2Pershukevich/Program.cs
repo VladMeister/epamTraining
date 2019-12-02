@@ -36,13 +36,14 @@ namespace Task2Pershukevich
                 Console.WriteLine(ex.Message);
             }
 
-            //FilterSentencesByCountOfWords(text);  //filter by count of words (1 exercise)
+            //FilterSentencesByCountOfWords(text);  //filter by count of words (exercise 1)
 
-            //GetWordsByLenghtFromInterrogativeSentences(text, 6);  //words with given lenght from interrogative sentences (2 exercise)
+            //GetWordsByLenghtFromInterrogativeSentences(text, 6);  //words with given lenght from interrogative sentences (exercise 2)
 
-            //GetTextWithDeletedWordsStartingFromConsonant(text, 28);
+            //GetTextWithDeletedWordsStartingFromConsonant(text, 9);  //deleting words with given lenght and starting with consonant from text (exercise 3)
 
-            // delat bez linq 4
+            GetTextWIthReplacedWordsInSentence(text, 19, 6, "amazing things");  //replacing words with given lenght in sentence with given substring (exercise 4)
+            
 
 
             Writer writer = new Writer(objectModelPath);  //object model saving
@@ -59,7 +60,7 @@ namespace Task2Pershukevich
 
             //OutoutEveryPunctuationMark(text);  //every punctuation mark
 
-            //OutputEverySentence(text);  //every sentence to string
+            OutputEverySentence(text);  //every sentence to string
 
             //OutputAmountOfWordsInEverySentence(text);  //amount of words in every sentence
 
@@ -109,20 +110,21 @@ namespace Task2Pershukevich
             }
         }
 
+
         static void FilterSentencesByCountOfWords(Text text)
         {
-            Console.WriteLine("Filtered count of words in every sentence: ");
+            Console.WriteLine("Filtered count of words in every sentence:");
 
             foreach (Sentence sent in text.OrderSentencesByCountOfWords())
             {
+                //Console.WriteLine(sent.ToString());
                 Console.WriteLine(sent.GetAllWords().Count);
-                //sent.GetAllWordsFromSentence();
             }
         }
 
         static void GetWordsByLenghtFromInterrogativeSentences(Text text, int wordLenght)
         {
-            Console.WriteLine($"Words with lenght = {wordLenght} in interrogative sentences: ");
+            Console.WriteLine($"Words with lenght = {wordLenght} in interrogative sentences:");
 
             foreach (Sentence sent in text.GetInterrogativeSentences())
             {
@@ -135,18 +137,16 @@ namespace Task2Pershukevich
 
         static void GetTextWithDeletedWordsStartingFromConsonant(Text text, int wordLenght)
         {
-            Console.WriteLine($"Getting new text after deleting words with lenght = {wordLenght} in every sentence: ");
+            Console.WriteLine($"Getting text after deleting words starting with consonant with lenght = {wordLenght} in every sentence:");
 
-            foreach (Sentence sent in text.GetAllSentences())
-            {
-                foreach(Word word in sent.GetWordsStartingFromConsonant(wordLenght, ConfigurationManager.AppSettings["vowelLetters"]))
-                {
-                    //Console.WriteLine(word.ToString());
-                    sent.Remove(word);
-                }
-            }
+            text.DeleteConsonantWordsFromSentences(wordLenght, ConfigurationManager.AppSettings["vowelLetters"]);
+        }
 
-            text.GetAllSentences();
+        static void GetTextWIthReplacedWordsInSentence(Text text, int sentenceNumber, int wordLenght, string subString)
+        {
+            Console.WriteLine($"Getting text after replacing words with lenght = {wordLenght} in sentence №{sentenceNumber} with substring '{subString}':");
+
+            text.GetConcreteSentence(sentenceNumber).ReplaceWordsWithSubstring(wordLenght, subString);
         }
     }
 }

@@ -48,6 +48,16 @@ namespace Task2Pershukevich.MainText
             return sentences;
         }
 
+        public void DeleteConsonantWordsFromSentences(int lenght, string vowelsAppConfig)
+        {
+            for (int i = 0; i < sentences.Count; i++)
+            {
+                sentences[i].DeleteConsonantWords(lenght, vowelsAppConfig);
+            }
+        }
+
+
+
         public void Add(Sentence sentence)
         {
             sentences.Add(sentence);
