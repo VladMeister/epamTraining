@@ -42,7 +42,7 @@ namespace Task2Pershukevich
 
             //GetTextWithDeletedWordsStartingFromConsonant(text, 9);  //deleting words with given lenght and starting with consonant from text (exercise 3)
 
-            GetTextWIthReplacedWordsInSentence(text, 19, 6, "amazing things");  //replacing words with given lenght in sentence with given substring (exercise 4)
+            //GetTextWIthReplacedWordsInSentence(text, 19, 6, "amazing things");  //replacing words with given lenght in sentence with given substring (exercise 4)
             
 
 

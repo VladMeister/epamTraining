@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Task2Pershukevich.MainParser.Parser" Collapsed="true">
+    <Position X="9.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>MainParser\Parser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Task2Pershukevich.MainParser.TextParser" Collapsed="true">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAAQAACQACAABAAAAEAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>MainParser\TextParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Task2Pershukevich.MainText.Text" Collapsed="true">
+    <Position X="4.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAEIAAAAABAQAAAAAASAAAAAAAAEAAQAACJQMAA=</HashCode>
+      <FileName>MainText\Text.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Task2Pershukevich.MainText.TextElements.Sentence" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIACAAAAAAAABAUEAAABEUBAAggAAAUACAAAARQIAA=</HashCode>
+      <FileName>MainText\TextElements\Sentence.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Task2Pershukevich.MainText.TextElements.SentenceElements.PunctuationMark" Collapsed="true">
+    <Position X="5.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAggAA=</HashCode>
+      <FileName>MainText\TextElements\SentenceElements\PunctuationMark.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Task2Pershukevich.MainText.TextElements.SentenceElements.SentenceElement" Collapsed="true">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>MainText\TextElements\SentenceElements\SentenceElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Task2Pershukevich.MainText.TextElements.SentenceElements.Symbol" Collapsed="true">
+    <Position X="6.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainText\TextElements\SentenceElements\Symbol.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Task2Pershukevich.MainText.TextElements.SentenceElements.Word" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABEAAAAAAAAAMgAAAAAAAAAAAAIAAAAAAAABhAAA=</HashCode>
+      <FileName>MainText\TextElements\SentenceElements\Word.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Task2Pershukevich.MainWriter.Writer" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>MainWriter\Writer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Task2Pershukevich.MainParser.IParser" Collapsed="true">
+    <Position X="9.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>MainParser\IParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Task2Pershukevich.MainWriter.IWriter" Collapsed="true">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>MainWriter\IWriter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Task2Pershukevich.MainText.TextElements.SentenceType" Collapsed="true">
+    <Position X="3.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAEAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainText\TextElements\Sentence.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
