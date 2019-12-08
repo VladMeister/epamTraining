@@ -36,13 +36,13 @@ namespace Task2Pershukevich
                 Console.WriteLine(ex.Message);
             }
 
-            //FilterSentencesByCountOfWords(text);  //filter by count of words (exercise 1)
+            FilterSentencesByCountOfWords(text);  //filter by count of words (exercise 1)
 
-            //GetWordsByLenghtFromInterrogativeSentences(text, 6);  //words with given lenght from interrogative sentences (exercise 2)
+            GetWordsByLenghtFromInterrogativeSentences(text, 6);  //words with given lenght from interrogative sentences (exercise 2)
 
             //GetTextWithDeletedWordsStartingFromConsonant(text, 9);  //deleting words with given lenght and starting with consonant from text (exercise 3)
 
-            //GetTextWIthReplacedWordsInSentence(text, 19, 6, "amazing things");  //replacing words with given lenght in sentence with given substring (exercise 4)
+            GetTextWIthReplacedWordsInSentence(text, 20, 6, "amazing things");  //replacing words with given lenght in sentence with given substring (exercise 4)
             
 
 
@@ -117,8 +117,8 @@ namespace Task2Pershukevich
 
             foreach (Sentence sent in text.OrderSentencesByCountOfWords())
             {
-                //Console.WriteLine(sent.ToString());
-                Console.WriteLine(sent.GetAllWords().Count);
+                Console.WriteLine(sent.ToString());
+                //Console.WriteLine(sent.GetAllWords().Count);
             }
         }
 
