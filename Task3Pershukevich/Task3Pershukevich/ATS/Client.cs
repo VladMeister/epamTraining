@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3Pershukevich.BS.BillingSystemElements
+namespace Task3Pershukevich.ATS
 {
     public class Client
     {
         public string FirstName { get; }
         public string LastName { get; }
+        public string Email { get; }
 
-        public Client(string firstName, string lastName)
+        public Client(string firstName, string lastName, string email)
         {
             FirstName = firstName;
             LastName = lastName;
+            Email = email;
         }
     }
 }

@@ -45,12 +45,12 @@
   <ItemGroup>
     <Compile Include="ATS\AutomaticStation.cs" />
     <Compile Include="ATS\Port.cs" />
-    <Compile Include="ATS\Telephone.cs" />
+    <Compile Include="ATS\Terminal.cs" />
     <Compile Include="BS\BillingSystem.cs" />
-    <Compile Include="BS\BillingSystemElements\CallData.cs" />
-    <Compile Include="BS\BillingSystemElements\Client.cs" />
-    <Compile Include="BS\BillingSystemElements\Contract.cs" />
-    <Compile Include="BS\Tariff.cs" />
+    <Compile Include="BS\CallData.cs" />
+    <Compile Include="ATS\Client.cs" />
+    <Compile Include="ATS\Contract.cs" />
+    <Compile Include="ATS\Tariff.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3Pershukevich.BS.BillingSystemElements
+namespace Task3Pershukevich.ATS
 {
     public class Contract
     {
-        public Client client { get; private set; }
-        public int NewNumber { get; private set; }
-        public TariffType tariff { get; private set; }
+        public Client Client { get; private set; }
+        public string NewNumber { get; private set; }
+        public Tariff Tariff { get; private set; }
 
         public Contract() //client and tariff?
         {

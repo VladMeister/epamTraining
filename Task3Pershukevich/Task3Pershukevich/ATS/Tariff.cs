@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3Pershukevich.BS
+namespace Task3Pershukevich.ATS
 {
     public enum TariffType
     {

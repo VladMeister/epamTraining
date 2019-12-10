@@ -6,19 +6,14 @@ using System.Threading.Tasks;
 
 namespace Task3Pershukevich.ATS
 {
-    public enum PortCondition
+    public class Terminal
     {
-        Free,
-        Off,
-        Busy
-    }
-
-    public class Port
-    {
-        public PortCondition PortCondition { get; private set; }
+        public string PhoneNumber { get; private set; }
         public int IdNumber { get; private set; }
 
+        public void TryMakeACall(string fromNumber, string toNumber)
+        {
 
-
+        }
     }
 }
