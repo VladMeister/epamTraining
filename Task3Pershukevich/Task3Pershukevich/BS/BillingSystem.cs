@@ -10,5 +10,10 @@ namespace Task3Pershukevich.BS
     public class BillingSystem
     {
         private IList<CallInfo> callDataList;
+
+        public void AddCallData()
+        {
+
+        }
     }
 }

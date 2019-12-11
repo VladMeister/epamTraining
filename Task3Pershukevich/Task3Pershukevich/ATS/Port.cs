@@ -15,10 +15,16 @@ namespace Task3Pershukevich.ATS
 
     public class Port
     {
+        public event EventHandler<PortCondition> ChangePortCondition;
+
         public PortCondition PortCondition { get; private set; }
         public int IdNumber { get; private set; }
 
 
-
+        public void ChangeCondition(PortCondition portCondition)
+        {
+            PortCondition = PortCondition;
+            ChangePortCondition?.Invoke(this, PortCondition);
+        }
     }
 }

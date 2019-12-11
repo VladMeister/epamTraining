@@ -12,10 +12,15 @@ namespace Task3Pershukevich.ATS
         public string NewNumber { get; private set; }
         public Tariff Tariff { get; private set; }
 
-        public Contract() //client and tariff?
+        public Contract(Client client, Tariff tariff)
         {
-
+            Client = client;
+            Tariff = tariff;
         }
 
+        public void SetNewNumber(string number)
+        {
+            NewNumber = number;
+        }
     }
 }
