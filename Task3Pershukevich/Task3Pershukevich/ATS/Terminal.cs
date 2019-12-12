@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task3Pershukevich.EventCallArgs;
 
 namespace Task3Pershukevich.ATS
 {
@@ -22,19 +23,21 @@ namespace Task3Pershukevich.ATS
             IdNumber = idNum;
         }
 
-        public void TryMakeACall(string toNumber)
+        public void TryMakeACall(string callingToNumber)
         {
-            //MakeACallEvent?.Invoke(this, PhoneNumber, toNumber);
+            MakeACall makeACall = new MakeACall(PhoneNumber, callingToNumber);
+            MakeACallEvent?.Invoke(this, makeACall);
         }
 
-        public void AnswerACall(string fromNumber)
+        public void AnswerACall(string callingFromNumber)
         {
-            //AnswerACallEvent?.Invoke(this, PhoneNumber, fromNumber);
+            AnswerACall answerACall = new AnswerACall(PhoneNumber, callingFromNumber);
+            AnswerACallEvent?.Invoke(this, answerACall);
         }
 
-        public void EndACall(string fromNumber)
+        public void EndACall(string callingFromNumber)
         {
-            EndACallEvent?.Invoke(this, fromNumber);
+            EndACallEvent?.Invoke(this, callingFromNumber);
         }
     }
 }

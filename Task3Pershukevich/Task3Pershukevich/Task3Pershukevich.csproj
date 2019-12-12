@@ -44,13 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATS\AutomaticStation.cs" />
+    <Compile Include="ATS\IATS.cs" />
     <Compile Include="ATS\Port.cs" />
     <Compile Include="ATS\Terminal.cs" />
-    <Compile Include="BS\BillingSystem.cs" />
-    <Compile Include="BS\CallData.cs" />
+    <Compile Include="BillingSystem\BillingSystem.cs" />
+    <Compile Include="BillingSystem\CallData.cs" />
     <Compile Include="ATS\Client.cs" />
     <Compile Include="ATS\Contract.cs" />
     <Compile Include="ATS\Tariff.cs" />
+    <Compile Include="BillingSystem\IBillingSystem.cs" />
+    <Compile Include="EventCallArgs\AnswerACall.cs" />
+    <Compile Include="EventCallArgs\MakeACall.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
