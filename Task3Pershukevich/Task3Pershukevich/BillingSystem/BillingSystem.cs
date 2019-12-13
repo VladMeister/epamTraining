@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Task3Pershukevich.ATS;
 
-namespace Task3Pershukevich.BillingSystem
+namespace Task3Pershukevich.billingSystem
 {
     public class BillingSystem : IBillingSystem
     {
@@ -19,10 +19,6 @@ namespace Task3Pershukevich.BillingSystem
         public void AddCallData(CallType callType, string number)
         {
             CallInfo callInfo = new CallInfo(callType, number);
-
-            callInfo.SetCostOfCall(callType);
-
-            //end time of call
 
             callDataList.Add(callInfo);
         }

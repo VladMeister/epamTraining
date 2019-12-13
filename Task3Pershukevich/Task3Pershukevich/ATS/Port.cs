@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task3Pershukevich.ATS
 {
-    public enum PortCondition
+    public enum PortState
     {
         Free,
         Off,
@@ -15,21 +15,23 @@ namespace Task3Pershukevich.ATS
 
     public class Port
     {
-        public event EventHandler<PortCondition> ChangePortCondition;
+        public event EventHandler<PortState> ChangePortCondition;
 
-        public PortCondition PortCondition { get; private set; }
-        public int IdNumber { get; private set; }
+        public PortState PortState { get; private set; }
+        public int PortId { get; private set; }
 
         public Port(int newId)
         {
-            PortCondition = PortCondition.Off;
-            IdNumber = newId;
+            PortState = PortState.Off;
+            PortId = newId;
         }
 
-        public void ChangeCondition(PortCondition portCondition)
+        //plug in terminal + event maybe to change terminal state
+
+        public void ChangeState(PortState portState)
         {
-            PortCondition = PortCondition;
-            ChangePortCondition?.Invoke(this, PortCondition);
+            PortState = portState;
+            ChangePortCondition?.Invoke(this, PortState);
         }
     }
 }

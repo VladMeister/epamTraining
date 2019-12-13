@@ -3,80 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Task3Pershukevich.EventCallArgs;
+using Task3Pershukevich.billingSystem;
 
 namespace Task3Pershukevich.ATS
 {
-    public class AutomaticStation : IATS
-    { 
-        private IList<Client> _clientList;
+    public class AutomaticStation : IAutomaticStation
+    {
+        private BillingSystem _billingSystem;
+
         private IList<Contract> _contractList;
 
-        private IDictionary<Port, Client> _portClientMapping;
-        private IDictionary<Terminal, Client> _terminalClientMapping;
+        private IDictionary<Terminal, Port> _terminalPortMapping;
+        private IDictionary<Terminal, Contract> _terminalContractMapping;
+
+        //public event EventHandler fillBS;
+        //public event EventHandler checkedAbilityToCall;
 
         public AutomaticStation()
         {
-            _clientList = new List<Client>();
+            _billingSystem = new BillingSystem();
             _contractList = new List<Contract>();
-            _portClientMapping = new Dictionary<Port, Client>();
-            _terminalClientMapping = new Dictionary<Terminal, Client>();
+            _terminalPortMapping = new Dictionary<Terminal, Port>();
+            _terminalContractMapping = new Dictionary<Terminal, Contract>();
+
+            //bs event subscribes to meth
         }
 
-        public Contract CreateNewContract(Client client, Tariff tariff, Port port, string phoneNumber, int terminalNumber)
+        public void CreateNewContract(Client client, Tariff tariff, string phoneNumber)
         {
-            Contract contract = new Contract(client, tariff);
+            Contract contract = new Contract(client, tariff, phoneNumber);
 
-            var newPort = port;
+            _contractList.Add(contract);
+        }
 
+        public void AddNewTerminal(Contract contract, string phoneNumber)
+        {
+            Terminal terminal = new Terminal(phoneNumber);
+
+            terminal.MakeCallEvent += EstablishConnection;
+            terminal.AnswerCallEvent += AnsweringACall;
+            terminal.EndCallEvent += EndingACall;
+
+            _terminalContractMapping.Add(terminal, contract);
+        }
+
+        public void AddNewPort(Terminal terminal, Port port)
+        {
+            Port newPort = port;
             newPort.ChangePortCondition += SwitchPortState;
 
-            contract.SetNewNumber(phoneNumber);
-
-            Terminal terminal = new Terminal(phoneNumber, terminalNumber);
-
-            terminal.MakeACallEvent += MakingACall;
-            terminal.AnswerACallEvent += AnsweringACall;
-            terminal.EndACallEvent += EndingACall;
-
-            _clientList.Add(client);
-            _portClientMapping.Add(newPort, client);
-            _terminalClientMapping.Add(terminal, client);
-            _contractList.Add(contract);
-
-            return contract;
+            _terminalPortMapping.Add(terminal, newPort);
         }
 
-        public void MakingACall(object sender, MakeACall args)
+        private void EstablishConnection(object sender, CallEventArgs args)
         {
-            if(CheckAvailabilityOfNumber(args.DestintionNumber, args.destinationPortID) && CheckSelfNumber(args.PhoneNumber, args.DestintionNumber))
+            if (CheckAvailabilityOfNumber(args.DestintionNumber) && CheckSelfNumber(args.PhoneNumber, args.DestintionNumber))
             {
-                //sub
+
             }
+            //event creating where terminal subs
+            //if failed to connect throw exeption, handling in main
         }
 
-        public void EndingACall(object sender, string callingNumber)
+        private void EndingACall(object sender, CallEventArgs args) 
         {
 
         }
 
-        public void AnsweringACall(object sender, AnswerACall args)
+        private void AnsweringACall(object sender, CallEventArgs args)
         {
 
         }
 
-        public void SwitchPortState(object sender, PortCondition portCondition)
+        private void SwitchPortState(object sender, PortState portState)
         {
             
         }
 
-        public bool CheckAvailabilityOfNumber(string callingNumber, int portId)
+        public bool CheckAvailabilityOfNumber(string callingNumber)
         {
             bool numberIsFree = false;
 
             if (ExistNumber(callingNumber))
             {
-                numberIsFree = _portClientMapping.Where(x => x.Key.PortCondition == PortCondition.Free).Any(p => p.Key.IdNumber == portId);
+                numberIsFree = _terminalPortMapping.Where(x => x.Key.PhoneNumber == callingNumber).Any(x => x.Value.PortState == PortState.Free); //sep meth
             }
 
             return numberIsFree;
@@ -86,7 +96,7 @@ namespace Task3Pershukevich.ATS
         {
             bool numberExists = false;
 
-            if (_terminalClientMapping.Any(x => x.Key.PhoneNumber == callingNumber))
+            if (_terminalContractMapping.Any(x => x.Key.PhoneNumber == callingNumber))
             {
                 numberExists = true;
             }

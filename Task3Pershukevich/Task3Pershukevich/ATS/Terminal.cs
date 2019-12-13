@@ -3,41 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Task3Pershukevich.EventCallArgs;
 
 namespace Task3Pershukevich.ATS
 {
+    public enum TerminalState
+    {
+        Connected,
+        Disconnected
+    }
+
+
     public class Terminal
     {
-        public event EventHandler<MakeACall> MakeACallEvent;
-        public event EventHandler<AnswerACall> AnswerACallEvent;
-        public event EventHandler<string> EndACallEvent;
+        public event EventHandler<CallEventArgs> MakeCallEvent;
+        public event EventHandler<CallEventArgs> AnswerCallEvent;
+        public event EventHandler<CallEventArgs> EndCallEvent;
 
 
         public string PhoneNumber { get; private set; }
-        public int IdNumber { get; private set; }
+        public Guid SerialNumber { get; }
+        public TerminalState TerminalState { get; private set; }
 
-        public Terminal(string number, int idNum)
+        public Terminal(string number)
         {
             PhoneNumber = number;
-            IdNumber = idNum;
+            SerialNumber = Guid.NewGuid();
+            TerminalState = TerminalState.Disconnected;
         }
 
-        public void TryMakeACall(string callingToNumber)
+        public void TryToConnect(string callingToNumber)
         {
-            MakeACall makeACall = new MakeACall(PhoneNumber, callingToNumber);
-            MakeACallEvent?.Invoke(this, makeACall);
+            CallEventArgs makeCall = new CallEventArgs(PhoneNumber, callingToNumber);
+            MakeCallEvent?.Invoke(this, makeCall);
         }
 
-        public void AnswerACall(string callingFromNumber)
+        public void SuccessfulCall()
         {
-            AnswerACall answerACall = new AnswerACall(PhoneNumber, callingFromNumber);
-            AnswerACallEvent?.Invoke(this, answerACall);
+            //subscribing to chech ability in ats
         }
 
-        public void EndACall(string callingNumber)
+        public void CallAnswer(string callingFromNumber)
         {
-            EndACallEvent?.Invoke(this, callingNumber);
+            CallEventArgs answerCall = new CallEventArgs(PhoneNumber, callingFromNumber);
+            AnswerCallEvent?.Invoke(this, answerCall);
+        }
+
+        public void CallEnd(string callingNumber)
+        {
+            CallEventArgs endCall = new CallEventArgs(PhoneNumber, callingNumber);
+            EndCallEvent?.Invoke(this, endCall);
         }
     }
 }

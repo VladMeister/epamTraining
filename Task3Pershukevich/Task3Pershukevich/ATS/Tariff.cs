@@ -13,13 +13,13 @@ namespace Task3Pershukevich.ATS
 
     public class Tariff
     {
-        public int CostPerMonth { get; private set; }
-        public int LimitedMinutesPerMonth { get; private set; }
+        public int ChargePerMinute { get; private set; }
         public TariffType TariffType { get; private set; }
 
-        public Tariff(TariffType type)
+        public Tariff(TariffType type, int costPerMinute)
         {
             SetTariffData(type);
+            ChargePerMinute = costPerMinute;
         }
 
         private void SetTariffData(TariffType type)
@@ -28,14 +28,12 @@ namespace Task3Pershukevich.ATS
 
             if(type == TariffType.Standart)
             {
-                CostPerMonth = 10;
-                LimitedMinutesPerMonth = 120;
+                ChargePerMinute = 20;
             }
 
             else
             {
-                CostPerMonth = 0;
-                LimitedMinutesPerMonth = 0;
+                ChargePerMinute = 0;
             }
         }
 

@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3Pershukevich.EventCallArgs
+namespace Task3Pershukevich.ATS
 {
-    public class MakeACall : EventArgs
+    public class CallEventArgs : EventArgs 
     {
         public string PhoneNumber { get; private set; }
         public string DestintionNumber { get; private set; }
-        public int destinationPortID { get; private set; }
 
-        public MakeACall(string phoneNumber, string destinationNumber)
+        public CallEventArgs(string phoneNumber, string destinationNumber)
         {
             PhoneNumber = phoneNumber;
             DestintionNumber = destinationNumber;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3Pershukevich.BillingSystem
+namespace Task3Pershukevich.billingSystem
 {
     public enum CallType
     {
@@ -15,9 +15,9 @@ namespace Task3Pershukevich.BillingSystem
     public class CallInfo
     {
         public CallType CallType { get; }
-        public int Cost { get; private set; }
+        public int Cost { get; set; }
         public DateTime StartCallDate { get; }
-        public DateTime EndCallDate { get; }
+        public DateTime EndCallDate { get; set; }
         public string CallNumber { get; }
 
         public CallInfo(CallType type, string number)
@@ -25,18 +25,6 @@ namespace Task3Pershukevich.BillingSystem
             CallType = type;
             CallNumber = number;
             StartCallDate = DateTime.Now.Date;
-        }
-
-        public void SetCostOfCall(CallType callType)
-        {
-            if(callType == CallType.Incoming)
-            {
-                Cost = 0;
-            }
-            else
-            {
-                //Price calculate
-            }
         }
     }
 }
