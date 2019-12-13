@@ -20,9 +20,10 @@ namespace Task3Pershukevich.ATS
         public PortCondition PortCondition { get; private set; }
         public int IdNumber { get; private set; }
 
-        public Port()
+        public Port(int newId)
         {
             PortCondition = PortCondition.Off;
+            IdNumber = newId;
         }
 
         public void ChangeCondition(PortCondition portCondition)

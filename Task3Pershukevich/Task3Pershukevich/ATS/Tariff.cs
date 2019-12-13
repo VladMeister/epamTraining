@@ -15,15 +15,17 @@ namespace Task3Pershukevich.ATS
     {
         public int CostPerMonth { get; private set; }
         public int LimitedMinutesPerMonth { get; private set; }
-        public TariffType TariffType { get; }
+        public TariffType TariffType { get; private set; }
 
         public Tariff(TariffType type)
         {
-
+            SetTariffData(type);
         }
 
         private void SetTariffData(TariffType type)
         {
+            TariffType = type;
+
             if(type == TariffType.Standart)
             {
                 CostPerMonth = 10;

@@ -9,8 +9,8 @@ namespace Task3Pershukevich.ATS
 {
     public class Terminal
     {
-        public event EventHandler MakeACallEvent;
-        public event EventHandler AnswerACallEvent;
+        public event EventHandler<MakeACall> MakeACallEvent;
+        public event EventHandler<AnswerACall> AnswerACallEvent;
         public event EventHandler<string> EndACallEvent;
 
 
@@ -35,9 +35,9 @@ namespace Task3Pershukevich.ATS
             AnswerACallEvent?.Invoke(this, answerACall);
         }
 
-        public void EndACall(string callingFromNumber)
+        public void EndACall(string callingNumber)
         {
-            EndACallEvent?.Invoke(this, callingFromNumber);
+            EndACallEvent?.Invoke(this, callingNumber);
         }
     }
 }

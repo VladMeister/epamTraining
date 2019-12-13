@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Task3Pershukevich.ATS
 {
-    interface IATS
+    public interface IATS
     {
         Contract CreateNewContract(Client client, Tariff tariff, Port port, string phoneNumber, int terminalNumber);
-        void SwitchPortState(PortCondition portCondition);
+        void SwitchPortState(object sender, PortCondition portCondition);
     }
 }

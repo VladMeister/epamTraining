@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task3Pershukevich.BillingSystem
 {
-    interface IBillingSystem
+    public interface IBillingSystem
     {
         void AddCallData(CallType callType, string number);
     }

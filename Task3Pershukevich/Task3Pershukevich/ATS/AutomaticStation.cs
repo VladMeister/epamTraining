@@ -15,21 +15,29 @@ namespace Task3Pershukevich.ATS
         private IDictionary<Port, Client> _portClientMapping;
         private IDictionary<Terminal, Client> _terminalClientMapping;
 
+        public AutomaticStation()
+        {
+            _clientList = new List<Client>();
+            _contractList = new List<Contract>();
+            _portClientMapping = new Dictionary<Port, Client>();
+            _terminalClientMapping = new Dictionary<Terminal, Client>();
+        }
+
         public Contract CreateNewContract(Client client, Tariff tariff, Port port, string phoneNumber, int terminalNumber)
         {
             Contract contract = new Contract(client, tariff);
 
-            Port newPort = port;
+            var newPort = port;
 
-            //newPort.ChangePortCondition += SwitchPortState;
+            newPort.ChangePortCondition += SwitchPortState;
 
             contract.SetNewNumber(phoneNumber);
 
             Terminal terminal = new Terminal(phoneNumber, terminalNumber);
 
-            //terminal.MakeACallEvent += MakingACall;
-            //terminal.AnswerACallEvent += Calling;
-            //terminal.EndACallEvent += Calling;
+            terminal.MakeACallEvent += MakingACall;
+            terminal.AnswerACallEvent += AnsweringACall;
+            terminal.EndACallEvent += EndingACall;
 
             _clientList.Add(client);
             _portClientMapping.Add(newPort, client);
@@ -39,14 +47,27 @@ namespace Task3Pershukevich.ATS
             return contract;
         }
 
-        public void MakingACall(object sender, MakeACall makeACall)
+        public void MakingACall(object sender, MakeACall args)
+        {
+            if(CheckAvailabilityOfNumber(args.DestintionNumber, args.destinationPortID) && CheckSelfNumber(args.PhoneNumber, args.DestintionNumber))
+            {
+                //sub
+            }
+        }
+
+        public void EndingACall(object sender, string callingNumber)
         {
 
         }
 
-        public void SwitchPortState(PortCondition portCondition)
+        public void AnsweringACall(object sender, AnswerACall args)
         {
 
+        }
+
+        public void SwitchPortState(object sender, PortCondition portCondition)
+        {
+            
         }
 
         public bool CheckAvailabilityOfNumber(string callingNumber, int portId)
@@ -71,6 +92,18 @@ namespace Task3Pershukevich.ATS
             }
 
             return numberExists;
+        }
+
+        public bool CheckSelfNumber(string callerNumber, string callingNumber)
+        {
+            bool equalNumbers = true;
+
+            if(callerNumber != callingNumber)
+            {
+                equalNumbers = false;
+            }
+
+            return equalNumbers;
         }
     }
 }

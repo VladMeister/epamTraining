@@ -10,6 +10,7 @@ namespace Task3Pershukevich.EventCallArgs
     {
         public string PhoneNumber { get; private set; }
         public string DestintionNumber { get; private set; }
+        public int destinationPortID { get; private set; }
 
         public MakeACall(string phoneNumber, string destinationNumber)
         {
