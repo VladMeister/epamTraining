@@ -8,6 +8,6 @@ namespace Task3Pershukevich.ATS
 {
     public interface IAutomaticStation
     {
-        void CreateNewContract(Client client, Tariff tariff, string phoneNumber);
+        Contract CreateNewContract(Client client, Tariff tariff, string phoneNumber);
     }
 }

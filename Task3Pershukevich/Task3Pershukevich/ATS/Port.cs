@@ -25,8 +25,11 @@ namespace Task3Pershukevich.ATS
             PortState = PortState.Off;
             PortId = newId;
         }
-
-        //plug in terminal + event maybe to change terminal state
+        
+        public void PlugInTerminal()
+        {
+            ChangePortCondition?.Invoke(this, PortState);
+        }
 
         public void ChangeState(PortState portState)
         {

@@ -15,6 +15,7 @@ namespace Task3Pershukevich.ATS
 
     public class Terminal
     {
+        public event EventHandler<CallEventArgs> TryMakeCallEvent;
         public event EventHandler<CallEventArgs> MakeCallEvent;
         public event EventHandler<CallEventArgs> AnswerCallEvent;
         public event EventHandler<CallEventArgs> EndCallEvent;
@@ -31,27 +32,36 @@ namespace Task3Pershukevich.ATS
             TerminalState = TerminalState.Disconnected;
         }
 
-        public void TryToConnect(string callingToNumber)
+        public void ChangeTerminalState(object sender, PortState state)
         {
-            CallEventArgs makeCall = new CallEventArgs(PhoneNumber, callingToNumber);
-            MakeCallEvent?.Invoke(this, makeCall);
+            if(state == PortState.Busy || state == PortState.Free)
+            {
+                TerminalState = TerminalState.Connected;
+            }
+            else
+            {
+                TerminalState = TerminalState.Disconnected;
+            }
         }
 
-        public void SuccessfulCall()
+        public void TryToConnect(string callingToNumber)
         {
-            //subscribing to chech ability in ats
+            TryMakeCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingToNumber));
+        }
+
+        public void SuccessfulCall(object sender, CallEventArgs callArgs)
+        {
+            MakeCallEvent?.Invoke(this, callArgs);
         }
 
         public void CallAnswer(string callingFromNumber)
         {
-            CallEventArgs answerCall = new CallEventArgs(PhoneNumber, callingFromNumber);
-            AnswerCallEvent?.Invoke(this, answerCall);
+            AnswerCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingFromNumber));
         }
 
         public void CallEnd(string callingNumber)
         {
-            CallEventArgs endCall = new CallEventArgs(PhoneNumber, callingNumber);
-            EndCallEvent?.Invoke(this, endCall);
+            EndCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber));
         }
     }
 }

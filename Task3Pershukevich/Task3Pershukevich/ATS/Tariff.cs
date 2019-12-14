@@ -16,10 +16,9 @@ namespace Task3Pershukevich.ATS
         public int ChargePerMinute { get; private set; }
         public TariffType TariffType { get; private set; }
 
-        public Tariff(TariffType type, int costPerMinute)
+        public Tariff(TariffType type)
         {
             SetTariffData(type);
-            ChargePerMinute = costPerMinute;
         }
 
         private void SetTariffData(TariffType type)

@@ -8,6 +8,6 @@ namespace Task3Pershukevich.billingSystem
 {
     public interface IBillingSystem
     {
-        void AddCallData(CallType callType, string number);
+        //void AddCallData(CallType callType, string number);
     }
 }

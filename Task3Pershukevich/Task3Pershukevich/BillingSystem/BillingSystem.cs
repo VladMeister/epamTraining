@@ -16,9 +16,9 @@ namespace Task3Pershukevich.billingSystem
             callDataList = new List<CallInfo>();
         }
 
-        public void AddCallData(CallType callType, string number)
+        public void AddCallData(object sender, CallInfoArgs infoArgs)
         {
-            CallInfo callInfo = new CallInfo(callType, number);
+            CallInfo callInfo = new CallInfo(infoArgs.CallType, infoArgs.CallNumber);
 
             callDataList.Add(callInfo);
         }

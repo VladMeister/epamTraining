@@ -16,8 +16,8 @@ namespace Task3Pershukevich.ATS
         private IDictionary<Terminal, Port> _terminalPortMapping;
         private IDictionary<Terminal, Contract> _terminalContractMapping;
 
-        //public event EventHandler fillBS;
-        //public event EventHandler checkedAbilityToCall;
+        public event EventHandler<CallInfoArgs> AddCallInfoEvent;
+        public event EventHandler<CallEventArgs> AvailableConnectionEvent;
 
         public AutomaticStation()
         {
@@ -26,53 +26,70 @@ namespace Task3Pershukevich.ATS
             _terminalPortMapping = new Dictionary<Terminal, Port>();
             _terminalContractMapping = new Dictionary<Terminal, Contract>();
 
-            //bs event subscribes to meth
+            AddCallInfoEvent += _billingSystem.AddCallData;
         }
 
-        public void CreateNewContract(Client client, Tariff tariff, string phoneNumber)
+        public Contract CreateNewContract(Client client, Tariff tariff, string phoneNumber)
         {
             Contract contract = new Contract(client, tariff, phoneNumber);
 
             _contractList.Add(contract);
+
+            return contract;
         }
 
-        public void AddNewTerminal(Contract contract, string phoneNumber)
+        public Terminal AddNewTerminal(Contract contract, string phoneNumber)
         {
             Terminal terminal = new Terminal(phoneNumber);
 
-            terminal.MakeCallEvent += EstablishConnection;
-            terminal.AnswerCallEvent += AnsweringACall;
-            terminal.EndCallEvent += EndingACall;
+            terminal.TryMakeCallEvent += EstablishConnection;
+            terminal.MakeCallEvent += MakingCall;
+            terminal.AnswerCallEvent += AnsweringCall;
+            terminal.EndCallEvent += EndingCall;
+
+            AvailableConnectionEvent += terminal.SuccessfulCall;
 
             _terminalContractMapping.Add(terminal, contract);
+
+            return terminal;
         }
 
-        public void AddNewPort(Terminal terminal, Port port)
+        public Port AddNewPort(Terminal terminal, Port port)
         {
             Port newPort = port;
             newPort.ChangePortCondition += SwitchPortState;
+            newPort.ChangePortCondition += terminal.ChangeTerminalState;
 
             _terminalPortMapping.Add(terminal, newPort);
+
+            return newPort;
         }
 
-        private void EstablishConnection(object sender, CallEventArgs args)
+        private void EstablishConnection(object sender, CallEventArgs callArgs)
         {
-            if (CheckAvailabilityOfNumber(args.DestintionNumber) && CheckSelfNumber(args.PhoneNumber, args.DestintionNumber))
+            if (CheckAvailabilityOfNumber(callArgs.DestintionNumber) && CheckSelfNumber(callArgs.PhoneNumber, callArgs.DestintionNumber))
             {
-
+                AvailableConnectionEvent?.Invoke(this, new CallEventArgs(callArgs.PhoneNumber, callArgs.DestintionNumber));
             }
-            //event creating where terminal subs
-            //if failed to connect throw exeption, handling in main
+            else
+            {
+                throw new Exception();
+            }
         }
 
-        private void EndingACall(object sender, CallEventArgs args) 
+        private void MakingCall(object sender, CallEventArgs callArgs)
         {
-
+            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Outgoing, callArgs.PhoneNumber));
         }
 
-        private void AnsweringACall(object sender, CallEventArgs args)
+        private void EndingCall(object sender, CallEventArgs callArgs) 
         {
+            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Outgoing, callArgs.DestintionNumber)); //not needed call type?
+        }
 
+        private void AnsweringCall(object sender, CallEventArgs callArgs)
+        {
+            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Incoming, callArgs.DestintionNumber));
         }
 
         private void SwitchPortState(object sender, PortState portState)

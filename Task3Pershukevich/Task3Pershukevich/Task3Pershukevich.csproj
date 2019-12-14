@@ -52,6 +52,7 @@
     <Compile Include="ATS\Client.cs" />
     <Compile Include="ATS\Contract.cs" />
     <Compile Include="ATS\Tariff.cs" />
+    <Compile Include="billingSystem\CallInfoArgs.cs" />
     <Compile Include="billingSystem\IBillingSystem.cs" />
     <Compile Include="ATS\CallEventArgs.cs" />
     <Compile Include="Program.cs" />
