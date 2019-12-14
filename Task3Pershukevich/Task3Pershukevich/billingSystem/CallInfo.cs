@@ -19,6 +19,7 @@ namespace Task3Pershukevich.billingSystem
         public DateTime StartCallDate { get; }
         public DateTime EndCallDate { get; set; }
         public string CallNumber { get; }
+        //maybe add tariff prop here
 
         public CallInfo(CallType type, string number)
         {

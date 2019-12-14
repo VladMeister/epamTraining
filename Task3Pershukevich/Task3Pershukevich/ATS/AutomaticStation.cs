@@ -79,6 +79,7 @@ namespace Task3Pershukevich.ATS
 
         private void MakingCall(object sender, CallEventArgs callArgs)
         {
+            //change port states in all handlers
             AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Outgoing, callArgs.PhoneNumber));
         }
 
