@@ -17,6 +17,8 @@ namespace Task3Pershukevich.ATS
         private IDictionary<Terminal, Contract> _terminalContractMapping;
 
         public event EventHandler<CallInfoArgs> AddCallInfoEvent;
+        public event EventHandler<CallInfoArgs> AddAfterCallInfoEvent;
+
         public event EventHandler<CallEventArgs> AvailableConnectionEvent;
 
         public AutomaticStation()
@@ -27,6 +29,7 @@ namespace Task3Pershukevich.ATS
             _terminalContractMapping = new Dictionary<Terminal, Contract>();
 
             AddCallInfoEvent += _billingSystem.AddCallData;
+            AddAfterCallInfoEvent += _billingSystem.AddAfterCallInfo;
         }
 
         public Contract CreateNewContract(Client client, Tariff tariff, string phoneNumber)
@@ -79,23 +82,31 @@ namespace Task3Pershukevich.ATS
 
         private void MakingCall(object sender, CallEventArgs callArgs)
         {
-            //change port states in all handlers
-            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Outgoing, callArgs.PhoneNumber));
+            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.PhoneNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToList();
+            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.DestintionNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToList();
+
+            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Outgoing, callArgs.PhoneNumber, callArgs.DestintionNumber));
         }
 
         private void EndingCall(object sender, CallEventArgs callArgs) 
         {
-            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Outgoing, callArgs.DestintionNumber)); //not needed call type?
+            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.PhoneNumber).Select(x => { x.Value.PortState = PortState.Free; return x; }).ToList();
+            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.DestintionNumber).Select(x => { x.Value.PortState = PortState.Free; return x; }).ToList();
+
+            AddAfterCallInfoEvent?.Invoke(this, new CallInfoArgs(callArgs.PhoneNumber, callArgs.DestintionNumber));
         }
 
         private void AnsweringCall(object sender, CallEventArgs callArgs)
         {
-            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Incoming, callArgs.DestintionNumber));
+            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.PhoneNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToList();
+            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.DestintionNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToList();
+
+            AddCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Incoming, callArgs.PhoneNumber, callArgs.DestintionNumber));
         }
 
-        private void SwitchPortState(object sender, PortState portState)
+        private void SwitchPortState(object sender, PortChangeArgs stateArgs)
         {
-            
+            _terminalPortMapping.Where(x => x.Value.PortId == stateArgs.PortId).Select(x => { x.Value.PortState = stateArgs.PortState; return x; }).ToList();
         }
 
         public bool CheckAvailabilityOfNumber(string callingNumber)
@@ -104,7 +115,7 @@ namespace Task3Pershukevich.ATS
 
             if (ExistNumber(callingNumber))
             {
-                numberIsFree = _terminalPortMapping.Where(x => x.Key.PhoneNumber == callingNumber).Any(x => x.Value.PortState == PortState.Free); //sep meth
+                numberIsFree = CheckForAvailabeNumber(callingNumber); 
             }
 
             return numberIsFree;
@@ -114,7 +125,7 @@ namespace Task3Pershukevich.ATS
         {
             bool numberExists = false;
 
-            if (_terminalContractMapping.Any(x => x.Key.PhoneNumber == callingNumber))
+            if (CheckForExistingNumber(callingNumber))
             {
                 numberExists = true;
             }
@@ -132,6 +143,16 @@ namespace Task3Pershukevich.ATS
             }
 
             return equalNumbers;
+        }
+
+        private bool CheckForExistingNumber(string callingNumber)
+        {
+            return _terminalContractMapping.Any(x => x.Key.PhoneNumber == callingNumber);
+        }
+
+        private bool CheckForAvailabeNumber(string callingNumber)
+        {
+            return _terminalPortMapping.Where(x => x.Key.PhoneNumber == callingNumber).Any(x => x.Value.PortState == PortState.Free);
         }
     }
 }

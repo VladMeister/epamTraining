@@ -46,6 +46,7 @@
     <Compile Include="ATS\AutomaticStation.cs" />
     <Compile Include="ATS\IAutomaticStation.cs" />
     <Compile Include="ATS\Port.cs" />
+    <Compile Include="ATS\PortChangeArgs.cs" />
     <Compile Include="ATS\Terminal.cs" />
     <Compile Include="billingSystem\BillingSystem.cs" />
     <Compile Include="billingSystem\CallInfo.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Task3Pershukevich.ATS;
 using Task3Pershukevich.billingSystem;
 
@@ -25,7 +26,11 @@ namespace Task3Pershukevich
    
             automaticStation.AddNewPort(terminal, port);
 
+            terminal.TryToConnect("765946");
+            Thread.Sleep(500);
+            terminal.CallEnd("765946");
 
+            
 
             Console.ReadKey();
         }

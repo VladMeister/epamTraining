@@ -9,12 +9,20 @@ namespace Task3Pershukevich.billingSystem
     public class CallInfoArgs : EventArgs
     {
         public CallType CallType { get; }
-        public string CallNumber { get; }
+        public string CallingToNumber { get; }
+        public string CallingFromNumber { get; }
 
-        public CallInfoArgs(CallType type, string number)
+        public CallInfoArgs(CallType type, string sourceNumber, string destinationNumber)
         {
             CallType = type;
-            CallNumber = number;
+            CallingToNumber = destinationNumber;
+            CallingFromNumber = sourceNumber;
+        }
+
+        public CallInfoArgs(string sourceNumber, string destinationNumber)
+        {
+            CallingToNumber = destinationNumber;
+            CallingFromNumber = sourceNumber;
         }
     }
 }

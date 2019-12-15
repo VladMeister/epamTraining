@@ -8,8 +8,8 @@ namespace Task3Pershukevich.ATS
 {
     public class CallEventArgs : EventArgs 
     {
-        public string PhoneNumber { get; private set; }
-        public string DestintionNumber { get; private set; }
+        public string PhoneNumber { get; }
+        public string DestintionNumber { get; }
 
         public CallEventArgs(string phoneNumber, string destinationNumber)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,32 +10,71 @@ namespace Task3Pershukevich.billingSystem
 {
     public class BillingSystem : IBillingSystem
     {
-        private IList<CallInfo> callDataList;
+        private IList<CallInfo> _callDataList;
 
         public BillingSystem()
         {
-            callDataList = new List<CallInfo>();
+            _callDataList = new List<CallInfo>();
         }
 
         public void AddCallData(object sender, CallInfoArgs infoArgs)
         {
-            CallInfo callInfo = new CallInfo(infoArgs.CallType, infoArgs.CallNumber);
+            CallInfo callInfo = new CallInfo(infoArgs.CallType, infoArgs.CallingFromNumber, infoArgs.CallingToNumber);
 
-            callDataList.Add(callInfo);
+            _callDataList.Add(callInfo);
         }
 
-        public void AddAfterCallInfo(CallInfo callInfo, Tariff tariff)
+        public void AddAfterCallInfo(object sender, CallInfoArgs infoArgs)
         {
-            if(callInfo.CallType == CallType.Incoming)
+            for (int i = 0; i < _callDataList.Count; i++)
             {
-                callInfo.Cost = 0;
-                callInfo.EndCallDate = DateTime.Now.Date;
+                if(_callDataList[i].StartCallDate.Day == DateTime.Now.Date.Day && 
+                    _callDataList[i].CallingToNumber == infoArgs.CallingToNumber && 
+                    _callDataList[i].CallingFromNumber == infoArgs.CallingFromNumber)
+                {
+                    _callDataList[i].EndCallDate = DateTime.Now.Date;
+                    _callDataList[i].CallLength = (_callDataList[i].EndCallDate - _callDataList[i].StartCallDate);
+
+                    if (_callDataList[i].CallType == CallType.Incoming)
+                    {
+                        _callDataList[i].Cost = 0;
+                    }
+                    else
+                    {
+                        _callDataList[i].Cost = Tariff.ChargePerMinute * _callDataList[i].CallLength.Minutes;
+                    }
+                }
             }
-            else
-            {
-                callInfo.EndCallDate = DateTime.Now.Date;
-                //callInfo.Cost = tariff.ChargePerMinute * Convert.ToInt32(callInfo.StartCallDate - callInfo.EndCallDate);
-            }
+        }
+
+        public IEnumerable GetLengthOfEveryCall()
+        {
+            return _callDataList.Select(x => x.CallLength);
+        }
+
+        public IEnumerable GetCostOfEveryCall()
+        {
+            return _callDataList.Select(x => x.Cost);
+        }
+
+        public IEnumerable GetDestinationNumberOfEveryCall()
+        {
+            return _callDataList.Select(x => x.CallingToNumber);
+        }
+
+        public IEnumerable GetFilteredCallsByDateOfCall()
+        {
+            return _callDataList.OrderBy(x => x.StartCallDate);
+        }
+
+        public IEnumerable GetFilteredCallsByPrice()
+        {
+            return _callDataList.OrderBy(x => x.Cost);
+        }
+
+        public IEnumerable GetFilteredCallsByDestinationNumber()
+        {
+            return _callDataList.OrderBy(x => x.CallingToNumber);
         }
     }
 }

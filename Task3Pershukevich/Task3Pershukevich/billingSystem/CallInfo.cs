@@ -18,13 +18,15 @@ namespace Task3Pershukevich.billingSystem
         public int Cost { get; set; }
         public DateTime StartCallDate { get; }
         public DateTime EndCallDate { get; set; }
-        public string CallNumber { get; }
-        //maybe add tariff prop here
+        public TimeSpan CallLength { get; set; }
+        public string CallingToNumber { get; }
+        public string CallingFromNumber { get; }
 
-        public CallInfo(CallType type, string number)
+        public CallInfo(CallType type, string sourceNumber, string destinationNumber)
         {
             CallType = type;
-            CallNumber = number;
+            CallingToNumber = destinationNumber;
+            CallingFromNumber = sourceNumber;
             StartCallDate = DateTime.Now.Date;
         }
     }

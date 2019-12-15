@@ -32,9 +32,9 @@ namespace Task3Pershukevich.ATS
             TerminalState = TerminalState.Disconnected;
         }
 
-        public void ChangeTerminalState(object sender, PortState state)
+        public void ChangeTerminalState(object sender, PortChangeArgs stateArgs)
         {
-            if(state == PortState.Busy || state == PortState.Free)
+            if(stateArgs.PortState == PortState.Busy || stateArgs.PortState == PortState.Free)
             {
                 TerminalState = TerminalState.Connected;
             }
@@ -46,7 +46,14 @@ namespace Task3Pershukevich.ATS
 
         public void TryToConnect(string callingToNumber)
         {
-            TryMakeCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingToNumber));
+            if (TerminalState == TerminalState.Connected)
+            {
+                TryMakeCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingToNumber));
+            }
+            else
+            {
+                Console.WriteLine("Terminal is not connected!");
+            }
         }
 
         public void SuccessfulCall(object sender, CallEventArgs callArgs)
@@ -56,12 +63,26 @@ namespace Task3Pershukevich.ATS
 
         public void CallAnswer(string callingFromNumber)
         {
-            AnswerCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingFromNumber));
+            if (TerminalState == TerminalState.Connected)
+            {
+                AnswerCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingFromNumber));
+            }
+            else
+            {
+                Console.WriteLine("Terminal is not connected!");
+            }
         }
 
         public void CallEnd(string callingNumber)
         {
-            EndCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber));
+            if (TerminalState == TerminalState.Connected)
+            {
+                EndCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber));
+            }
+            else
+            {
+                Console.WriteLine("Terminal is not connected!");
+            }
         }
     }
 }
