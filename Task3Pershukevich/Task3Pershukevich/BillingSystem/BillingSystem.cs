@@ -32,8 +32,8 @@ namespace Task3Pershukevich.billingSystem
                     _callDataList[i].CallingToNumber == infoArgs.CallingToNumber && 
                     _callDataList[i].CallingFromNumber == infoArgs.CallingFromNumber)
                 {
-                    _callDataList[i].EndCallDate = DateTime.Now.Date;
-                    _callDataList[i].CallLength = (_callDataList[i].EndCallDate - _callDataList[i].StartCallDate);
+                    _callDataList[i].EndCallDate = DateTime.Now;
+                    _callDataList[i].CallLength = (_callDataList[i].EndCallDate.Second - _callDataList[i].StartCallDate.Second);
 
                     if (_callDataList[i].CallType == CallType.Incoming)
                     {
@@ -41,10 +41,15 @@ namespace Task3Pershukevich.billingSystem
                     }
                     else
                     {
-                        _callDataList[i].Cost = Tariff.ChargePerMinute * _callDataList[i].CallLength.Minutes;
+                        _callDataList[i].Cost = Tariff.ChargePerSecond * _callDataList[i].CallLength;
                     }
                 }
             }
+        }
+
+        public IEnumerable GetAllElements()
+        {
+            return _callDataList;
         }
 
         public IEnumerable GetLengthOfEveryCall()

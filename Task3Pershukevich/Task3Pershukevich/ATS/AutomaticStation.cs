@@ -21,9 +21,9 @@ namespace Task3Pershukevich.ATS
 
         public event EventHandler<CallEventArgs> AvailableConnectionEvent;
 
-        public AutomaticStation()
+        public AutomaticStation(BillingSystem billingSystem)
         {
-            _billingSystem = new BillingSystem();
+            _billingSystem = billingSystem;
             _contractList = new List<Contract>();
             _terminalPortMapping = new Dictionary<Terminal, Port>();
             _terminalContractMapping = new Dictionary<Terminal, Contract>();
@@ -70,7 +70,7 @@ namespace Task3Pershukevich.ATS
 
         private void EstablishConnection(object sender, CallEventArgs callArgs)
         {
-            if (CheckAvailabilityOfNumber(callArgs.DestintionNumber) && CheckSelfNumber(callArgs.PhoneNumber, callArgs.DestintionNumber))
+            if (CheckAvailabilityOfNumber(callArgs.DestintionNumber) && !CheckSelfNumber(callArgs.PhoneNumber, callArgs.DestintionNumber))
             {
                 AvailableConnectionEvent?.Invoke(this, new CallEventArgs(callArgs.PhoneNumber, callArgs.DestintionNumber));
             }

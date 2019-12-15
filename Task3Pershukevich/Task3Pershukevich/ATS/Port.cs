@@ -28,6 +28,7 @@ namespace Task3Pershukevich.ATS
         
         public void PlugInTerminal()
         {
+            PortState = PortState.Free;
             ChangePortCondition?.Invoke(this, new PortChangeArgs(PortId, PortState));
         }
 
