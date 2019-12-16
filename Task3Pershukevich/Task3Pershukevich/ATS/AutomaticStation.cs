@@ -46,13 +46,6 @@ namespace Task3Pershukevich.ATS
         {
             Terminal terminal = new Terminal(phoneNumber);
 
-            terminal.TryToMakeCallEvent += EstablishConnection;
-            terminal.MakeCallEvent += HandlingOutgoingCall;
-            terminal.AnswerCallEvent += HandlingIncomingCall;
-            terminal.EndCallEvent += HandlingEndingCall;
-
-            ConnectionAvailableEvent += terminal.MakeCall;
-
             _terminalContractMapping.Add(terminal, contract);
 
             return terminal;
@@ -61,8 +54,21 @@ namespace Task3Pershukevich.ATS
         public Port AssignToTerminalNewPort(Terminal terminal, Port port)
         {
             Port newPort = port;
-            newPort.ChangePortState += SwitchPortState;
-            newPort.ChangePortState += terminal.ChangeTerminalState;
+
+            terminal.ChangeTerminalState += newPort.ChangePortState;
+            newPort.ChangePortStateEvent += SwitchPortState;
+
+            terminal.DialEvent += newPort.MakeRing;
+            terminal.PickUpEvent += newPort.AnswerCall;
+            terminal.HangUpEvent += newPort.EndCall;
+
+            newPort.TryToMakeCallEvent += EstablishConnection;
+            newPort.MakeCallEvent += HandlingOutgoingCall;
+            newPort.AnswerCallEvent += HandlingIncomingCall;
+            newPort.EndCallEvent += HandlingEndingCall;
+
+            ConnectionAvailableEvent += newPort.MakeCall;
+
 
             _terminalPortMapping.Add(terminal, newPort);
 
@@ -73,7 +79,7 @@ namespace Task3Pershukevich.ATS
         {
             if (CheckAvailabilityOfNumber(callArgs.DestintionNumber) && !IsSelfCall(callArgs.SourceNumber, callArgs.DestintionNumber))
             {
-                ConnectionAvailableEvent?.Invoke(this, new CallEventArgs(callArgs.SourceNumber, callArgs.DestintionNumber, callArgs.TerminalSerialNumber));
+                ConnectionAvailableEvent?.Invoke(this, callArgs);
             }
             else
             {
@@ -83,16 +89,16 @@ namespace Task3Pershukevich.ATS
 
         private void HandlingOutgoingCall(object sender, CallEventArgs callArgs)
         {
-            //_terminalPortMapping = _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.SourceNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToDictionary(); //sep meth
-            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.DestintionNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToList();
-
+            ChangePortConditionByCall(callArgs.SourceNumber, PortState.Busy);
+            ChangePortConditionByCall(callArgs.DestintionNumber, PortState.Busy);
+            
             RecordCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Outgoing, callArgs.SourceNumber, callArgs.DestintionNumber));
         }
 
         private void HandlingEndingCall(object sender, CallEventArgs callArgs) 
         {
-            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.SourceNumber).Select(x => { x.Value.PortState = PortState.Free; return x; }).ToList();
-            _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.DestintionNumber).Select(x => { x.Value.PortState = PortState.Free; return x; }).ToList();
+            ChangePortConditionByCall(callArgs.SourceNumber, PortState.Free);
+            ChangePortConditionByCall(callArgs.DestintionNumber, PortState.Free);
 
             ChargeCallInfoEvent?.Invoke(this, new CallInfoArgs(callArgs.SourceNumber, callArgs.DestintionNumber));
         }
@@ -101,8 +107,8 @@ namespace Task3Pershukevich.ATS
         {
             if (CheckAvailabilityOfNumber(callArgs.DestintionNumber) && !IsSelfCall(callArgs.SourceNumber, callArgs.DestintionNumber))
             {
-                _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.SourceNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToList();
-                _terminalPortMapping.Where(x => x.Key.PhoneNumber == callArgs.DestintionNumber).Select(x => { x.Value.PortState = PortState.Busy; return x; }).ToList();
+                ChangePortConditionByCall(callArgs.SourceNumber, PortState.Busy);
+                ChangePortConditionByCall(callArgs.DestintionNumber, PortState.Busy);
 
                 RecordCallInfoEvent?.Invoke(this, new CallInfoArgs(CallType.Incoming, callArgs.SourceNumber, callArgs.DestintionNumber));
             }
@@ -114,7 +120,7 @@ namespace Task3Pershukevich.ATS
 
         private void SwitchPortState(object sender, PortChangeArgs stateArgs)
         {
-            _terminalPortMapping.Where(x => x.Value.PortId == stateArgs.PortId).Select(x => { x.Value.PortState = stateArgs.PortState; return x; }).ToList();
+            ChangePortConditionByPort(stateArgs.PortId, stateArgs.PortState);
         }
 
         private bool CheckAvailabilityOfNumber(string callingNumber)
@@ -161,6 +167,30 @@ namespace Task3Pershukevich.ATS
         private bool CheckPortState(string callingNumber)
         {
             return _terminalPortMapping.Where(x => x.Key.PhoneNumber == callingNumber).Any(x => x.Value.PortState == PortState.Free);
+        }
+
+        private Port GetPortByTerminalId(string phoneNumber)
+        {
+            return _terminalPortMapping.Where(x => x.Key.PhoneNumber == phoneNumber).Select(x => x.Value).Single();
+        }
+
+        private Port GetPortByPortId(int portId)
+        {
+            return _terminalPortMapping.Where(x => x.Value.PortId == portId).Select(x => x.Value).Single();
+        }
+
+        private void ChangePortConditionByCall(string phoneNumber, PortState state)
+        {
+            Port port = GetPortByTerminalId(phoneNumber);
+
+            port.PortState = state;
+        }
+
+        private void ChangePortConditionByPort(int portId, PortState state)
+        {
+            Port port = GetPortByPortId(portId);
+
+            port.PortState = state;
         }
     }
 }

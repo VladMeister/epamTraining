@@ -35,8 +35,8 @@ namespace Task3Pershukevich
             automaticStation.AssignToTerminalNewPort(terminal, port);
             automaticStation.AssignToTerminalNewPort(terminal2, port2);
 
-            port.PlugInTerminal();
-            port2.PlugInTerminal();
+            terminal.PlugInPort();
+            terminal2.PlugInPort();
 
             Console.WriteLine("Making call to number 765946...");
             try
@@ -47,7 +47,7 @@ namespace Task3Pershukevich
             {
                 Console.WriteLine(ex.Message);
             }
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
             try
             {
                 terminal.EndCall("765946");
@@ -68,7 +68,7 @@ namespace Task3Pershukevich
             {
                 Console.WriteLine(ex.Message);
             }
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             try
             {
                 terminal2.EndCall("702391");

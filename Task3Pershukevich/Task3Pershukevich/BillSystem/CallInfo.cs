@@ -37,7 +37,7 @@ namespace Task3Pershukevich.BillSystem
 
         public override string ToString()
         {
-            return $"Call type - {CallType}, Cost - {Cost}, Call length - {CallLength} seconds, Caller number - {CallingFromNumber}, Destination number - {CallingToNumber}, Call start - {StartCallDate.ToString("hh:mm:ss")}, Call End - {EndCallDate.ToString("hh:mm:ss")}";
+            return $"Call type - {CallType}, Cost - {Cost}, Call length - {CallLength} seconds, Call start - {StartCallDate.ToString("hh:mm:ss")}, Call End - {EndCallDate.ToString("hh:mm:ss")}";
         }
     }
 }

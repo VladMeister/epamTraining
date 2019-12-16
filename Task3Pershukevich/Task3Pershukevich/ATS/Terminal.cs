@@ -16,15 +16,16 @@ namespace Task3Pershukevich.ATS
 
     public class Terminal : ITerminal
     {
-        public event EventHandler<CallEventArgs> TryToMakeCallEvent;
-        public event EventHandler<CallEventArgs> MakeCallEvent;  //dial
-        public event EventHandler<CallEventArgs> AnswerCallEvent;
-        public event EventHandler<CallEventArgs> EndCallEvent;
+        public event EventHandler<CallEventArgs> DialEvent;
+        public event EventHandler<CallEventArgs> PickUpEvent;
+        public event EventHandler<CallEventArgs> HangUpEvent;
+
+        public event EventHandler<TerminalChangeArgs> ChangeTerminalState;
 
 
         public string PhoneNumber { get; }
         public Guid SerialNumber { get; }
-        public TerminalState TerminalState { get; private set; }
+        public TerminalState TerminalState { get; set; }
 
         public Terminal(string number)
         {
@@ -33,23 +34,23 @@ namespace Task3Pershukevich.ATS
             TerminalState = TerminalState.Disconnected;
         }
 
-        public void ChangeTerminalState(object sender, PortChangeArgs stateArgs)
+        public void PlugInPort()
         {
-            if(stateArgs.PortState == PortState.Busy || stateArgs.PortState == PortState.Free)
-            {
-                TerminalState = TerminalState.Connected;
-            }
-            else
-            {
-                TerminalState = TerminalState.Disconnected;
-            }
+            TerminalState = TerminalState.Connected;
+            ChangeTerminalState?.Invoke(this, new TerminalChangeArgs(SerialNumber, TerminalState));
+        }
+
+        public void PlugOutPort()
+        {
+            TerminalState = TerminalState.Disconnected;
+            ChangeTerminalState?.Invoke(this, new TerminalChangeArgs(SerialNumber, TerminalState));
         }
 
         public void MakeRing(string callingNumber)
         {
             if (TerminalState == TerminalState.Connected)
             {
-                TryToMakeCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber, SerialNumber));
+                DialEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber));
             }
             else
             {
@@ -57,19 +58,11 @@ namespace Task3Pershukevich.ATS
             }
         }
 
-        public void MakeCall(object sender, CallEventArgs callArgs)
-        {
-            if(callArgs.TerminalSerialNumber == SerialNumber)
-            {
-                MakeCallEvent?.Invoke(this, callArgs);
-            }
-        }
-
         public void AnswerCall(string callingFromNumber)
         {
             if (TerminalState == TerminalState.Connected)
             {
-                AnswerCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingFromNumber));
+                PickUpEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingFromNumber));
             }
             else
             {
@@ -81,7 +74,7 @@ namespace Task3Pershukevich.ATS
         {
             if (TerminalState == TerminalState.Connected)
             {
-                EndCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber));
+                HangUpEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber));
             }
             else
             {

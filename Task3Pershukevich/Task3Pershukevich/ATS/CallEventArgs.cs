@@ -10,7 +10,7 @@ namespace Task3Pershukevich.ATS
     {
         public string SourceNumber { get; }
         public string DestintionNumber { get; }
-        public Guid TerminalSerialNumber { get; }
+        public int PortId { get; }
 
         public CallEventArgs(string sourceNumber, string destinationNumber)
         {
@@ -18,11 +18,11 @@ namespace Task3Pershukevich.ATS
             DestintionNumber = destinationNumber;
         }
 
-        public CallEventArgs(string sourceNumber, string destinationNumber, Guid terminalSerialNumber)
+        public CallEventArgs(string sourceNumber, string destinationNumber, int portId)
         {
             SourceNumber = sourceNumber;
             DestintionNumber = destinationNumber;
-            TerminalSerialNumber = terminalSerialNumber;
+            PortId = portId;
         }
     }
 }
