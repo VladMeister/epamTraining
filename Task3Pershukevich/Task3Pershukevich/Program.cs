@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using Task3Pershukevich.Exceptions;
 using Task3Pershukevich.ATS;
-using Task3Pershukevich.billingSystem;
+using Task3Pershukevich.BillSystem;
 
 namespace Task3Pershukevich
 {
@@ -25,83 +26,98 @@ namespace Task3Pershukevich
             Contract contract = automaticStation.CreateNewContract(client, tariff, "702391");
             Contract contract2 = automaticStation.CreateNewContract(client2, tariff, "765946");
 
-            Terminal terminal = automaticStation.AddNewTerminal(contract, contract.NewNumber);
-            Terminal terminal2 = automaticStation.AddNewTerminal(contract2, contract2.NewNumber);
+            Terminal terminal = automaticStation.GiveNewTerminal(contract, contract.PhoneNumber);
+            Terminal terminal2 = automaticStation.GiveNewTerminal(contract2, contract2.PhoneNumber);
 
             Port port = new Port(0001);
             Port port2 = new Port(0002);
 
-            automaticStation.AddNewPort(terminal, port);
-            automaticStation.AddNewPort(terminal2, port2);
+            automaticStation.AssignToTerminalNewPort(terminal, port);
+            automaticStation.AssignToTerminalNewPort(terminal2, port2);
 
             port.PlugInTerminal();
             port2.PlugInTerminal();
 
+            Console.WriteLine("Making call to number 765946...");
             try
             {
-                terminal.TryToConnect("765946");
+                terminal.MakeRing("765946");
             }
-            catch
+            catch(MakeCallException ex)
             {
-                Console.WriteLine("Incorrect call input!");
+                Console.WriteLine(ex.Message);
             }
-
-            Thread.Sleep(5000);
-            terminal.CallEnd("765946");
-
-            //terminal.CallAnswer("765946");
-            //Thread.Sleep(5000);
-            //terminal.CallEnd("765946");
-
-
-
-            Console.WriteLine("Get every element from calldata list: ");
-            foreach (CallInfo callInfo in billingSystem.GetAllElements())
+            Thread.Sleep(1000);
+            try
             {
-                Console.WriteLine(callInfo.ToString());
+                terminal.EndCall("765946");
             }
-            Console.WriteLine();
-
-            Console.WriteLine("Get length of every call from calldata list: ");
-            foreach (int length in billingSystem.GetLengthOfEveryCall())
+            catch (EndCallException ex)
             {
-                Console.WriteLine(length);
+                Console.WriteLine(ex.Message);
             }
-            Console.WriteLine();
+            Console.WriteLine("Call ended.");
 
-            Console.WriteLine("Get cost of every call from calldata list: ");
-            foreach (int cost in billingSystem.GetCostOfEveryCall())
+
+            Console.WriteLine("Answering a call from number 702391...");
+            try
             {
-                Console.WriteLine(cost);
+                terminal2.AnswerCall("702391");
             }
-            Console.WriteLine();
-
-            Console.WriteLine("Get every number from calldata list: ");
-            foreach (string number in billingSystem.GetDestinationNumberOfEveryCall())
+            catch (Exception ex)
             {
-                Console.WriteLine(number);
+                Console.WriteLine(ex.Message);
             }
-            Console.WriteLine();
+            Thread.Sleep(2000);
+            try
+            {
+                terminal2.EndCall("702391");
+            }
+            catch (EndCallException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine("Call ended." + '\n');
 
-            Console.WriteLine("Get filtered by date of call calldata list: ");
-            foreach (CallInfo callInfo in billingSystem.GetFilteredCallsByDateOfCall())
+
+
+            Console.WriteLine("Get every calldata info: ");
+            foreach (CallInfo callInfo in billingSystem.GetEveryCallInfo())
             {
                 Console.WriteLine(callInfo.ToString());
             }
             Console.WriteLine();
 
-            Console.WriteLine("Get filtered by destination number calldata list: ");
-            foreach (CallInfo callInfo in billingSystem.GetFilteredCallsByDestinationNumber())
+            Console.WriteLine("Get calls report: ");
+            foreach (string callReport in billingSystem.GetCallsReport())
+            {
+                Console.WriteLine(callReport);
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Get filtered by date of call calldata: ");
+            foreach (CallInfo callInfo in billingSystem.GetFilteredCallsByDateOfCall(new DateTime(2019, 12, 16)))
             {
                 Console.WriteLine(callInfo.ToString());
             }
             Console.WriteLine();
 
-            Console.WriteLine("Get filtered by price of call calldata list: ");
-            foreach (CallInfo callInfo in billingSystem.GetFilteredCallsByPrice())
+            Console.WriteLine("Get filtered by destination number calldata: ");
+            foreach (CallInfo callInfo in billingSystem.GetFilteredCallsByDestinationNumber("702391"))
             {
                 Console.WriteLine(callInfo.ToString());
             }
+            Console.WriteLine();
+
+            Console.WriteLine("Get filtered by call price calldata: ");
+            foreach (CallInfo callInfo in billingSystem.GetFilteredCallsByPrice(10))
+            {
+                Console.WriteLine(callInfo.ToString());
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("Get minimal call price from calldata: ");
+            Console.WriteLine(billingSystem.GetMinimalPriceOfCall());
             Console.WriteLine();
 
 

@@ -45,17 +45,23 @@
   <ItemGroup>
     <Compile Include="ATS\AutomaticStation.cs" />
     <Compile Include="ATS\IAutomaticStation.cs" />
+    <Compile Include="ATS\IPort.cs" />
+    <Compile Include="ATS\ITerminal.cs" />
     <Compile Include="ATS\Port.cs" />
     <Compile Include="ATS\PortChangeArgs.cs" />
     <Compile Include="ATS\Terminal.cs" />
-    <Compile Include="billingSystem\BillingSystem.cs" />
-    <Compile Include="billingSystem\CallInfo.cs" />
+    <Compile Include="BillSystem\BillingSystem.cs" />
+    <Compile Include="BillSystem\CallInfo.cs" />
     <Compile Include="ATS\Client.cs" />
     <Compile Include="ATS\Contract.cs" />
     <Compile Include="ATS\Tariff.cs" />
-    <Compile Include="billingSystem\CallInfoArgs.cs" />
-    <Compile Include="billingSystem\IBillingSystem.cs" />
+    <Compile Include="BillSystem\CallInfoArgs.cs" />
+    <Compile Include="BillSystem\IBillingSystem.cs" />
     <Compile Include="ATS\CallEventArgs.cs" />
+    <Compile Include="Exceptions\AnswerCallException.cs" />
+    <Compile Include="Exceptions\EndCallException.cs" />
+    <Compile Include="Exceptions\EstablishConnectionException.cs" />
+    <Compile Include="Exceptions\MakeCallException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

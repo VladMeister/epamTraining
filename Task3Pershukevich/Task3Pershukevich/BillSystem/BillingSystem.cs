@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Task3Pershukevich.ATS;
 
-namespace Task3Pershukevich.billingSystem
+namespace Task3Pershukevich.BillSystem
 {
     public class BillingSystem : IBillingSystem
     {
@@ -47,39 +47,34 @@ namespace Task3Pershukevich.billingSystem
             }
         }
 
-        public IEnumerable GetAllElements()
+        public IEnumerable GetEveryCallInfo()
         {
             return _callDataList;
         }
 
-        public IEnumerable GetLengthOfEveryCall()
+        public IEnumerable GetCallsReport()
         {
-            return _callDataList.Select(x => x.CallLength);
+            return _callDataList.Select(x => x.GetReportCallInfo());
         }
 
-        public IEnumerable GetCostOfEveryCall()
+        public IEnumerable GetFilteredCallsByDateOfCall(DateTime dateTime) 
         {
-            return _callDataList.Select(x => x.Cost);
+            return _callDataList.Where(x => x.StartCallDate.Day == dateTime.Day);
         }
 
-        public IEnumerable GetDestinationNumberOfEveryCall()
+        public IEnumerable GetFilteredCallsByPrice(int price)
         {
-            return _callDataList.Select(x => x.CallingToNumber);
+            return _callDataList.Where(x => x.Cost == price);
         }
 
-        public IEnumerable GetFilteredCallsByDateOfCall()
+        public IEnumerable GetFilteredCallsByDestinationNumber(string destinationNumber)
         {
-            return _callDataList.OrderBy(x => x.StartCallDate);
+            return _callDataList.Where(x => x.CallingToNumber == destinationNumber);
         }
 
-        public IEnumerable GetFilteredCallsByPrice()
+        public int GetMinimalPriceOfCall()
         {
-            return _callDataList.OrderBy(x => x.Cost);
-        }
-
-        public IEnumerable GetFilteredCallsByDestinationNumber()
-        {
-            return _callDataList.OrderBy(x => x.CallingToNumber);
+            return _callDataList.Min(x => x.Cost);
         }
     }
 }

@@ -13,9 +13,9 @@ namespace Task3Pershukevich.ATS
         Busy
     }
 
-    public class Port
+    public class Port : IPort
     {
-        public event EventHandler<PortChangeArgs> ChangePortCondition;
+        public event EventHandler<PortChangeArgs> ChangePortState;
 
         public PortState PortState { get; set; }
         public int PortId { get; private set; }
@@ -29,13 +29,13 @@ namespace Task3Pershukevich.ATS
         public void PlugInTerminal()
         {
             PortState = PortState.Free;
-            ChangePortCondition?.Invoke(this, new PortChangeArgs(PortId, PortState));
+            ChangePortState?.Invoke(this, new PortChangeArgs(PortId, PortState));
         }
 
-        public void ChangeState(PortState portState)
+        public void PlugOutTerminal()
         {
-            PortState = portState;
-            ChangePortCondition?.Invoke(this, new PortChangeArgs(PortId, PortState));
+            PortState = PortState.Off;
+            ChangePortState?.Invoke(this, new PortChangeArgs(PortId, PortState));
         }
     }
 }

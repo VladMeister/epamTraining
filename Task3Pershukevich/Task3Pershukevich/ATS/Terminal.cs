@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Task3Pershukevich.Exceptions;
 
 namespace Task3Pershukevich.ATS
 {
@@ -13,15 +14,15 @@ namespace Task3Pershukevich.ATS
     }
 
 
-    public class Terminal
+    public class Terminal : ITerminal
     {
-        public event EventHandler<CallEventArgs> TryMakeCallEvent;
-        public event EventHandler<CallEventArgs> MakeCallEvent;
+        public event EventHandler<CallEventArgs> TryToMakeCallEvent;
+        public event EventHandler<CallEventArgs> MakeCallEvent;  //dial
         public event EventHandler<CallEventArgs> AnswerCallEvent;
         public event EventHandler<CallEventArgs> EndCallEvent;
 
 
-        public string PhoneNumber { get; private set; }
+        public string PhoneNumber { get; }
         public Guid SerialNumber { get; }
         public TerminalState TerminalState { get; private set; }
 
@@ -44,24 +45,27 @@ namespace Task3Pershukevich.ATS
             }
         }
 
-        public void TryToConnect(string callingToNumber)
+        public void MakeRing(string callingNumber)
         {
             if (TerminalState == TerminalState.Connected)
             {
-                TryMakeCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingToNumber));
+                TryToMakeCallEvent?.Invoke(this, new CallEventArgs(PhoneNumber, callingNumber, SerialNumber));
             }
             else
             {
-                Console.WriteLine("Terminal is not connected!");
+                throw new MakeCallException("Terminal is not connected!");
             }
         }
 
-        public void SuccessfulCall(object sender, CallEventArgs callArgs) //double check???
+        public void MakeCall(object sender, CallEventArgs callArgs)
         {
-            MakeCallEvent?.Invoke(this, callArgs);
+            if(callArgs.TerminalSerialNumber == SerialNumber)
+            {
+                MakeCallEvent?.Invoke(this, callArgs);
+            }
         }
 
-        public void CallAnswer(string callingFromNumber)
+        public void AnswerCall(string callingFromNumber)
         {
             if (TerminalState == TerminalState.Connected)
             {
@@ -69,11 +73,11 @@ namespace Task3Pershukevich.ATS
             }
             else
             {
-                Console.WriteLine("Terminal is not connected!");
+                throw new AnswerCallException("Terminal is not connected!");
             }
         }
 
-        public void CallEnd(string callingNumber)
+        public void EndCall(string callingNumber)
         {
             if (TerminalState == TerminalState.Connected)
             {
@@ -81,7 +85,7 @@ namespace Task3Pershukevich.ATS
             }
             else
             {
-                Console.WriteLine("Terminal is not connected!");
+                throw new EndCallException("Terminal is not connected!");
             }
         }
     }

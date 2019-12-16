@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3Pershukevich.billingSystem
+namespace Task3Pershukevich.BillSystem
 {
     public enum CallType
     {
@@ -28,6 +28,11 @@ namespace Task3Pershukevich.billingSystem
             CallingToNumber = destinationNumber;
             CallingFromNumber = sourceNumber;
             StartCallDate = DateTime.Now;
+        }
+
+        public string GetReportCallInfo()
+        {
+            return $"Call length - {CallLength}, Call price - {Cost}, Call abonent - {CallingFromNumber}";
         }
 
         public override string ToString()

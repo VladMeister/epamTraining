@@ -20,6 +20,5 @@ namespace Task3Pershukevich.ATS
         {
             TariffType = type;
         }
-
     }
 }

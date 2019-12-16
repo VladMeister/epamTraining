@@ -9,14 +9,14 @@ namespace Task3Pershukevich.ATS
     public class Contract
     {
         public Client Client { get; }
-        public string NewNumber { get; }
+        public string PhoneNumber { get; }
         public Tariff Tariff { get; }
 
         public Contract(Client client, Tariff tariff, string phoneNumber)
         {
             Client = client;
             Tariff = tariff;
-            NewNumber = phoneNumber;
+            PhoneNumber = phoneNumber;
         }
     }
 }
