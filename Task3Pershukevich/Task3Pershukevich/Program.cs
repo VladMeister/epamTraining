@@ -26,7 +26,7 @@ namespace Task3Pershukevich
             Contract contract = automaticStation.CreateNewContract(client, tariff, "702391");
             Contract contract2 = automaticStation.CreateNewContract(client2, tariff, "765946");
 
-            Terminal terminal = automaticStation.GiveNewTerminal(contract, contract.PhoneNumber);
+            Terminal terminal = automaticStation.GiveNewTerminal(contract, contract.PhoneNumber); 
             Terminal terminal2 = automaticStation.GiveNewTerminal(contract2, contract2.PhoneNumber);
 
             Port port = new Port(0001);
@@ -68,7 +68,7 @@ namespace Task3Pershukevich
             {
                 Console.WriteLine(ex.Message);
             }
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             try
             {
                 terminal2.EndCall("702391");
