@@ -8,5 +8,7 @@ namespace Task4BL.DTO
 {
     public class ManagerDTO
     {
+        public int Id { get; set; }
+        public string Lastname { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using Task4DAL.EF;
 
 namespace Task4DAL.Repositories
 {
-    class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IDisposable
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IDisposable
     {
         public SalesContext SalesContext { get; }
         private DbSet<TEntity> _dbSet;
