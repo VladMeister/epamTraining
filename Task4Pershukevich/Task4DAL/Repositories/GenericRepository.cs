@@ -8,21 +8,21 @@ using Task4DAL.EF;
 
 namespace Task4DAL.Repositories
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IDisposable
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        public SalesContext SalesContext { get; }
+        private SalesContext _salesContext { get; }
         private DbSet<TEntity> _dbSet;
 
         public GenericRepository()
         {
-            SalesContext = new SalesContext();
-            _dbSet = SalesContext.Set<TEntity>();
+            _salesContext = new SalesContext();
+            _dbSet = _salesContext.Set<TEntity>();
         }
 
         public void Add(TEntity item)
         {
             _dbSet.Add(item);
-            SalesContext.SaveChanges();
+            _salesContext.SaveChanges();
         }
 
         public IEnumerable<TEntity> Get()
@@ -33,23 +33,23 @@ namespace Task4DAL.Repositories
         public void Remove(TEntity item)
         {
             _dbSet.Remove(item);
-            SalesContext.SaveChanges();
+            _salesContext.SaveChanges();
         }
 
         public void Save()
         {
-            SalesContext.SaveChanges();
+            _salesContext.SaveChanges();
         }
 
         private bool disposed = false;
 
-        public virtual void Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
             if (!disposed)
             {
                 if (disposing)
                 {
-                    SalesContext.Dispose();
+                    _salesContext.Dispose();
                 }
                 disposed = true;
             }
