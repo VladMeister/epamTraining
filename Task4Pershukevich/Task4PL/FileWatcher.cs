@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Task4PL
 {
@@ -13,7 +14,7 @@ namespace Task4PL
         {
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
-                //watcher.Path = args[1];
+                watcher.Path = ConfigurationManager.AppSettings["directoryPath"];
 
                 // Watch for changes in LastAccess and LastWrite times, and
                 // the renaming of files or directories.
@@ -23,7 +24,7 @@ namespace Task4PL
                                      | NotifyFilters.DirectoryName;
 
                 // Only watch text files.
-                watcher.Filter = "*.txt";
+                watcher.Filter = "*.csv";
 
                 // Add event handlers.
                 //watcher.Changed += OnChanged;
