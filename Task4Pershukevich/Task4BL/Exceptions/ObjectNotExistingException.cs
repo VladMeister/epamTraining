@@ -8,7 +8,7 @@ namespace Task4BL.Exceptions
 {
     public class ObjectNotExistingException : Exception
     {
-        public ObjectNotExistingException() : base("This object does not exist!")
+        public ObjectNotExistingException(string message) : base(message)
         {
 
         }

@@ -8,7 +8,7 @@ namespace Task4BL.Exceptions
 {
     public class InvalidIdException : Exception
     {
-        public InvalidIdException() : base("Invalid Id input!")
+        public InvalidIdException(string message) : base(message)
         {
 
         }

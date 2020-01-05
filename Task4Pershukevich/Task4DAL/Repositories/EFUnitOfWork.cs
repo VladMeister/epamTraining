@@ -1,39 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task4DAL.EF;
+using Task4DAL.Entities;
 
 namespace Task4DAL.Repositories
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class EFUnitOfWork : IUnitOfWork
     {
         private SalesContext _salesContext { get; }
-        private DbSet<TEntity> _dbSet;
 
-        public GenericRepository()
+        public ClientRepository ClientRepository;
+        public ManagerRepository ManagerRepository;
+        public OrderRepository OrderRepository;
+        public ProductRepository ProductRepository;
+
+        public EFUnitOfWork()
         {
             _salesContext = new SalesContext();
-            _dbSet = _salesContext.Set<TEntity>();
-        }
-
-        public void Add(TEntity item)
-        {
-            _dbSet.Add(item);
-            _salesContext.SaveChanges();
-        }
-
-        public IEnumerable<TEntity> Get()
-        {
-            return _dbSet.AsNoTracking().ToList();
-        }
-
-        public void Remove(TEntity item)
-        {
-            _dbSet.Remove(item);
-            _salesContext.SaveChanges();
+            ClientRepository = new ClientRepository();
+            ManagerRepository = new ManagerRepository();
+            OrderRepository = new OrderRepository();
+            ProductRepository = new ProductRepository();
         }
 
         public void Save()

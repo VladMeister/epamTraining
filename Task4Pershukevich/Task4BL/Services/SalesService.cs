@@ -7,69 +7,78 @@ using System.Data.Entity;
 using Task4BL.Exceptions;
 using Task4BL.DTO;
 using Task4DAL.Repositories;
+using Task4DAL.Entities;
+using AutoMapper;
 
 namespace Task4BL.Services
 {
     public class SalesService : ISalesService
     {
-        public GenericRepository<ClientDTO> ClientService { get; set; }
-        public GenericRepository<ManagerDTO> ManagerService { get; set; }
-        public GenericRepository<ProductDTO> ProductService { get; set; }
-        public GenericRepository<OrderDTO> OrderService { get; set; }
+        private EFUnitOfWork dataBase { get; }
 
         public SalesService()
         {
-            ClientService = new GenericRepository<ClientDTO>();
-            ManagerService = new GenericRepository<ManagerDTO>();
-            ProductService = new GenericRepository<ProductDTO>();
-            OrderService = new GenericRepository<OrderDTO>();
+            dataBase = new EFUnitOfWork();
         }
 
         public IEnumerable<OrderDTO> GetOrders()
         {
-            return OrderService.Get();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Order>, List<OrderDTO>>(dataBase.OrderRepository.GetAll());
         }
 
         public OrderDTO GetOrderById(int id)
         {
-            if (id < 0 || !OrderService.Get().Any(x => x.Id == id))
+            if (id < 0 || !dataBase.OrderRepository.GetAll().Any(x => x.Id == id))
             {
-                throw new InvalidIdException();
+                throw new InvalidIdException("Invalid id input!");
             }
             else
             {
-                return OrderService.Get().FirstOrDefault(x => x.Id == id);
+                var order = dataBase.OrderRepository.GetById(id);
+
+                return new OrderDTO { Date = order.Date, Cost = order.Cost };
             }
         }
 
-        public void AddOrder(OrderDTO order)
+        public void AddOrder(OrderDTO orderDTO)
         {
-            OrderService.Add(order);
+            Order order = new Order
+            {
+                Cost = orderDTO.Cost,
+                Date = orderDTO.Date,
+                ClientId = orderDTO.ClientId,
+                ManagerId = orderDTO.ManagerId,
+                ProductId = orderDTO.ProductId
+            };
+
+            dataBase.OrderRepository.Add(order);
         }
 
-        public void RemoveOrder(OrderDTO order)
+        public void RemoveOrder(OrderDTO orderDTO)
         {
-            if(!OrderService.Get().Contains(order))
+            Order order = dataBase.OrderRepository.GetAll().FirstOrDefault(o => o.Cost == orderDTO.Cost
+            && o.Date == orderDTO.Date && o.ProductId == orderDTO.ProductId && o.ManagerId == orderDTO.ManagerId
+            && o.ClientId == orderDTO.ClientId);
+
+            if(!dataBase.OrderRepository.GetAll().Contains(order))
             {
-                throw new ObjectNotExistingException();
+                throw new ObjectNotExistingException("This order does not exist!");
             }
             else
             {
-                OrderService.Remove(order);
+                dataBase.OrderRepository.Remove(order);
             }
         }
 
         public void SaveOrdersChanges()
         {
-            OrderService.Save();
+            dataBase.Save();
         }
 
         public void Dispose()
         {
-            ClientService.Dispose();
-            ManagerService.Dispose();
-            ProductService.Dispose();
-            OrderService.Dispose();
+            dataBase.Dispose();
         }
     }
 }
