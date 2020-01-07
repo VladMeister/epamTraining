@@ -13,11 +13,9 @@ namespace Task4DAL.Entities
         public string Lastname { get; set; }
         public ICollection<Order> Orders { get; set; }
 
-        public Client(int id, string firstName, string lastName)
+        public Client()
         {
-            Id = id;
-            Firstname = firstName;
-            Lastname = lastName;
+            Orders = new List<Order>();
         }
     }
 }

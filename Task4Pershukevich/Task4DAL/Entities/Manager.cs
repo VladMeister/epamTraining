@@ -12,10 +12,9 @@ namespace Task4DAL.Entities
         public string Lastname { get; set; }
         public ICollection<Order> Orders { get; set; }
 
-        public Manager(int id, string lastName)
+        public Manager()
         {
-            Id = id;
-            Lastname = lastName;
+            Orders = new List<Order>();
         }
     }
 }
