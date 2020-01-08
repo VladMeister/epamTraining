@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 
-namespace Task4PL
+namespace Task4Service
 {
     public class FileWatcher
     {

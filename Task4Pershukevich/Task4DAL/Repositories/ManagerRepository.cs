@@ -8,13 +8,13 @@ using Task4DAL.Entities;
 
 namespace Task4DAL.Repositories
 {
-    public class ManagerRepository : IRepository<Manager>
+    public class ManagerRepository : Repository, IRepository<Manager>
     {
         private SalesContext _salesContext { get; }
 
-        public ManagerRepository()
+        public ManagerRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = new SalesContext();
+            _salesContext = salesContext;
         }
 
         public void Add(Manager manager)
@@ -26,12 +26,6 @@ namespace Task4DAL.Repositories
         public IEnumerable<Manager> GetAll()
         {
             return _salesContext.Managers.ToList();
-        }
-
-        public void Remove(Manager manager)
-        {
-            _salesContext.Managers.Remove(manager);
-            _salesContext.SaveChanges();
         }
 
         public Manager GetById(int id)

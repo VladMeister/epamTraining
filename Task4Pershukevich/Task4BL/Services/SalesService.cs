@@ -11,9 +11,10 @@ using Task4DAL.Entities;
 using AutoMapper;
 
 namespace Task4BL.Services
-{
+{//add all services, 
     public class SalesService : ISalesService
     {
+        //inject order repo instead of this
         private EFUnitOfWork dataBase { get; }
 
         public SalesService()
@@ -29,6 +30,7 @@ namespace Task4BL.Services
 
         public OrderDTO GetOrderById(int id)
         {
+            //if state not need, add automappers
             if (id < 0 || !dataBase.OrderRepository.GetAll().Any(x => x.Id == id))
             {
                 throw new InvalidIdException("Invalid id input!");
@@ -37,12 +39,13 @@ namespace Task4BL.Services
             {
                 var order = dataBase.OrderRepository.GetById(id);
 
-                return new OrderDTO { Date = order.Date, Cost = order.Cost };
+                return new OrderDTO { Date = order.Date, Cost = order.Cost }; //
             }
         }
 
         public void AddOrder(OrderDTO orderDTO)
         {
+            //automapper
             Order order = new Order
             {
                 Cost = orderDTO.Cost,
@@ -55,6 +58,7 @@ namespace Task4BL.Services
             dataBase.OrderRepository.Add(order);
         }
 
+        //remove not needed
         public void RemoveOrder(OrderDTO orderDTO)
         {
             Order order = dataBase.OrderRepository.GetAll().FirstOrDefault(o => o.Cost == orderDTO.Cost
@@ -71,6 +75,7 @@ namespace Task4BL.Services
             }
         }
 
+        //delete
         public void SaveOrdersChanges()
         {
             dataBase.Save();

@@ -8,13 +8,13 @@ using Task4DAL.EF;
 
 namespace Task4DAL.Repositories
 {
-    public class ProductRepository : IRepository<Product>
+    public class ProductRepository : Repository, IRepository<Product>
     {
         private SalesContext _salesContext { get; }
 
-        public ProductRepository()
+        public ProductRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = new SalesContext();
+            _salesContext = salesContext;
         }
 
         public void Add(Product product)
@@ -26,12 +26,6 @@ namespace Task4DAL.Repositories
         public IEnumerable<Product> GetAll()
         {
             return _salesContext.Products.ToList();
-        }
-
-        public void Remove(Product product)
-        {
-            _salesContext.Products.Remove(product);
-            _salesContext.SaveChanges();
         }
 
         public Product GetById(int id)

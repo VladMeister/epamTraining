@@ -8,13 +8,13 @@ using Task4DAL.Entities;
 
 namespace Task4DAL.Repositories
 {
-    public class ClientRepository : IRepository<Client>
+    public class ClientRepository : Repository, IRepository<Client>
     {
         private SalesContext _salesContext { get; }
 
-        public ClientRepository()
+        public ClientRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = new SalesContext();
+            _salesContext = salesContext;
         }
 
         public void Add(Client client)
@@ -26,12 +26,6 @@ namespace Task4DAL.Repositories
         public IEnumerable<Client> GetAll()
         {
             return _salesContext.Clients.ToList();
-        }
-
-        public void Remove(Client client)
-        {
-            _salesContext.Clients.Remove(client);
-            _salesContext.SaveChanges();
         }
 
         public Client GetById(int id)

@@ -9,13 +9,13 @@ using Task4DAL.EF;
 
 namespace Task4DAL.Repositories
 {
-    public class OrderRepository : IRepository<Order>
+    public class OrderRepository : Repository, IRepository<Order>
     {
         private SalesContext _salesContext { get; }
 
-        public OrderRepository()
+        public OrderRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = new SalesContext();
+            _salesContext = salesContext;
         }
 
         public void Add(Order order)
@@ -27,12 +27,6 @@ namespace Task4DAL.Repositories
         public IEnumerable<Order> GetAll()
         {
             return _salesContext.Orders.Include(o => o.Client).Include(o => o.Manager).Include(o => o.Product).ToList();
-        }
-
-        public void Remove(Order order)
-        {
-            _salesContext.Orders.Remove(order);
-            _salesContext.SaveChanges();
         }
 
         public Order GetById(int id)

@@ -15,7 +15,7 @@ namespace Task4DAL.EF
         public DbSet<Client> Clients { get; set; }
         public DbSet<Product> Products { get; set; }
 
-        public SalesContext(/*string connectionString*/) : base("Sales")
+        public SalesContext(string connectionString) : base(connectionString)
         {
 
         }
