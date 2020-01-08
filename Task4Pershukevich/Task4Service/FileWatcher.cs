@@ -10,36 +10,44 @@ namespace Task4Service
 {
     public class FileWatcher
     {
+        public EventHandler<FileSystemEventArgs> FileChanged;
+
         public void Run()
         {
             using (FileSystemWatcher watcher = new FileSystemWatcher())
             {
                 watcher.Path = ConfigurationManager.AppSettings["directoryPath"];
 
-                // Watch for changes in LastAccess and LastWrite times, and
-                // the renaming of files or directories.
                 watcher.NotifyFilter = NotifyFilters.LastAccess
                                      | NotifyFilters.LastWrite
                                      | NotifyFilters.FileName
                                      | NotifyFilters.DirectoryName;
 
-                // Only watch text files.
                 watcher.Filter = "*.csv";
 
-                // Add event handlers.
                 watcher.Changed += OnChanged;
-                //watcher.Created += OnChanged;
-                //watcher.Deleted += OnChanged;
-                //watcher.Renamed += OnRenamed;
+                watcher.Created += OnChanged;
 
-                // Begin watching.
+                // Begin watching
                 watcher.EnableRaisingEvents = true;
             }
         }
 
-        private void OnChanged(object sender, FileSystemEventArgs e)
+        public void Stop()
         {
-            throw new NotImplementedException();
+            using (FileSystemWatcher watcher = new FileSystemWatcher())
+            {
+                watcher.Changed -= OnChanged;
+                watcher.Created -= OnChanged;
+
+                // Stop watching
+                watcher.EnableRaisingEvents = false;
+            }
+        }
+
+        private void OnChanged(object sender, FileSystemEventArgs args)
+        {
+            FileChanged?.Invoke(this, args);
         }
     }
 }
