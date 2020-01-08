@@ -7,9 +7,9 @@ using Task4BL.DTO;
 
 namespace Task4BL.Services
 {
-    public interface ISalesService
+    public interface ISalesService<T>
     {
         void Dispose();
-        IEnumerable<OrderDTO> GetOrders();
+        IEnumerable<T> GetAll();
     }
 }
