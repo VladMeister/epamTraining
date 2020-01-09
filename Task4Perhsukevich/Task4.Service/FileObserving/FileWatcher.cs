@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task4.Service
+namespace Task4.Service.FileObserving
 {
-    public class FileWatcher
+    public class FileWatcher : IFileWatcher
     {
         public EventHandler<FileSystemEventArgs> FileChanged;
 
@@ -25,11 +25,13 @@ namespace Task4.Service
 
                 watcher.Filter = "*.csv";
 
-                watcher.Changed += OnChanged;
+                //watcher.Changed += OnChanged;
                 watcher.Created += OnChanged;
 
                 // Begin watching
                 watcher.EnableRaisingEvents = true;
+
+                while (true) ;
             }
         }
 

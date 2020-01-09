@@ -9,7 +9,7 @@ namespace Task4.DAL.Repositories
 {
     public abstract class Repository
     {
-        protected SalesContext salesContext { get; }
+        protected SalesContext salesContext;
 
         public Repository(string connectionString)
         {

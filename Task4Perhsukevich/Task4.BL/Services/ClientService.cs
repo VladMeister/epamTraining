@@ -13,29 +13,30 @@ namespace Task4.BL.Services
 {
     public class ClientService : ISalesService<ClientDTO>
     {
-        private ClientRepository clientRepository { get; }
+        private ClientRepository _clientRepository;
 
         public ClientService(string connectionString)
         {
-            clientRepository = new ClientRepository(connectionString);
+            _clientRepository = new ClientRepository(connectionString);
         }
 
         public IEnumerable<ClientDTO> GetAll()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Client>, List<ClientDTO>>(clientRepository.GetAll());
+            return mapper.Map<IEnumerable<Client>, List<ClientDTO>>(_clientRepository.GetAll());
         }
 
         public ClientDTO GetClientById(int id)
         {
             if (id < 0)
             {
+                return null;
                 throw new InvalidIdException("Invalid id input!");
             }
             else
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientDTO>()).CreateMapper();
-                return mapper.Map<Client, ClientDTO>(clientRepository.GetById(id));
+                return mapper.Map<Client, ClientDTO>(_clientRepository.GetById(id));
             }
         }
 
@@ -44,17 +45,17 @@ namespace Task4.BL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, Client>()).CreateMapper();
             Client client = mapper.Map<ClientDTO, Client>(clientDTO);
 
-            clientRepository.Add(client);
+            _clientRepository.Add(client);
         }
 
         public void Save()
         {
-            clientRepository.Save();
+            _clientRepository.Save();
         }
 
         public void Dispose()
         {
-            clientRepository.Dispose();
+            _clientRepository.Dispose();
         }
     }
 }

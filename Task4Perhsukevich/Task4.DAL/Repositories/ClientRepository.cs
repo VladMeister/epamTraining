@@ -10,7 +10,7 @@ namespace Task4.DAL.Repositories
 {
     public class ClientRepository : Repository, IRepository<Client>
     {
-        private SalesContext _salesContext { get; }
+        private SalesContext _salesContext;
 
         public ClientRepository(string connectionString) : base(connectionString)
         {

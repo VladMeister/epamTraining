@@ -13,29 +13,30 @@ namespace Task4.BL.Services
 {
     public class ManagerService : ISalesService<ManagerDTO>
     {
-        private ManagerRepository managerRepository { get; }
+        private ManagerRepository _managerRepository;
 
         public ManagerService(string connectionString)
         {
-            managerRepository = new ManagerRepository(connectionString);
+            _managerRepository = new ManagerRepository(connectionString);
         }
 
         public IEnumerable<ManagerDTO> GetAll()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Manager, ManagerDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Manager>, List<ManagerDTO>>(managerRepository.GetAll());
+            return mapper.Map<IEnumerable<Manager>, List<ManagerDTO>>(_managerRepository.GetAll());
         }
 
         public ManagerDTO GetManagerById(int id)
         {
             if (id < 0)
             {
+                return null;
                 throw new InvalidIdException("Invalid id input!");
             }
             else
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Manager, ManagerDTO>()).CreateMapper();
-                return mapper.Map<Manager, ManagerDTO>(managerRepository.GetById(id));
+                return mapper.Map<Manager, ManagerDTO>(_managerRepository.GetById(id));
             }
         }
 
@@ -44,17 +45,17 @@ namespace Task4.BL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, Manager>()).CreateMapper();
             Manager manager = mapper.Map<ManagerDTO, Manager>(managerDTO);
 
-            managerRepository.Add(manager);
+            _managerRepository.Add(manager);
         }
 
         public void Save()
         {
-            managerRepository.Save();
+            _managerRepository.Save();
         }
 
         public void Dispose()
         {
-            managerRepository.Dispose();
+            _managerRepository.Dispose();
         }
     }
 }

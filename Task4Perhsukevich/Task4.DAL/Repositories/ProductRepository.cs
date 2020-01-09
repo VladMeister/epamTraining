@@ -10,7 +10,7 @@ namespace Task4.DAL.Repositories
 {
     public class ProductRepository : Repository, IRepository<Product>
     {
-        private SalesContext _salesContext { get; }
+        private SalesContext _salesContext;
 
         public ProductRepository(string connectionString) : base(connectionString)
         {

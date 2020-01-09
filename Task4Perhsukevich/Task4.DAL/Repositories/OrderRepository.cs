@@ -11,7 +11,7 @@ namespace Task4.DAL.Repositories
 {
     public class OrderRepository : Repository, IRepository<Order>
     {
-        private SalesContext _salesContext { get; }
+        private SalesContext _salesContext;
 
         public OrderRepository(string connectionString) : base(connectionString)
         {

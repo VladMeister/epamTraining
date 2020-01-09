@@ -13,29 +13,30 @@ namespace Task4.BL.Services
 {
     public class OrderService : ISalesService<OrderDTO>
     {
-        private OrderRepository orderRepository { get; }
+        private OrderRepository _orderRepository;
 
         public OrderService(string connectionString)
         {
-            orderRepository = new OrderRepository(connectionString);
+            _orderRepository = new OrderRepository(connectionString);
         }
 
         public IEnumerable<OrderDTO> GetAll()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Order>, List<OrderDTO>>(orderRepository.GetAll());
+            return mapper.Map<IEnumerable<Order>, List<OrderDTO>>(_orderRepository.GetAll());
         }
 
         public OrderDTO GetOrderById(int id)
         {
             if (id < 0)
             {
+                return null;
                 throw new InvalidIdException("Invalid id input!");
             }
             else
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()).CreateMapper();
-                return mapper.Map<Order, OrderDTO>(orderRepository.GetById(id));
+                return mapper.Map<Order, OrderDTO>(_orderRepository.GetById(id));
             }
         }
 
@@ -44,17 +45,17 @@ namespace Task4.BL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, Order>()).CreateMapper();
             Order order = mapper.Map<OrderDTO, Order>(orderDTO);
 
-            orderRepository.Add(order);
+            _orderRepository.Add(order);
         }
 
         public void Save()
         {
-            orderRepository.Save();
+            _orderRepository.Save();
         }
 
         public void Dispose()
         {
-            orderRepository.Dispose();
+            _orderRepository.Dispose();
         }
     }
 }
