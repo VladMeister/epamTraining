@@ -11,12 +11,17 @@ namespace Task4Service
     {
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
-                new SalesService()
-            };
-            ServiceBase.Run(ServicesToRun);
+            //ServiceBase[] ServicesToRun;
+            //ServicesToRun = new ServiceBase[]
+            //{
+            //    new SalesService()
+            //};
+            //ServiceBase.Run(ServicesToRun);
+
+            SalesService service = new SalesService();
+            //service.OnDebug();
+
+            System.Threading.Thread.Sleep(System.Threading.Timeout.Infinite);
         }
     }
 }

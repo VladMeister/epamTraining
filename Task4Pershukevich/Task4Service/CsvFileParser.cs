@@ -21,9 +21,8 @@ namespace Task4Service
             }
         }
 
-        public ManagerDTO ParseManagers(string path)
+        public ManagerDTO ParseManager(string fileName)
         {
-            string fileName = Path.GetFileName(path);
             string[] fileNameElements = fileName.Split('_');
 
             return new ManagerDTO() { Lastname = fileNameElements[0] };

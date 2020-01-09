@@ -12,6 +12,7 @@ using Task4BL.Services;
 
 namespace Task4Service
 {
+    [System.Runtime.InteropServices.Guid("FEF61412-976D-41AF-9F43-80FC92008467")]
     public partial class SalesService : ServiceBase
     {
         private FileWatcher _fileWatcher;
@@ -27,27 +28,32 @@ namespace Task4Service
         protected override void OnStart(string[] args)
         {
             _fileWatcher = new FileWatcher();
-            _fileWatcher.FileChanged += HandleFiles;
+            _fileWatcher.FileChanged += HandleFileChanges;
             _fileWatcher.Run();
-
-            ProductService productService = new ProductService(connectionString);
-            ManagerService managerService = new ManagerService(connectionString);
-            ClientService clientService = new ClientService(connectionString);
-            OrderService orderService = new OrderService(connectionString);
         }
 
         protected override void OnStop()
         {
             _fileWatcher.Stop();
-            _fileWatcher.FileChanged -= HandleFiles;
+            _fileWatcher.FileChanged -= HandleFileChanges;
         }
 
-        public void HandleFiles(object sender, FileSystemEventArgs args)
+        public void OnDebug()
         {
-            //_csvFileParser.ParseClients(args.FullPath);
-            //_csvFileParser.ParseManagers(args.FullPath);
-            //_csvFileParser.ParseProducts(args.FullPath);
-            //_csvFileParser.ParseOrders(args.FullPath);
+            OnStart(null);
+        }
+
+        public void HandleFileChanges(object sender, FileSystemEventArgs args)
+        {
+            ProductService productService = new ProductService(connectionString);
+            ManagerService managerService = new ManagerService(connectionString);
+            ClientService clientService = new ClientService(connectionString);
+            OrderService orderService = new OrderService(connectionString);
+
+            _csvFileParser.ParseClients(args.FullPath).ToList().ForEach(x => clientService.AddClient(x));
+            managerService.AddManager(_csvFileParser.ParseManager(args.Name));
+            _csvFileParser.ParseProducts(args.FullPath).ToList().ForEach(x => productService.AddProduct(x));
+            _csvFileParser.ParseOrders(args.FullPath).ToList().ForEach(x => orderService.AddOrder(x));
         }
     }
 }
