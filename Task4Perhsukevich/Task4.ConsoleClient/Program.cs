@@ -21,7 +21,7 @@ namespace Task4.ConsoleClient
             RunWatcher(fileWatcher);
 
             Console.Read();
-            StopWatcher(fileWatcher);
+            //StopWatcher(fileWatcher);
         }
 
         static void RunWatcher(FileWatcher fileWatcher)
