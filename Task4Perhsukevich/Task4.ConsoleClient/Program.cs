@@ -39,7 +39,9 @@ namespace Task4.ConsoleClient
         {
             Task task = Task.Run(() =>
             {
-                SalesFileParser.AddInfoToDataBase(connectionString, args.FullPath, args.Name);
+                SalesFileParser salesFileParser = new SalesFileParser();
+
+                salesFileParser.AddInfoToDataBase(connectionString, args.FullPath, args.Name);
             });
         }
     }
