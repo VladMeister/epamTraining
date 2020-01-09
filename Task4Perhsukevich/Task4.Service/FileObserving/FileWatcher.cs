@@ -11,40 +11,44 @@ namespace Task4.Service.FileObserving
     public class FileWatcher : IFileWatcher
     {
         public EventHandler<FileSystemEventArgs> FileChanged;
+        FileSystemWatcher watcher;
 
         public void Run()
         {
-            using (FileSystemWatcher watcher = new FileSystemWatcher())
-            {
-                watcher.Path = ConfigurationManager.AppSettings["directoryPath"];
+            //using (FileSystemWatcher watcher = new FileSystemWatcher())
+            //{
+            watcher = new FileSystemWatcher();
 
-                watcher.NotifyFilter = NotifyFilters.LastAccess
-                                     | NotifyFilters.LastWrite
-                                     | NotifyFilters.FileName
-                                     | NotifyFilters.DirectoryName;
+            watcher.Path = ConfigurationManager.AppSettings["directoryPath"];
 
-                watcher.Filter = "*.csv";
+            watcher.NotifyFilter = NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.DirectoryName;
 
-                //watcher.Changed += OnChanged;
-                watcher.Created += OnChanged;
+            watcher.Filter = "*.csv";
 
-                // Begin watching
-                watcher.EnableRaisingEvents = true;
+            watcher.Created += OnChanged;
 
-                while (true) ;
-            }
+            // Begin watching
+            watcher.EnableRaisingEvents = true;
+
+            //while (true) ;
+            //}
         }
 
         public void Stop()
         {
-            using (FileSystemWatcher watcher = new FileSystemWatcher())
-            {
-                watcher.Changed -= OnChanged;
-                watcher.Created -= OnChanged;
+            //using (FileSystemWatcher watcher = new FileSystemWatcher())
+            //{
+            watcher.Changed -= OnChanged;
+            watcher.Created -= OnChanged;
 
-                // Stop watching
-                watcher.EnableRaisingEvents = false;
-            }
+            // Stop watching
+            watcher.EnableRaisingEvents = false;
+
+            watcher.Dispose();
+            //}
         }
 
         private void OnChanged(object sender, FileSystemEventArgs args)

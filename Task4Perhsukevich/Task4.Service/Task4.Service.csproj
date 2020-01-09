@@ -63,7 +63,8 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="CsvParser\SalesInfo.cs" />
+    <Compile Include="SalesInfoParser\SalesInfo.cs" />
+    <Compile Include="SalesInfoParser\SalesFileParser.cs" />
     <Compile Include="SalesService.cs">
       <SubType>Component</SubType>
     </Compile>

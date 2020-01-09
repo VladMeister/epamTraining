@@ -17,8 +17,6 @@ namespace Task4.Service
                 new SalesService()
             };
             ServiceBase.Run(ServicesToRun);
-
-            Console.WriteLine("Start");
         }
     }
 }
