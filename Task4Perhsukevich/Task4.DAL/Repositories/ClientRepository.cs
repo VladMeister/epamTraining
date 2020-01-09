@@ -14,13 +14,15 @@ namespace Task4.DAL.Repositories
 
         public ClientRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = salesContext;
+            _salesContext = new SalesContext(connectionString);
         }
 
-        public void Add(Client client)
+        public int Add(Client client)
         {
             _salesContext.Clients.Add(client);
             _salesContext.SaveChanges();
+
+            return client.Id;
         }
 
         public IEnumerable<Client> GetAll()

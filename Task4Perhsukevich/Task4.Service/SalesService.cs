@@ -20,8 +20,7 @@ namespace Task4.Service
     {
         private FileWatcher _fileWatcher;
 
-        //private string connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
-        private string connectionString = "data source = (localdb); Initial Catalog = Sales; Integrated Security = True;";
+        private string connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
 
         public SalesService()
         {
@@ -43,10 +42,12 @@ namespace Task4.Service
 
         public void HandleFileChanges(object sender, FileSystemEventArgs args)
         {
-            Task task = Task.Run( () =>
-            {
-                SalesFileParser.AddInfoToDataBase(connectionString, args.FullPath, args.Name);
-            });
+            Task task = Task.Run(() =>
+           {
+               SalesFileParser salesFileParser = new SalesFileParser();
+
+               salesFileParser.AddInfoToDataBase(connectionString, args.FullPath, args.Name);
+           });
         }
     }
 }

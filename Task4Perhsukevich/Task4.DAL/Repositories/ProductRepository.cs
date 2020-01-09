@@ -14,13 +14,15 @@ namespace Task4.DAL.Repositories
 
         public ProductRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = salesContext;
+            _salesContext = new SalesContext(connectionString);
         }
 
-        public void Add(Product product)
+        public int Add(Product product)
         {
             _salesContext.Products.Add(product);
             _salesContext.SaveChanges();
+
+            return product.Id;
         }
 
         public IEnumerable<Product> GetAll()

@@ -12,18 +12,22 @@ namespace Task4.Service.CsvParser
 {
     public class CsvFileParser : ICsvParser
     {
+        private IList<SalesInfo> salesInfo;
+
+        public CsvFileParser()
+        {
+            salesInfo = new List<SalesInfo>();
+        }
+
         public IEnumerable<SalesInfo> GetSalesInfoFromFile(string path)
         {
-            IEnumerable<SalesInfo> salesInfo;
-
             using (var reader = new StreamReader(path))
             using (var csv = new CsvReader(reader))
             {
                 var records = csv.GetRecords<SalesInfo>();
-                salesInfo = records;
+                salesInfo = records.ToList();
+                return salesInfo;
             }
-
-            return salesInfo;
         }
 
         public ManagerDTO GetManagerFromFileByFileName(string fileName)

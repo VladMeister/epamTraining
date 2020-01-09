@@ -15,23 +15,26 @@ namespace Task4.DAL.Repositories
 
         public OrderRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = salesContext;
+            _salesContext = new SalesContext(connectionString);
         }
 
-        public void Add(Order order)
+        public int Add(Order order)
         {
             _salesContext.Orders.Add(order);
             _salesContext.SaveChanges();
+
+            return order.Id;
         }
 
         public IEnumerable<Order> GetAll()
         {
-            return _salesContext.Orders.Include(o => o.Client).Include(o => o.Manager).Include(o => o.Product).ToList();
+            return _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client).ToList();
         }
 
         public Order GetById(int id)
         {
             return _salesContext.Orders.Find(id);
+            
         }
     }
 }

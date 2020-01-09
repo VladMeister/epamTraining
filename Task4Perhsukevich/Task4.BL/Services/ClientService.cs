@@ -40,12 +40,14 @@ namespace Task4.BL.Services
             }
         }
 
-        public void AddClient(ClientDTO clientDTO)
+        public int AddClient(ClientDTO clientDTO)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, Client>()).CreateMapper();
             Client client = mapper.Map<ClientDTO, Client>(clientDTO);
 
-            _clientRepository.Add(client);
+            var clientId = _clientRepository.Add(client);
+
+            return clientId;
         }
 
         public void Save()

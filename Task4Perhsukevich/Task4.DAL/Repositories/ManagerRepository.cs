@@ -14,13 +14,15 @@ namespace Task4.DAL.Repositories
 
         public ManagerRepository(string connectionString) : base(connectionString)
         {
-            _salesContext = salesContext;
+            _salesContext = new SalesContext(connectionString);
         }
 
-        public void Add(Manager manager)
+        public int Add(Manager manager)
         {
             _salesContext.Managers.Add(manager);
             _salesContext.SaveChanges();
+
+            return manager.Id;
         }
 
         public IEnumerable<Manager> GetAll()

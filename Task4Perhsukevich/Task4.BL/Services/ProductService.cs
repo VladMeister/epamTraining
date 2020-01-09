@@ -40,12 +40,14 @@ namespace Task4.BL.Services
             }
         }
 
-        public void AddProduct(ProductDTO productDTO)
+        public int AddProduct(ProductDTO productDTO)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
             Product product = mapper.Map<ProductDTO, Product>(productDTO);
 
-            _productRepository.Add(product);
+            var productId = _productRepository.Add(product);
+
+            return productId;
         }
 
         public void Save()

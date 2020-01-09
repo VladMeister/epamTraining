@@ -15,8 +15,6 @@ namespace Task4.Service.FileObserving
 
         public void Run()
         {
-            //using (FileSystemWatcher watcher = new FileSystemWatcher())
-            //{
             watcher = new FileSystemWatcher();
 
             watcher.Path = ConfigurationManager.AppSettings["directoryPath"];
@@ -32,23 +30,16 @@ namespace Task4.Service.FileObserving
 
             // Begin watching
             watcher.EnableRaisingEvents = true;
-
-            //while (true) ;
-            //}
         }
 
         public void Stop()
         {
-            //using (FileSystemWatcher watcher = new FileSystemWatcher())
-            //{
-            watcher.Changed -= OnChanged;
             watcher.Created -= OnChanged;
 
             // Stop watching
             watcher.EnableRaisingEvents = false;
 
             watcher.Dispose();
-            //}
         }
 
         private void OnChanged(object sender, FileSystemEventArgs args)

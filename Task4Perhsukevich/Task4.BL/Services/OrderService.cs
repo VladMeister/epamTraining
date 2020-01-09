@@ -40,12 +40,14 @@ namespace Task4.BL.Services
             }
         }
 
-        public void AddOrder(OrderDTO orderDTO)
+        public int AddOrder(OrderDTO orderDTO)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, Order>()).CreateMapper();
             Order order = mapper.Map<OrderDTO, Order>(orderDTO);
 
-            _orderRepository.Add(order);
+            var orderId = _orderRepository.Add(order);
+
+            return orderId;
         }
 
         public void Save()

@@ -40,12 +40,14 @@ namespace Task4.BL.Services
             }
         }
 
-        public void AddManager(ManagerDTO managerDTO)
+        public int AddManager(ManagerDTO managerDTO)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, Manager>()).CreateMapper();
             Manager manager = mapper.Map<ManagerDTO, Manager>(managerDTO);
 
-            _managerRepository.Add(manager);
+            var managerId = _managerRepository.Add(manager);
+
+            return managerId;
         }
 
         public void Save()

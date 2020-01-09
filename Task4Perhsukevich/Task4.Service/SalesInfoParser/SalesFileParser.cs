@@ -12,8 +12,12 @@ namespace Task4.Service.SalesInfoParser
 {
     public class SalesFileParser
     {
-        public static void AddInfoToDataBase(string connectionString, string filePath, string fileName)
+        public void AddInfoToDataBase(string connectionString, string filePath, string fileName)
         {
+            int clientId;
+            int productId;
+            int managerId;
+
             ProductService productService = new ProductService(connectionString);
             ManagerService managerService = new ManagerService(connectionString);
             ClientService clientService = new ClientService(connectionString);
@@ -21,20 +25,45 @@ namespace Task4.Service.SalesInfoParser
 
             CsvFileParser csvFileParser = new CsvFileParser();
 
+            ManagerDTO managerDTO = new ManagerDTO() { Lastname = csvFileParser.GetManagerFromFileByFileName(fileName).Lastname };
+
+            if(CheckForExistingManager(managerService, managerDTO.Lastname))
+            {
+                managerId = managerDTO.Id;
+            }
+            else
+            {
+                managerId = managerService.AddManager(managerDTO);
+            }
+
             try
             {
-                foreach (SalesInfo salesInfo in csvFileParser.GetSalesInfoFromFile(filePath).ToList())
+                foreach (SalesInfo salesInfo in csvFileParser.GetSalesInfoFromFile(filePath))
                 {
                     string[] firstLastName = salesInfo.Client.Split(' ');
 
-                    ManagerDTO managerDTO = new ManagerDTO() { Lastname = csvFileParser.GetManagerFromFileByFileName(fileName).Lastname };
                     ProductDTO productDTO = new ProductDTO() { Name = salesInfo.Product };
                     ClientDTO clientDTO = new ClientDTO() { Firstname = firstLastName[0], Lastname = firstLastName[1] };
-                    OrderDTO orderDTO = new OrderDTO() { Date = salesInfo.Date, Cost = salesInfo.Cost, ClientId = clientDTO.Id, ManagerId = managerDTO.Id, ProductId = productDTO.Id };
 
-                    productService.AddProduct(productDTO);
-                    managerService.AddManager(managerDTO);
-                    clientService.AddClient(clientDTO);
+                    if (CheckForExistingProduct(productService, productDTO.Name))
+                    {
+                        productId = productDTO.Id;
+                    }
+                    else
+                    {
+                        productId = productService.AddProduct(productDTO);
+                    }
+
+                    if (CheckForExistingClient(clientService, clientDTO.Firstname, clientDTO.Lastname))
+                    {
+                        clientId = clientDTO.Id;
+                    }
+                    else
+                    {
+                        clientId = clientService.AddClient(clientDTO);
+                    }
+
+                    OrderDTO orderDTO = new OrderDTO() { Date = salesInfo.Date, Cost = salesInfo.Cost, ClientId = clientId, ManagerId = managerId, ProductId = productId };
                     orderService.AddOrder(orderDTO);
                 }
             }
@@ -42,6 +71,21 @@ namespace Task4.Service.SalesInfoParser
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private bool CheckForExistingProduct(ProductService productService, string product)
+        {
+            return productService.GetAll().Any(p => p.Name == product);
+        }
+
+        private bool CheckForExistingClient(ClientService clientService, string clientFirstName, string clientLastName)
+        {
+            return clientService.GetAll().Any(c => c.Firstname == clientFirstName && c.Lastname == clientLastName);
+        }
+
+        private bool CheckForExistingManager(ManagerService managerService, string managerLastName)
+        {
+            return managerService.GetAll().Any(m => m.Lastname == managerLastName);
         }
     }
 }
