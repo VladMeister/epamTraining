@@ -20,6 +20,17 @@ namespace Task5.DAL.EF
 
         }
 
-        //add override method
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Manager>().Property(p => p.Lastname).HasMaxLength(25);
+
+            modelBuilder.Entity<Client>().Property(p => p.Firstname).HasMaxLength(20);
+            modelBuilder.Entity<Client>().Property(p => p.Lastname).HasMaxLength(25);
+
+            modelBuilder.Entity<Product>().Property(p => p.Name).HasMaxLength(30);
+
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

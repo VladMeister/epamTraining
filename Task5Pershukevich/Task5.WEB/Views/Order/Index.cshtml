@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Task5.WEB.Models.OrderViewModel>
+
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Price
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Manager Id
+        </th>
+        <th>
+            Client Id
+        </th>
+        <th>
+            Product Id
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ManagerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>
+        <td>
+            @Html.ActionLink("Info", "GetOrderInfo", new { id = item.Id })
+        </td>
+    </tr>
+    }
+
+</table>

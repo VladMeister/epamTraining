@@ -1,10 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Task5.BL.DTO;
 using Task5.BL.Services;
+using Task5.WEB.Models;
 
 namespace Task5.WEB.Controllers
 {
@@ -21,7 +24,10 @@ namespace Task5.WEB.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<ProductDTO> productDtos = _productService.GetAll();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
+            var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
+            return View(products);
         }
 
         protected override void Dispose(bool disposing)

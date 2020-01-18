@@ -285,12 +285,12 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Manager\Index.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Manager\" />
-    <Folder Include="Views\Order\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
