@@ -50,11 +50,6 @@ namespace Task5.BL.Services
             return productId;
         }
 
-        public void Save()
-        {
-            _productRepository.Save();
-        }
-
         public void Dispose()
         {
             _productRepository.Dispose();

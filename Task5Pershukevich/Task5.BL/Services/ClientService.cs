@@ -50,11 +50,6 @@ namespace Task5.BL.Services
             return clientId;
         }
 
-        public void Save()
-        {
-            _clientRepository.Save();
-        }
-
         public void Dispose()
         {
             _clientRepository.Dispose();

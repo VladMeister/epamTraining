@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Task5.WEB.Models
 {
-    public class OrderViewModel
+    public class OrderViewModel //orderlistmodel
     {
         public int Id { get; set; }
         public double Cost { get; set; }

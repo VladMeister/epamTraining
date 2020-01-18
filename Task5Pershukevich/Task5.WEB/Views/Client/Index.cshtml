@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Task5.WEB.Models.ClientViewModel>
+
+
+@{
+    ViewBag.Title = "Clients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            First name
+        </th>
+        <th>
+            Last name
+        </th>
+        <th>
+
+        </th>
+    </tr>
+ 
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lastname)
+        </td>
+        <td>
+            @Html.ActionLink("Info", "GetClientInfo", new { id=item.Id })
+        </td>
+    </tr>
+}
+ 
+</table>
+

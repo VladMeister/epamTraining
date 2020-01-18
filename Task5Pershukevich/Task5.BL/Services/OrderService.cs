@@ -50,11 +50,6 @@ namespace Task5.BL.Services
             return orderId;
         }
 
-        public void Save()
-        {
-            _orderRepository.Save();
-        }
-
         public void Dispose()
         {
             _orderRepository.Dispose();

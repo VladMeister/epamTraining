@@ -11,6 +11,8 @@ namespace Task5.DAL.Repositories
 {
     public class OrderRepository : Repository, IRepository<Order>
     {
+        //add two more rpositories: user and userRoles
+
         private SalesContext _salesContext;
 
         public OrderRepository(string connectionString) : base(connectionString)
@@ -31,7 +33,7 @@ namespace Task5.DAL.Repositories
             return _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client).ToList();
         }
 
-        public Order GetById(int id)
+        public Order GetById(int id) //replace with find(delegate)
         {
             return _salesContext.Orders.Find(id);
         }

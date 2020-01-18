@@ -18,10 +18,7 @@ namespace Task5.DAL.Repositories
 
         public void Save()
         {
-            using (salesContext)
-            {
-                salesContext.SaveChanges();
-            }
+            salesContext.SaveChanges();
         }
 
         private bool disposed = false;

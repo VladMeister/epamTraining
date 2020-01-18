@@ -50,11 +50,6 @@ namespace Task5.BL.Services
             return managerId;
         }
 
-        public void Save()
-        {
-            _managerRepository.Save();
-        }
-
         public void Dispose()
         {
             _managerRepository.Dispose();
