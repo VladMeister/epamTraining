@@ -50,6 +50,22 @@ namespace Task5.BL.Services
             return clientId;
         }
 
+        public void UpdateClient(ClientDTO clientDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, Client>()).CreateMapper();
+            Client client = mapper.Map<ClientDTO, Client>(clientDTO);
+
+            _clientRepository.Update(client);
+        }
+
+        public void DeleteClient(ClientDTO clientDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, Client>()).CreateMapper();
+            Client client = mapper.Map<ClientDTO, Client>(clientDTO);
+
+            _clientRepository.Delete(client);
+        }
+
         public void Dispose()
         {
             _clientRepository.Dispose();

@@ -1,9 +1,27 @@
-﻿@model IEnumerable<Task5.WEB.Models.OrderViewModel>
+﻿@model Task5.WEB.Models.OrderListViewModel
 
 @{
     ViewBag.Title = "Orders";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Manager: </label>
+        @Html.DropDownList("manager", Model.Managers as SelectList,
+                    htmlAttributes: new { @class = "form-control" })
+
+        <label class="control-label">Client: </label>
+        @Html.DropDownList("client", Model.Clients as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+
+        <label class="control-label">Product: </label>
+        @Html.DropDownList("product", Model.Products as SelectList,
+                htmlAttributes: new { @class = "form-control" })
+
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
 
 <table class="table">
     <tr>
@@ -27,7 +45,7 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Orders)
     {
     <tr>
         <td>

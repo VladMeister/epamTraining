@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,22 @@ namespace Task5.DAL.Repositories
             _salesContext.SaveChanges();
 
             return product.Id;
+        }
+
+        public void Update(Product product)
+        {
+            _salesContext.Entry(product).State = EntityState.Modified;
+            _salesContext.SaveChanges();
+        }
+
+        public void Delete(Product product)
+        {
+            product = _salesContext.Products.Find(product);
+            if (product != null)
+            {
+                _salesContext.Products.Remove(product);
+            }
+            _salesContext.SaveChanges();
         }
 
         public IEnumerable<Product> GetAll()

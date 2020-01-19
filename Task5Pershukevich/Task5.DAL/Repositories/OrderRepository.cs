@@ -28,6 +28,22 @@ namespace Task5.DAL.Repositories
             return order.Id;
         }
 
+        public void Update(Order order)
+        {
+            _salesContext.Entry(order).State = EntityState.Modified;
+            _salesContext.SaveChanges();
+        }
+
+        public void Delete(Order order)
+        {
+            order = _salesContext.Orders.Find(order);
+            if (order != null)
+            {
+                _salesContext.Orders.Remove(order);
+            }
+            _salesContext.SaveChanges();
+        }
+
         public IEnumerable<Order> GetAll()
         {
             return _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client).ToList();

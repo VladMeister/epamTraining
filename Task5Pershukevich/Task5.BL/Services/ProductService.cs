@@ -50,6 +50,22 @@ namespace Task5.BL.Services
             return productId;
         }
 
+        public void UpdateProduct(ProductDTO productDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
+            Product product = mapper.Map<ProductDTO, Product>(productDTO);
+
+            _productRepository.Update(product);
+        }
+
+        public void DeleteProduct(ProductDTO productDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
+            Product product = mapper.Map<ProductDTO, Product>(productDTO);
+
+            _productRepository.Delete(product);
+        }
+
         public void Dispose()
         {
             _productRepository.Dispose();

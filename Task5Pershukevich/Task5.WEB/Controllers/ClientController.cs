@@ -22,12 +22,15 @@ namespace Task5.WEB.Controllers
             _clientService = new ClientService(_connectionString);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             IEnumerable<ClientDTO> clientDtos = _clientService.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
             var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);
-            return View(clients);
+
+            var filteredClients = clients.Where(c => c.Lastname == searchString);
+
+            return View(filteredClients);
         }
 
         protected override void Dispose(bool disposing)

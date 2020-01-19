@@ -50,6 +50,22 @@ namespace Task5.BL.Services
             return managerId;
         }
 
+        public void UpdateManager(ManagerDTO managerDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, Manager>()).CreateMapper();
+            Manager manager = mapper.Map<ManagerDTO, Manager>(managerDTO);
+
+            _managerRepository.Update(manager);
+        }
+
+        public void DeleteManager(ManagerDTO managerDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, Manager>()).CreateMapper();
+            Manager manager = mapper.Map<ManagerDTO, Manager>(managerDTO);
+
+            _managerRepository.Delete(manager);
+        }
+
         public void Dispose()
         {
             _managerRepository.Dispose();

@@ -9,6 +9,8 @@ namespace Task5.DAL.Repositories
     public interface IRepository<TEntity> where TEntity : class
     {
         int Add(TEntity item);
+        void Update(TEntity item);
+        void Delete(TEntity item);
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
         void Save();

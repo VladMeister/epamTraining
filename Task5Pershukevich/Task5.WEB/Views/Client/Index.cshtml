@@ -6,6 +6,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using (Html.BeginForm("Index", "Client", FormMethod.Get))
+{
+<p>
+    Filter by last name: @Html.TextBox("searchString")
+    <input type="submit" value="Search" />
+</p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -18,20 +26,21 @@
 
         </th>
     </tr>
- 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
-        </td>
-        <td>
-            @Html.ActionLink("Info", "GetClientInfo", new { id=item.Id })
-        </td>
-    </tr>
-}
- 
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.ActionLink("Info", "GetClientInfo", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
 </table>
 

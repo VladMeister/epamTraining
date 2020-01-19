@@ -22,12 +22,15 @@ namespace Task5.WEB.Controllers
             _orderService = new OrderService(_connectionString);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? manager, int? client, int? product)
         {
             IEnumerable<OrderDTO> orderDtos = _orderService.GetAll();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, OrderViewModel>()).CreateMapper();
             var orders = mapper.Map<IEnumerable<OrderDTO>, List<OrderViewModel>>(orderDtos);
-            return View(orders);
+
+            OrderListViewModel orderList = new OrderListViewModel();
+
+            return View(orderList);
         }
 
         protected override void Dispose(bool disposing)

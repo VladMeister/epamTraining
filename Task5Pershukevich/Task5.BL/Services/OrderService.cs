@@ -50,6 +50,22 @@ namespace Task5.BL.Services
             return orderId;
         }
 
+        public void UpdateOrder(OrderDTO orderDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, Order>()).CreateMapper();
+            Order order = mapper.Map<OrderDTO, Order>(orderDTO);
+
+            _orderRepository.Update(order);
+        }
+
+        public void DeleteOrder(OrderDTO orderDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, Order>()).CreateMapper();
+            Order order = mapper.Map<OrderDTO, Order>(orderDTO);
+
+            _orderRepository.Delete(order);
+        }
+
         public void Dispose()
         {
             _orderRepository.Dispose();

@@ -2,13 +2,21 @@
 <html>
 <head>
     <title>Home</title>
+    <link href="../../Content/bootstrap.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="container body-content">
+        <header>
+            <p style="text-align: center;
+        font-style: oblique;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: x-large;
+        text-decoration: underline">Sales</p>
+        </header>
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Task 5 - Pershukevich</p>
+            <p>&copy; @DateTime.Now.Year  @Html.ActionLink("Task5 - Pershukevich", "Index", "Home")</p>
         </footer>
     </div>
 </body>
