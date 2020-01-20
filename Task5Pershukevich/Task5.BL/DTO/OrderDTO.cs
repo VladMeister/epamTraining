@@ -12,8 +12,17 @@ namespace Task5.BL.DTO
         public double Cost { get; set; }
         public DateTime Date { get; set; }
 
-        public int ManagerId { get; set; } //new properties(name , product name, client name)
+        public int ManagerId { get; set; }
+        public ManagerDTO Manager { get; set; }
+
         public int ProductId { get; set; }
+        public ProductDTO Product { get; set; }
+
         public int ClientId { get; set; }
+        public ClientDTO Client { get; set; }
+
+        //public string ManagerLastName { get; set; }
+        //public string ProductName { get; set; }
+        //public string ClientLastName { get; set; }
     }
 }

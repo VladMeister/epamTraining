@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<Task5.WEB.Models.ClientViewModel>
 
-@TempData["message"];
-
 @{
     ViewBag.Title = "Clients";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -39,7 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Lastname)
             </td>
             <td>
-                @Html.ActionLink("Info", "GetClientInfo", new { id = item.Id })
+                @Html.ActionLink("Edit", "EditClient", new { id = item.Id })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteClient", new { id = item.Id })
             </td>
         </tr>
     }

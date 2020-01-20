@@ -17,14 +17,17 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Info", "GetProductInfo", new { id = item.Id })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditProduct", new { id = item.Id })
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id })
+        </td>
+    </tr>
     }
 
 </table>

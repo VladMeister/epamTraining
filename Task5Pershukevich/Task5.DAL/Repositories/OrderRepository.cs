@@ -46,7 +46,7 @@ namespace Task5.DAL.Repositories
 
         public IEnumerable<Order> GetAll()
         {
-            return _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client).ToList();
+            return _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client);
         }
 
         public Order GetById(int id) //replace with find(delegate)
