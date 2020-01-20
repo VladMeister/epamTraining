@@ -22,13 +22,17 @@ namespace Task5.DAL.EF
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Manager>().Property(p => p.Lastname).HasMaxLength(25);
+            modelBuilder.Properties<string>().Configure(s => s.HasMaxLength(30));
 
-            modelBuilder.Entity<Client>().Property(p => p.Firstname).HasMaxLength(20);
-            modelBuilder.Entity<Client>().Property(p => p.Lastname).HasMaxLength(25);
+            modelBuilder.Entity<Order>().Property(o => o.Cost).IsRequired();
+            modelBuilder.Entity<Order>().Property(o => o.Date).IsRequired();
 
-            modelBuilder.Entity<Product>().Property(p => p.Name).HasMaxLength(30);
+            modelBuilder.Entity<Manager>().Property(o => o.Lastname).IsRequired();
 
+            modelBuilder.Entity<Client>().Property(o => o.Firstname).IsRequired();
+            modelBuilder.Entity<Client>().Property(o => o.Lastname).IsRequired();
+
+            modelBuilder.Entity<Product>().Property(o => o.Name).IsRequired();
 
             base.OnModelCreating(modelBuilder);
         }

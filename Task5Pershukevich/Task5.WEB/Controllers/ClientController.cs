@@ -25,12 +25,19 @@ namespace Task5.WEB.Controllers
         public ActionResult Index(string searchString)
         {
             IEnumerable<ClientDTO> clientDtos = _clientService.GetAll();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
-            var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);
+            if(clientDtos.Any())
+            {
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
+                var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);
 
-            var filteredClients = clients.Where(c => c.Lastname == searchString);
+                var filteredClients = clients.Where(c => c.Lastname == searchString);
 
-            return View(filteredClients);
+                return View(filteredClients);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         protected override void Dispose(bool disposing)

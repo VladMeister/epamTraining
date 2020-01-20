@@ -25,12 +25,19 @@ namespace Task5.WEB.Controllers
         public ActionResult Index(int? manager, int? client, int? product)
         {
             IEnumerable<OrderDTO> orderDtos = _orderService.GetAll();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, OrderViewModel>()).CreateMapper();
-            var orders = mapper.Map<IEnumerable<OrderDTO>, List<OrderViewModel>>(orderDtos);
+            if (orderDtos.Any())
+            {
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, OrderViewModel>()).CreateMapper();
+                var orders = mapper.Map<IEnumerable<OrderDTO>, List<OrderViewModel>>(orderDtos);
 
-            OrderListViewModel orderList = new OrderListViewModel();
+                OrderListViewModel orderList = new OrderListViewModel();
 
-            return View(orderList);
+                return View(orderList);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -25,9 +25,16 @@ namespace Task5.WEB.Controllers
         public ActionResult Index()
         {
             IEnumerable<ProductDTO> productDtos = _productService.GetAll();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
-            var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
-            return View(products);
+            if (productDtos.Any())
+            {
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
+                var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
+                return View(products);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         protected override void Dispose(bool disposing)

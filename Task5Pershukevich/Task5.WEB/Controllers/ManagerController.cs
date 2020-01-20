@@ -25,9 +25,16 @@ namespace Task5.WEB.Controllers
         public ActionResult Index()
         {
             IEnumerable<ManagerDTO> managerDtos = _managerService.GetAll();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, ManagerViewModel>()).CreateMapper();
-            var managers = mapper.Map<IEnumerable<ManagerDTO>, List<ManagerViewModel>>(managerDtos);
-            return View(managers);
+            if (managerDtos.Any())
+            {
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, ManagerViewModel>()).CreateMapper();
+                var managers = mapper.Map<IEnumerable<ManagerDTO>, List<ManagerViewModel>>(managerDtos);
+                return View(managers);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         protected override void Dispose(bool disposing)
