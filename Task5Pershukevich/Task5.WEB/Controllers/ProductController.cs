@@ -22,14 +22,24 @@ namespace Task5.WEB.Controllers
             _productService = new ProductService(_connectionString);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             IEnumerable<ProductDTO> productDtos = _productService.GetAll();
             if (productDtos.Any())
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
                 var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
-                return View(products);
+
+                if (string.IsNullOrEmpty(searchString))
+                {
+                    return View(products);
+                }
+                else
+                {
+                    var filteredProducts = products.Where(p => p.Name == searchString);
+
+                    return View(filteredProducts);
+                }
             }
             else
             {

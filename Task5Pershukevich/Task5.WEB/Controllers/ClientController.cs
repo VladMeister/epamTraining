@@ -30,9 +30,16 @@ namespace Task5.WEB.Controllers
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
                 var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);
 
-                var filteredClients = clients.Where(c => c.Lastname == searchString);
+                if(string.IsNullOrEmpty(searchString))
+                {
+                    return View(clients);
+                }
+                else
+                {
+                    var filteredClients = clients.Where(c => c.Lastname == searchString);
 
-                return View(filteredClients);
+                    return View(filteredClients);
+                }
             }
             else
             {

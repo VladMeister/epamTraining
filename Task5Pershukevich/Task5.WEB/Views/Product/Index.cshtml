@@ -5,6 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <p>
+        Filter by product name: @Html.TextBox("searchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -17,17 +25,17 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditProduct", new { id = item.Id })
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditProduct", new { id = item.Id })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id })
+            </td>
+        </tr>
     }
 
 </table>

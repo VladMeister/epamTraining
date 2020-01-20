@@ -22,14 +22,24 @@ namespace Task5.WEB.Controllers
             _managerService = new ManagerService(_connectionString);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             IEnumerable<ManagerDTO> managerDtos = _managerService.GetAll();
             if (managerDtos.Any())
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, ManagerViewModel>()).CreateMapper();
                 var managers = mapper.Map<IEnumerable<ManagerDTO>, List<ManagerViewModel>>(managerDtos);
-                return View(managers);
+
+                if (string.IsNullOrEmpty(searchString))
+                {
+                    return View(managers);
+                }
+                else
+                {
+                    var filteredManagers = managers.Where(m => m.Lastname == searchString);
+
+                    return View(filteredManagers);
+                }
             }
             else
             {

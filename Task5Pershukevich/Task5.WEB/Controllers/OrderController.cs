@@ -43,22 +43,22 @@ namespace Task5.WEB.Controllers
                     orders = orders.Where(o => o.Product.Name == product);
                 }
 
-                IList<ManagerViewModel> managers = orders.Select(o => o.Manager).ToList();
-                managers.Insert(0, new ManagerViewModel { Lastname  = "All", Id = 0 });
+                //IList<ManagerViewModel> managers = orders.Select(o => o.Manager).ToList();
+                //managers.Insert(0, new ManagerViewModel { Lastname  = "All", Id = 0 });
 
-                IList<ClientViewModel> clients = orders.Select(o => o.Client).ToList();
-                clients.Insert(0, new ClientViewModel {  Lastname = "All", Id = 0 });
+                //IList<ClientViewModel> clients = orders.Select(o => o.Client).ToList();
+                //clients.Insert(0, new ClientViewModel {  Lastname = "All", Id = 0 });
 
-                IList<ProductViewModel> products = orders.Select(o => o.Product).ToList();
-                products.Insert(0, new ProductViewModel { Name = "All", Id = 0 });
+                //IList<ProductViewModel> products = orders.Select(o => o.Product).ToList();
+                //products.Insert(0, new ProductViewModel { Name = "All", Id = 0 });
 
-                OrderListViewModel orderList = new OrderListViewModel()
-                {
-                    Orders = orders.ToList(),
-                    Managers = new SelectList(managers, "Id", "Name"),
-                    Clients = new SelectList(clients, "Id", "Name"),
-                    Products = new SelectList(products, "Id", "Name")
-                };
+                OrderListViewModel orderList = new OrderListViewModel();
+                //{
+                //    Orders = orders.ToList(),
+                //    Managers = new SelectList(managers, "Id", "Name"),
+                //    Clients = new SelectList(clients, "Id", "Name"),
+                //    Products = new SelectList(products, "Id", "Name")
+                //};
 
                 return View(orderList);
             }
