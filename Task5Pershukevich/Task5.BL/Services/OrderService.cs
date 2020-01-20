@@ -23,6 +23,12 @@ namespace Task5.BL.Services
         public IEnumerable<OrderDTO> GetAll()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()).CreateMapper();
+
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()
+            //.ForMember(o => o.Manager.Lastname, opt => opt.MapFrom(src => src.Manager.Lastname))
+            //.ForMember(o => o.Client.Lastname, opt => opt.MapFrom(src => src.Client.Lastname))
+            //.ForMember(o => o.Product.Name, opt => opt.MapFrom(src => src.Product.Name))).CreateMapper();
+
             return mapper.Map<IEnumerable<Order>, List<OrderDTO>>(_orderRepository.GetAll());
         }
 

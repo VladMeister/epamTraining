@@ -25,14 +25,22 @@ namespace Task5.DAL.EF
             modelBuilder.Properties<string>().Configure(s => s.HasMaxLength(30));
 
             modelBuilder.Entity<Order>().Property(o => o.Cost).IsRequired();
+            modelBuilder.Entity<Order>().Property(o => o.Cost).HasColumnType("float");
             modelBuilder.Entity<Order>().Property(o => o.Date).IsRequired();
 
-            modelBuilder.Entity<Manager>().Property(o => o.Lastname).IsRequired();
+            modelBuilder.Entity<Manager>().Property(m => m.Lastname).IsRequired();
+            modelBuilder.Entity<Manager>().Property(m => m.Lastname).HasColumnType("varchar");
+            modelBuilder.Entity<Manager>().HasIndex(m => m.Lastname).IsUnique();
 
-            modelBuilder.Entity<Client>().Property(o => o.Firstname).IsRequired();
-            modelBuilder.Entity<Client>().Property(o => o.Lastname).IsRequired();
+            modelBuilder.Entity<Client>().Property(c => c.Firstname).IsRequired();
+            modelBuilder.Entity<Client>().Property(c => c.Lastname).IsRequired();
+            modelBuilder.Entity<Client>().Property(c => c.Firstname).HasColumnType("varchar");
+            modelBuilder.Entity<Client>().Property(c => c.Lastname).HasColumnType("varchar");
+            modelBuilder.Entity<Client>().HasIndex(c => c.Lastname).IsUnique();
 
-            modelBuilder.Entity<Product>().Property(o => o.Name).IsRequired();
+            modelBuilder.Entity<Product>().Property(p => p.Name).IsRequired();
+            modelBuilder.Entity<Product>().Property(p => p.Name).HasColumnType("varchar");
+            modelBuilder.Entity<Product>().HasIndex(p => p.Name).IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace Task5.DAL.Entities
     {
         public int Id { get; set; }
         public double Cost { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public int ManagerId { get; set; }
