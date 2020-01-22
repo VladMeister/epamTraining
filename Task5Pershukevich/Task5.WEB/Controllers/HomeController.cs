@@ -41,7 +41,6 @@ namespace Task5.WEB.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel logModel)
         {
             if (ModelState.IsValid)
@@ -68,7 +67,6 @@ namespace Task5.WEB.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel regModel)
         {
             if (ModelState.IsValid)
@@ -79,7 +77,6 @@ namespace Task5.WEB.Controllers
 
                 if (!userInDb)
                 {
-                    // создаем нового пользователя
                     user = new UserModel();
 
                     user.Email = regModel.Email;
@@ -90,7 +87,6 @@ namespace Task5.WEB.Controllers
 
                     _userService.RegisterUser(userDTO);
 
-                    // если пользователь удачно добавлен в бд
                     if (user != null)
                     {
                         FormsAuthentication.SetAuthCookie(regModel.Email, true);
@@ -105,7 +101,7 @@ namespace Task5.WEB.Controllers
 
             return View(regModel);
         }
-        public ActionResult Logoff()
+        public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Home");

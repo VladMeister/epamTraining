@@ -16,6 +16,7 @@ namespace Task5.DAL.EF
         public DbSet<Product> Products { get; set; }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         public SalesContext(string connectionString) : base(connectionString)
         {
@@ -51,7 +52,30 @@ namespace Task5.DAL.EF
             modelBuilder.Entity<User>().Property(u => u.Password).HasColumnType("varchar");
             modelBuilder.Entity<User>().Property(u => u.Password).HasMaxLength(8);
 
+            modelBuilder.Entity<Role>().Property(r => r.Name).IsRequired();
+            modelBuilder.Entity<Role>().Property(r => r.Name).HasColumnType("varchar");
+            modelBuilder.Entity<Role>().HasIndex(r => r.Name).IsUnique();
+
             base.OnModelCreating(modelBuilder);
+        }
+
+        public class RoleDbInitializer : DropCreateDatabaseAlways<SalesContext> //<- ?
+        {
+            protected override void Seed(SalesContext db)
+            {
+                Role admin = new Role { Name = "admin" };
+                Role user = new Role { Name = "user" };
+                db.Roles.Add(admin);
+                db.Roles.Add(user);
+                db.Users.Add(new User
+                {
+                    Email = "mr.vlad0207@mail.ru",
+                    Password = "12345678",
+                    Role = admin
+                });
+
+                base.Seed(db);
+            }
         }
     }
 }

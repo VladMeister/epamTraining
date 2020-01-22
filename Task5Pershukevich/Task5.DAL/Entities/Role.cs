@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task5.BL.DTO
+namespace Task5.DAL.Entities
 {
-    public class UserDTO
+    public class Role
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        //roleDTO?
+        public string Name { get; set; }
     }
 }

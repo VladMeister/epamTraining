@@ -5,11 +5,11 @@
     <link href="../../Content/bootstrap.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    @if (User.Identity.IsAuthenticated)
-    {
-        @Html.ActionLink("Logout", "Logout", "Home")
-    }
     <div class="container body-content">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <input type="button" value="Logout" onclick="location.href='@Url.Action("Logout", "Home")'" />
+        }
         <header>
             <p style="text-align: center;
         font-style: oblique;
@@ -22,6 +22,6 @@
     <footer>
         <p>&copy; @DateTime.Now.Year  @Html.ActionLink("Task5 - Pershukevich", "Index", "Home")</p>
     </footer>
-</div>
+    </div>
 </body>
 </html>
