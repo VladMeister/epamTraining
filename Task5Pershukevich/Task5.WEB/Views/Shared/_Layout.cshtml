@@ -5,19 +5,23 @@
     <link href="../../Content/bootstrap.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        @Html.ActionLink("Logout", "Logout", "Home")
+    }
     <div class="container body-content">
         <header>
-        <p style="text-align: center;
+            <p style="text-align: center;
         font-style: oblique;
         font-family: 'Times New Roman', Times, serif;
         font-size: x-large;
         text-decoration: underline">@ViewBag.Title</p>
-        </header>
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year  @Html.ActionLink("Task5 - Pershukevich", "Index", "Home")</p>
-        </footer>
-    </div>
+    </header>
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year  @Html.ActionLink("Task5 - Pershukevich", "Index", "Home")</p>
+    </footer>
+</div>
 </body>
 </html>

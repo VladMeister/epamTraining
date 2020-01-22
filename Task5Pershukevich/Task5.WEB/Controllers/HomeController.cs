@@ -25,13 +25,14 @@ namespace Task5.WEB.Controllers
 
         public ActionResult Index()
         {
-            //string result = "Your are not authorized";
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    result = "Your login: " + User.Identity.Name;
-            //}
-            //return result;
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
         }
 
         public ActionResult Login()
@@ -40,16 +41,16 @@ namespace Task5.WEB.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(string email, string password)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Login(LoginModel logModel)
         {
             if (ModelState.IsValid)
             {
-                bool userInDb = _userService.LoginUser(email, password);
+                bool userInDb = _userService.LoginUser(logModel.Email, logModel.Password);
 
                 if (userInDb)
                 {
-                    FormsAuthentication.SetAuthCookie(email, true);
+                    FormsAuthentication.SetAuthCookie(logModel.Email, true);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -58,7 +59,7 @@ namespace Task5.WEB.Controllers
                 }
             }
 
-            return View();
+            return View(logModel);
         }
 
         public ActionResult Register()
@@ -67,32 +68,32 @@ namespace Task5.WEB.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(string email, string password)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Register(RegisterModel regModel)
         {
-            UserViewModel user = null;
-
             if (ModelState.IsValid)
             {
-                bool userInDb = _userService.LoginUser(email, password);
+                UserModel user = null;
+
+                bool userInDb = _userService.LoginUser(regModel.Email, regModel.Password);
 
                 if (!userInDb)
                 {
                     // создаем нового пользователя
-                    user = new UserViewModel();
+                    user = new UserModel();
 
-                    user.Email = email;
-                    user.Password = password;
+                    user.Email = regModel.Email;
+                    user.Password = regModel.Password;
 
-                    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserViewModel, UserDTO>()).CreateMapper();
-                    UserDTO userDTO = mapper.Map<UserViewModel, UserDTO>(user);
+                    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>()).CreateMapper();
+                    UserDTO userDTO = mapper.Map<UserModel, UserDTO>(user);
 
                     _userService.RegisterUser(userDTO);
 
                     // если пользователь удачно добавлен в бд
                     if (user != null)
                     {
-                        FormsAuthentication.SetAuthCookie(email, true);
+                        FormsAuthentication.SetAuthCookie(regModel.Email, true);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -102,12 +103,12 @@ namespace Task5.WEB.Controllers
                 }
             }
 
-            return View(user);
+            return View(regModel);
         }
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }
     }
 }

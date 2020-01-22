@@ -137,6 +137,7 @@
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrderListViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Global.asax.cs">
@@ -145,7 +146,8 @@
     <Compile Include="Models\ClientViewModel.cs" />
     <Compile Include="Models\ManagerViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -291,6 +293,7 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\Logoff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

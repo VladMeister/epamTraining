@@ -1,8 +1,43 @@
-﻿
+﻿@model Task5.WEB.Models.RegisterModel
+
 @{
     ViewBag.Title = "Register";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Register</h2>
+@using (Html.BeginForm("Register", "Home", FormMethod.Get))
+{
+<table class="table">
+    <tr>
+        <th>
+            Email:
+        </th>
+        <th>
+            @Html.EditorFor(model => model.Email)
+        </th>
+    </tr>
+    <tr>
+        <th>
+            Password:
+        </th>
+        <th>
+            @Html.EditorFor(model => model.Password)
+        </th>
+    </tr>
+    <tr>
+        <th>
+            Confirm password:
+        </th>
+        <th>
+            @Html.EditorFor(model => model.ConfirmPassword)
+        </th>
+        <th>
+            <input type="submit" value="Register" />
+        </th>
+        <th>
+            <input type="button" value="Back" onclick="location.href='@Url.Action("Login", "Home")'" />
+        </th>
+    </tr>
+</table>
+}
 
