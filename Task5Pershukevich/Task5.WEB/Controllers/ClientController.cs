@@ -10,7 +10,7 @@ using Task5.BL.Services;
 using Task5.WEB.Models;
 
 namespace Task5.WEB.Controllers
-{
+{//authorize attribute
     public class ClientController : Controller
     {
         private string _connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
@@ -25,7 +25,7 @@ namespace Task5.WEB.Controllers
         public ActionResult Index(string searchString)
         {
             IEnumerable<ClientDTO> clientDtos = _clientService.GetAll();
-            if(clientDtos.Any())
+            if(clientDtos.Any())//not needed
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
                 var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);

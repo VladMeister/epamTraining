@@ -24,10 +24,28 @@ namespace Task5.WEB.Controllers
 
         public ActionResult Index(string manager, string client, string product)
         {
-            IEnumerable<OrderDTO> orderDtos = _orderService.GetAll();
+            var orderDtos = _orderService.GetAll();
             if (orderDtos.Any())
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<OrderDTO, OrderViewModel>()).CreateMapper();
+                var mapper = new MapperConfiguration(cfg => {
+                    cfg.CreateMap<ManagerDTO, ManagerViewModel>()
+                    .ForMember(o => o.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(o => o.Lastname, opt => opt.MapFrom(src => src.Lastname));
+
+                    cfg.CreateMap<ClientDTO, ClientViewModel>()
+                    .ForMember(o => o.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(o => o.Lastname, opt => opt.MapFrom(src => src.Lastname));
+
+                    cfg.CreateMap<ProductDTO, ProductViewModel>()
+                    .ForMember(o => o.Id, opt => opt.MapFrom(src => src.Id))
+                    .ForMember(o => o.Name, opt => opt.MapFrom(src => src.Name));
+
+                    cfg.CreateMap<OrderDTO, OrderViewModel>()
+                    .ForMember(o => o.Manager, opt => opt.MapFrom(src => src.Manager))
+                    .ForMember(o => o.Client, opt => opt.MapFrom(src => src.Client))
+                    .ForMember(o => o.Product, opt => opt.MapFrom(src => src.Product));
+                }).CreateMapper();
+
                 IEnumerable<OrderViewModel> orders = mapper.Map<IEnumerable<OrderDTO>, List<OrderViewModel>>(orderDtos);
 
                 if (!string.IsNullOrEmpty(manager) && !manager.Equals("All"))

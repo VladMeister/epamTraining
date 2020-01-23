@@ -13,7 +13,7 @@ namespace Task5.WEB.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(8, ErrorMessage = "Name cannot be longer than 8 characters.")]
+        [StringLength(8, ErrorMessage = "Password cannot be longer than 8 characters.")]
         public string Password { get; set; }
     }
 }

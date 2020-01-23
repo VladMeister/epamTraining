@@ -5,34 +5,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm(@*"Login", "Home", FormMethod.Get*@))
+@using (Html.BeginForm())
 {
-<table class="table">
-    <tr>
-        <th>
-            Email:
-        </th>
-        <th>
-            @Html.EditorFor(model => model.Email)
-        </th>
-    </tr>
-    <tr>
-        <th>
-            Password:
-        </th>
-        <th>
-            @Html.EditorFor(model => model.Password)
-        </th>
-        <th>
-            <input type="submit" value="Login" />
-        </th>
-        <th>
-            <p>or</p>
-        </th>
-        <th>
-            <input type="button" value="Register" onclick="location.href='@Url.Action("Register", "Home")'" />
-        </th>
-    </tr>
-</table>
+    @Html.ValidationSummary()
+    <table class="table">
+        <tr>
+            <th>
+                Email:
+            </th>
+            <th>
+                @Html.EditorFor(model => model.Email, new { autocomplete = "off", maxlength = "10" })
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Password:
+            </th>
+            <th>
+                @Html.EditorFor(model => model.Password)
+            </th>
+            <th>
+                <input type="submit" value="Login" class="btn btn-secondary" />
+            </th>
+            <th>
+                <p>or</p>
+            </th>
+            <th>
+                @Html.ActionLink("Register", "Register", "Home", new { @class = "btn btn-secondary" })
+            </th>
+        </tr>
+    </table>
 }
 

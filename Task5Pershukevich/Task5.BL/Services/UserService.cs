@@ -33,25 +33,9 @@ namespace Task5.BL.Services
             _userRepository.Register(user);
         }
 
-        public bool LoginUser(string email, string password)
+        public bool UserExists(string email, string password)
         {
-            return _userRepository.Login(email, password);
-        }
-
-        public void UpdateClient(UserDTO userDTO)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
-            User user = mapper.Map<UserDTO, User>(userDTO);
-
-            _userRepository.Update(user);
-        }
-
-        public void DeleteClient(UserDTO userDTO)
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserDTO, User>()).CreateMapper();
-            User user = mapper.Map<UserDTO, User>(userDTO);
-
-            _userRepository.Delete(user);
+            return _userRepository.UserExists(email, password);
         }
 
         public void Dispose()

@@ -5,39 +5,40 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm(@*"Register", "Home", FormMethod.Get*@)) //ask here
+@using (Html.BeginForm())
 {
-<table class="table">
-    <tr>
-        <th>
-            Email:
-        </th>
-        <th>
-            @Html.EditorFor(model => model.Email)
-        </th>
-    </tr>
-    <tr>
-        <th>
-            Password:
-        </th>
-        <th>
-            @Html.EditorFor(model => model.Password)
-        </th>
-    </tr>
-    <tr>
-        <th>
-            Confirm password:
-        </th>
-        <th>
-            @Html.EditorFor(model => model.ConfirmPassword)
-        </th>
-        <th>
-            <input type="submit" value="Register" />
-        </th>
-        <th>
-            <input type="button" value="Back" onclick="location.href='@Url.Action("Login", "Home")'" />
-        </th>
-    </tr>
-</table>
+    @Html.ValidationSummary()
+    <table class="table">
+        <tr>
+            <th>
+                Email:
+            </th>
+            <th>
+                @Html.EditorFor(model => model.Email)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Password:
+            </th>
+            <th>
+                @Html.EditorFor(model => model.Password)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Confirm password:
+            </th>
+            <th>
+                @Html.EditorFor(model => model.ConfirmPassword)
+            </th>
+            <th>
+                <input type="submit" value="Register" class="btn btn-secondary" />
+            </th>
+            <th>
+                @Html.ActionLink("Back", "Login", "Home", new { @class = "btn btn-secondary" })
+            </th>
+        </tr>
+    </table>
 }
 

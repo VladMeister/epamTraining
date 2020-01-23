@@ -22,14 +22,28 @@ namespace Task5.BL.Services
 
         public IEnumerable<OrderDTO> GetAll()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()).CreateMapper();
+            var ordersList = _orderRepository.GetAll();
 
-            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()
-            //.ForMember(o => o.Manager.Lastname, opt => opt.MapFrom(src => src.Manager.Lastname))
-            //.ForMember(o => o.Client.Lastname, opt => opt.MapFrom(src => src.Client.Lastname))
-            //.ForMember(o => o.Product.Name, opt => opt.MapFrom(src => src.Product.Name))).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Manager, ManagerDTO>()
+                .ForMember(o => o.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(o => o.Lastname, opt => opt.MapFrom(src => src.Lastname));
 
-            return mapper.Map<IEnumerable<Order>, List<OrderDTO>>(_orderRepository.GetAll());
+                cfg.CreateMap<Client, ClientDTO>()
+                .ForMember(o => o.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(o => o.Lastname, opt => opt.MapFrom(src => src.Lastname));
+
+                cfg.CreateMap<Product, ProductDTO>()
+                .ForMember(o => o.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(o => o.Name, opt => opt.MapFrom(src => src.Name));
+
+                cfg.CreateMap<Order, OrderDTO>()
+                .ForMember(o => o.Manager, opt => opt.MapFrom(src => src.Manager))
+                .ForMember(o => o.Client, opt => opt.MapFrom(src => src.Client))
+                .ForMember(o => o.Product, opt => opt.MapFrom(src => src.Product));
+            }).CreateMapper();
+
+            return mapper.Map<IEnumerable<Order>, List<OrderDTO>>(ordersList);
         }
 
         public OrderDTO GetOrderById(int id)

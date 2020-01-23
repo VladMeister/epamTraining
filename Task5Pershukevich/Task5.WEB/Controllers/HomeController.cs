@@ -45,7 +45,7 @@ namespace Task5.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool userInDb = _userService.LoginUser(logModel.Email, logModel.Password);
+                bool userInDb = _userService.UserExists(logModel.Email, logModel.Password);
 
                 if (userInDb)
                 {
@@ -73,7 +73,7 @@ namespace Task5.WEB.Controllers
             {
                 UserModel user = null;
 
-                bool userInDb = _userService.LoginUser(regModel.Email, regModel.Password);
+                bool userInDb = _userService.UserExists(regModel.Email, regModel.Password);
 
                 if (!userInDb)
                 {

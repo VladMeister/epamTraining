@@ -20,9 +20,5 @@ namespace Task5.BL.DTO
 
         public int ClientId { get; set; }
         public ClientDTO Client { get; set; }
-
-        //public string ManagerLastName { get; set; }
-        //public string ProductName { get; set; }
-        //public string ClientLastName { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Task5.DAL.Repositories
             _salesContext.SaveChanges();
         }
 
-        public bool Login(string email, string password)
+        public bool UserExists(string email, string password)
         {
             bool userExists = false;
 
@@ -34,22 +34,6 @@ namespace Task5.DAL.Repositories
             }
 
             return userExists;
-        }
-
-        public void Update(User user)
-        {
-            _salesContext.Entry(user).State = EntityState.Modified;
-            _salesContext.SaveChanges();
-        }
-
-        public void Delete(User user)
-        {
-            user = _salesContext.Users.Find(user);
-            if (user != null)
-            {
-                _salesContext.Users.Remove(user);
-            }
-            _salesContext.SaveChanges();
         }
 
         public IEnumerable<User> GetAll()

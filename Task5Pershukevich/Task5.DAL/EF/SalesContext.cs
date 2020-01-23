@@ -64,7 +64,7 @@ namespace Task5.DAL.EF
             base.OnModelCreating(modelBuilder);
         }
 
-        public class RoleDbInitializer : DropCreateDatabaseAlways<SalesContext> //<- ?
+        public class RoleDbInitializer : DropCreateDatabaseIfModelChanges<SalesContext>
         {
             protected override void Seed(SalesContext db)
             {
