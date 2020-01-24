@@ -25,25 +25,19 @@ namespace Task5.WEB.Controllers
         public ActionResult Index(string searchString)
         {
             IEnumerable<ManagerDTO> managerDtos = _managerService.GetAll();
-            if (managerDtos.Any())
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, ManagerViewModel>()).CreateMapper();
+            var managers = mapper.Map<IEnumerable<ManagerDTO>, List<ManagerViewModel>>(managerDtos);
+
+            if (string.IsNullOrEmpty(searchString))
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ManagerDTO, ManagerViewModel>()).CreateMapper();
-                var managers = mapper.Map<IEnumerable<ManagerDTO>, List<ManagerViewModel>>(managerDtos);
-
-                if (string.IsNullOrEmpty(searchString))
-                {
-                    return View(managers);
-                }
-                else
-                {
-                    var filteredManagers = managers.Where(m => m.Lastname == searchString);
-
-                    return View(filteredManagers);
-                }
+                return View(managers);
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                var filteredManagers = managers.Where(m => m.Lastname == searchString);
+
+                return View(filteredManagers);
             }
         }
 

@@ -25,25 +25,19 @@ namespace Task5.WEB.Controllers
         public ActionResult Index(string searchString)
         {
             IEnumerable<ProductDTO> productDtos = _productService.GetAll();
-            if (productDtos.Any())
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
+            var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
+
+            if (string.IsNullOrEmpty(searchString))
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
-                var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
-
-                if (string.IsNullOrEmpty(searchString))
-                {
-                    return View(products);
-                }
-                else
-                {
-                    var filteredProducts = products.Where(p => p.Name == searchString);
-
-                    return View(filteredProducts);
-                }
+                return View(products);
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                var filteredProducts = products.Where(p => p.Name == searchString);
+
+                return View(filteredProducts);
             }
         }
 

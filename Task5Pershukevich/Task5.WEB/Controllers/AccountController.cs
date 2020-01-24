@@ -97,7 +97,7 @@ namespace Task5.WEB.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }

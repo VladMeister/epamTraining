@@ -25,25 +25,19 @@ namespace Task5.WEB.Controllers
         public ActionResult Index(string searchString)
         {
             IEnumerable<ClientDTO> clientDtos = _clientService.GetAll();
-            if(clientDtos.Any())//not needed
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
+            var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);
+
+            if (string.IsNullOrEmpty(searchString))
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
-                var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);
-
-                if(string.IsNullOrEmpty(searchString))
-                {
-                    return View(clients);
-                }
-                else
-                {
-                    var filteredClients = clients.Where(c => c.Lastname == searchString);
-
-                    return View(filteredClients);
-                }
+                return View(clients);
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                var filteredClients = clients.Where(c => c.Lastname == searchString);
+
+                return View(filteredClients);
             }
         }
 

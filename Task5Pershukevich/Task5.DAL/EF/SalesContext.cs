@@ -23,11 +23,6 @@ namespace Task5.DAL.EF
 
         }
 
-        public SalesContext() : base() //?
-        {
-
-        }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Properties<string>().Configure(s => s.HasMaxLength(30));
