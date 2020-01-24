@@ -14,7 +14,13 @@
                 Email:
             </th>
             <th>
-                @Html.EditorFor(model => model.Email)
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { autocomplete = "off", maxlength = 30 } })
+            </th>
+            <th>
+
+            </th>
+            <th>
+
             </th>
         </tr>
         <tr>
@@ -22,7 +28,13 @@
                 Password:
             </th>
             <th>
-                @Html.EditorFor(model => model.Password)
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { maxlength = 8 } })
+            </th>
+            <th>
+
+            </th>
+            <th>
+
             </th>
         </tr>
         <tr>
@@ -30,13 +42,13 @@
                 Confirm password:
             </th>
             <th>
-                @Html.EditorFor(model => model.ConfirmPassword)
+                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { maxlength = 8 } })
             </th>
             <th>
                 <input type="submit" value="Register" class="btn btn-secondary" />
             </th>
             <th>
-                @Html.ActionLink("Back", "Login", "Home", new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Back", "Login", "Account", new { @class = "btn btn-secondary" })
             </th>
         </tr>
     </table>

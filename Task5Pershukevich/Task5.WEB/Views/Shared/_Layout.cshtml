@@ -8,7 +8,7 @@
     <div class="container body-content">
         @if (User.Identity.IsAuthenticated)
         {
-            <input type="button" value="Logout" onclick="location.href='@Url.Action("Logout", "Home")'" />
+            <input type="button" value="Logout" onclick="location.href='@Url.Action("Logout", "Account")'" />
         }
         <header>
             <p style="text-align: center;

@@ -8,7 +8,7 @@
 @using (Html.BeginForm("Index", "Product", FormMethod.Get))
 {
     <p>
-        Filter by product name: @Html.TextBox("searchString")
+        Filter by product name: @Html.TextBox("searchString", null, new { autocomplete = "off", maxlength = 30 })
         <input type="submit" value="Search" class = "btn btn-secondary"/>
     </p>
 }

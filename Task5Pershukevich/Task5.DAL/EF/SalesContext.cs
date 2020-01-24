@@ -33,32 +33,24 @@ namespace Task5.DAL.EF
             modelBuilder.Properties<string>().Configure(s => s.HasMaxLength(30));
 
             modelBuilder.Entity<Order>().Property(o => o.Cost).IsRequired();
-            modelBuilder.Entity<Order>().Property(o => o.Cost).HasColumnType("float");
             modelBuilder.Entity<Order>().Property(o => o.Date).IsRequired();
 
             modelBuilder.Entity<Manager>().Property(m => m.Lastname).IsRequired();
-            modelBuilder.Entity<Manager>().Property(m => m.Lastname).HasColumnType("varchar");
             modelBuilder.Entity<Manager>().HasIndex(m => m.Lastname).IsUnique();
 
             modelBuilder.Entity<Client>().Property(c => c.Firstname).IsRequired();
             modelBuilder.Entity<Client>().Property(c => c.Lastname).IsRequired();
-            modelBuilder.Entity<Client>().Property(c => c.Firstname).HasColumnType("varchar");
-            modelBuilder.Entity<Client>().Property(c => c.Lastname).HasColumnType("varchar");
             modelBuilder.Entity<Client>().HasIndex(c => c.Lastname).IsUnique();
 
             modelBuilder.Entity<Product>().Property(p => p.Name).IsRequired();
-            modelBuilder.Entity<Product>().Property(p => p.Name).HasColumnType("varchar");
             modelBuilder.Entity<Product>().HasIndex(p => p.Name).IsUnique();
 
             modelBuilder.Entity<User>().Property(u => u.Email).IsRequired();
-            modelBuilder.Entity<User>().Property(u => u.Email).HasColumnType("varchar");
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
             modelBuilder.Entity<User>().Property(u => u.Password).IsRequired();
-            modelBuilder.Entity<User>().Property(u => u.Password).HasColumnType("varchar");
             modelBuilder.Entity<User>().Property(u => u.Password).HasMaxLength(8);
 
             modelBuilder.Entity<Role>().Property(r => r.Name).IsRequired();
-            modelBuilder.Entity<Role>().Property(r => r.Name).HasColumnType("varchar");
             modelBuilder.Entity<Role>().HasIndex(r => r.Name).IsUnique();
 
             base.OnModelCreating(modelBuilder);
