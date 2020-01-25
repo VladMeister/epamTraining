@@ -74,6 +74,7 @@ namespace Task5.WEB.Controllers
 
                     user.Email = regModel.Email;
                     user.Password = regModel.Password;
+                    user.Role = _userService.GetUserRoles().FirstOrDefault(r => r.Name == "user");
 
                     var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>()).CreateMapper();
                     UserDTO userDTO = mapper.Map<UserModel, UserDTO>(user);

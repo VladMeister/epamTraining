@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace Task5.BL.DTO
 {
-    public class UserDTO
+    public class RoleDTO
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public RoleDTO Role { get; set; }
+        public string Name { get; set; }
     }
 }

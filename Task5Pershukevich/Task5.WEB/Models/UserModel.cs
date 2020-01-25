@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Task5.BL.DTO;
 
 namespace Task5.WEB.Models
 {
@@ -10,5 +11,6 @@ namespace Task5.WEB.Models
         public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public RoleDTO Role { get; set; }
     }
 }

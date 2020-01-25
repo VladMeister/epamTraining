@@ -9,13 +9,17 @@ namespace Task5.WEB.Providers
 {
     //public class CustomRoleProvider : RoleProvider
     //{
+    //    private string _connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
+
+    //    private UserService _userService;
+
     //    public override string[] GetRolesForUser(string username)
     //    {
     //        string[] roles = new string[] { };
-    //        using (UserService db = new UserService())
+    //        using (UserService userService = new UserService(_connectionString))
     //        {
     //            // Получаем пользователя
-    //            User user = db.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == username);
+    //            User user = userService.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == username);
     //            if (user != null && user.Role != null)
     //            {
     //                // получаем роль
