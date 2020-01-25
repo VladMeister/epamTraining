@@ -30,10 +30,10 @@
                 @Html.DisplayFor(modelItem => item.Lastname)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditManager", new { id = item.Id })
+                @Html.ActionLink("Edit", "EditManager", new { id = item.Id }, new { @class = "btn btn-secondary" })
             </td>
             <td>
-                @Html.ActionLink("Delete", "DeleteManager", new { id = item.Id })
+                @Html.ActionLink("Delete", "DeleteManager", new { id = item.Id }, new { @class = "btn btn-secondary" })
             </td>
         </tr>
     }

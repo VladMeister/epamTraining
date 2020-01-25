@@ -7,6 +7,12 @@ using Task5.BL.Services;
 
 namespace Task5.WEB.Providers
 {
+    //<roleManager enabled = "true" defaultProvider="MyRoleProvider">
+    //  <providers>
+    //    <add name = "MyRoleProvider" type="Task5.WEB.Providers.CustomRoleProvider" />
+    //  </providers>
+    //</roleManager> after auth in web config
+
     //public class CustomRoleProvider : RoleProvider
     //{
     //    private string _connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;

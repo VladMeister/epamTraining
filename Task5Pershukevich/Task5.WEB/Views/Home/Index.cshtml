@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -13,10 +14,10 @@
 </head>
 <body>
     <div style="text-align:center">
-        @Html.ActionLink("Clients", "Index", "Client")
-        @Html.ActionLink("Managers", "Index", "Manager")
-        @Html.ActionLink("Products", "Index", "Product")
-        @Html.ActionLink("Orders", "Index", "Order")
+        @Html.ActionLink("Clients", "Index", "Client", null, new { @class = "btn btn-secondary" })
+        @Html.ActionLink("Managers", "Index", "Manager", null, new { @class = "btn btn-secondary" })
+        @Html.ActionLink("Products", "Index", "Product", null, new { @class = "btn btn-secondary" })
+        @Html.ActionLink("Orders", "Index", "Order", null, new { @class = "btn btn-secondary" })
     </div>
 </body>
 </html>

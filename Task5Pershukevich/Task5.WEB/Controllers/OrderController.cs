@@ -22,6 +22,7 @@ namespace Task5.WEB.Controllers
             _orderService = new OrderService(_connectionString);
         }
 
+        [Authorize]
         public ActionResult Index(string manager, string client, string product)
         {
             var orderDtos = _orderService.GetAll();
@@ -49,15 +50,18 @@ namespace Task5.WEB.Controllers
 
             if (!string.IsNullOrEmpty(manager) && !manager.Equals("All"))
             {
-                orders = orders.Where(o => o.Manager.Lastname == manager);
+                return View(orders.Where(o => o.Manager.Lastname == manager));
+                //orders = orders.Where(o => o.Manager.Lastname == manager);
             }
             if (!string.IsNullOrEmpty(client) && !client.Equals("All"))
             {
-                orders = orders.Where(o => o.Client.Lastname == client);
+                return View(orders.Where(o => o.Client.Lastname == client));
+                //orders = orders.Where(o => o.Client.Lastname == client);
             }
             if (!string.IsNullOrEmpty(product) && !product.Equals("All"))
             {
-                orders = orders.Where(o => o.Product.Name == product);
+                return View(orders.Where(o => o.Product.Name == product));
+                //orders = orders.Where(o => o.Product.Name == product);
             }
 
             IList<ManagerViewModel> managers = orders.Select(o => o.Manager).ToList();

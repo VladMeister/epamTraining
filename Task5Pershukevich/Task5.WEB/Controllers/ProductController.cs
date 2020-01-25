@@ -22,6 +22,7 @@ namespace Task5.WEB.Controllers
             _productService = new ProductService(_connectionString);
         }
 
+        [Authorize]
         public ActionResult Index(string searchString)
         {
             IEnumerable<ProductDTO> productDtos = _productService.GetAll();

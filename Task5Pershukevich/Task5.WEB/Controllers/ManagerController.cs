@@ -22,6 +22,7 @@ namespace Task5.WEB.Controllers
             _managerService = new ManagerService(_connectionString);
         }
 
+        [Authorize]
         public ActionResult Index(string searchString)
         {
             IEnumerable<ManagerDTO> managerDtos = _managerService.GetAll();

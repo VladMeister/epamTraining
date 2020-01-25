@@ -10,7 +10,7 @@ using Task5.BL.Services;
 using Task5.WEB.Models;
 
 namespace Task5.WEB.Controllers
-{//authorize attribute
+{
     public class ClientController : Controller
     {
         private string _connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
@@ -22,6 +22,7 @@ namespace Task5.WEB.Controllers
             _clientService = new ClientService(_connectionString);
         }
 
+        [Authorize]
         public ActionResult Index(string searchString)
         {
             IEnumerable<ClientDTO> clientDtos = _clientService.GetAll();
