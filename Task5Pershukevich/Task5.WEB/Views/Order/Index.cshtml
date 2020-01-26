@@ -50,29 +50,29 @@
 
     @foreach (var item in Model.Orders)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Client.Lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Product.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Manager.Lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditOrder", new { id = item.Id }, new { @class = "btn btn-secondary" })
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "DeleteOrder", new { id = item.Id }, new { @class = "btn btn-secondary" })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manager.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditOrder", new { id = item.Id }, new { @class = "btn btn-secondary" })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteOrder", new { id = item.Id }, new { @class = "btn btn-secondary" })
+            </td>
+        </tr>
     }
 
-</table>
+</table>  

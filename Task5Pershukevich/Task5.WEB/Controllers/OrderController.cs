@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -50,35 +51,32 @@ namespace Task5.WEB.Controllers
 
             if (!string.IsNullOrEmpty(manager) && !manager.Equals("All"))
             {
-                return View(orders.Where(o => o.Manager.Lastname == manager));
-                //orders = orders.Where(o => o.Manager.Lastname == manager);
+                orders = orders.Where(o => o.Manager.Lastname == manager);
             }
             if (!string.IsNullOrEmpty(client) && !client.Equals("All"))
             {
-                return View(orders.Where(o => o.Client.Lastname == client));
-                //orders = orders.Where(o => o.Client.Lastname == client);
+                orders = orders.Where(o => o.Client.Lastname == client);
             }
             if (!string.IsNullOrEmpty(product) && !product.Equals("All"))
             {
-                return View(orders.Where(o => o.Product.Name == product));
-                //orders = orders.Where(o => o.Product.Name == product);
+                orders = orders.Where(o => o.Product.Name == product);
             }
 
-            IList<ManagerViewModel> managers = orders.Select(o => o.Manager).ToList();
+            IList<ManagerViewModel> managers = orders.Select(o => o.Manager).DistinctBy(m => m.Lastname).ToList();
             managers.Insert(0, new ManagerViewModel { Lastname = "All", Id = 0 });
 
-            IList<ClientViewModel> clients = orders.Select(o => o.Client).ToList();
+            IList<ClientViewModel> clients = orders.Select(o => o.Client).DistinctBy(c => c.Lastname).ToList();
             clients.Insert(0, new ClientViewModel { Lastname = "All", Id = 0 });
 
-            IList<ProductViewModel> products = orders.Select(o => o.Product).ToList();
+            IList<ProductViewModel> products = orders.Select(o => o.Product).DistinctBy(p => p.Name).ToList();
             products.Insert(0, new ProductViewModel { Name = "All", Id = 0 });
 
             OrderListViewModel orderList = new OrderListViewModel()
             {
                 Orders = orders.ToList(),
-                Managers = new SelectList(managers, "Id", "Lastname"),
-                Clients = new SelectList(clients, "Id", "Lastname"),
-                Products = new SelectList(products, "Id", "Name")
+                Managers = new SelectList(managers, "Lastname", "Lastname"),
+                Clients = new SelectList(clients, "Lastname", "Lastname"),
+                Products = new SelectList(products, "Name", "Name")
             };
 
             return View(orderList);
