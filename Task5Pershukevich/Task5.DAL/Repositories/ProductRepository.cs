@@ -47,6 +47,15 @@ namespace Task5.DAL.Repositories
             return _salesContext.Products.ToList();
         }
 
+        public IEnumerable<Product> GetFilteredByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return _salesContext.Products.ToList();
+            }
+            return _salesContext.Products.Where(p => p.Name == name).ToList();
+        }
+
         public Product GetById(int id)
         {
             return _salesContext.Products.Find(id);

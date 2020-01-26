@@ -26,6 +26,12 @@ namespace Task5.BL.Services
             return mapper.Map<IEnumerable<Client>, List<ClientDTO>>(_clientRepository.GetAll());
         }
 
+        public IEnumerable<ClientDTO> GetClientsByLastname(string lastName)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Client, ClientDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Client>, List<ClientDTO>>(_clientRepository.GetFilteredByLastname(lastName));
+        }
+
         public ClientDTO GetClientById(int id)
         {
             if (id < 0)

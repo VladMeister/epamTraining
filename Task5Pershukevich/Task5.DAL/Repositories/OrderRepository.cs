@@ -11,8 +11,6 @@ namespace Task5.DAL.Repositories
 {
     public class OrderRepository : Repository, IRepository<Order>
     {
-        //add two more rpositories: user and userRoles
-
         private SalesContext _salesContext;
 
         public OrderRepository(string connectionString) : base(connectionString)
@@ -46,10 +44,33 @@ namespace Task5.DAL.Repositories
 
         public IEnumerable<Order> GetAll()
         {
-            return _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client);
+            return _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client).ToList();
         }
 
-        public Order GetById(int id) //replace with find(delegate)
+        public IEnumerable<Order> GetFilteredByProperties(string managerLastname, string clientLastname, string productName)
+        {
+            IEnumerable<Order> orders = _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client).ToList();
+
+            if (!string.IsNullOrEmpty(managerLastname) && !managerLastname.Equals("All"))
+            {
+                orders = _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client)
+                    .Where(o => o.Manager.Lastname == managerLastname).ToList();
+            }
+            if (!string.IsNullOrEmpty(clientLastname) && !clientLastname.Equals("All"))
+            {
+                orders = _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client)
+                    .Where(o => o.Client.Lastname == clientLastname).ToList();
+            }
+            if (!string.IsNullOrEmpty(productName) && !productName.Equals("All"))
+            {
+                orders = _salesContext.Orders.Include(o => o.Manager).Include(o => o.Product).Include(o => o.Client)
+                    .Where(o => o.Product.Name == productName).ToList();
+            }
+
+            return orders;
+        }
+
+        public Order GetById(int id)
         {
             return _salesContext.Orders.Find(id);
         }

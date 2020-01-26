@@ -26,6 +26,12 @@ namespace Task5.BL.Services
             return mapper.Map<IEnumerable<Manager>, List<ManagerDTO>>(_managerRepository.GetAll());
         }
 
+        public IEnumerable<ManagerDTO> GetManagersByLastname(string lastName)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Manager, ManagerDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Manager>, List<ManagerDTO>>(_managerRepository.GetFilteredByLastname(lastName));
+        }
+
         public ManagerDTO GetManagerById(int id)
         {
             if (id < 0)

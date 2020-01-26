@@ -47,6 +47,15 @@ namespace Task5.DAL.Repositories
             return _salesContext.Managers.ToList();
         }
 
+        public IEnumerable<Manager> GetFilteredByLastname(string lastName)
+        {
+            if (string.IsNullOrEmpty(lastName))
+            {
+                return _salesContext.Managers.ToList();
+            }
+            return _salesContext.Managers.Where(m => m.Lastname == lastName).ToList();
+        }
+
         public Manager GetById(int id)
         {
             return _salesContext.Managers.Find(id);

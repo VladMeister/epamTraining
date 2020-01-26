@@ -26,7 +26,7 @@ namespace Task5.WEB.Controllers
         [Authorize]
         public ActionResult Index(string manager, string client, string product)
         {
-            var orderDtos = _orderService.GetAll();
+            var orderDtos = _orderService.GetOrdersByProperties(manager, client, product);
 
             var mapper = new MapperConfiguration(cfg => {
                 cfg.CreateMap<ManagerDTO, ManagerViewModel>()
@@ -48,19 +48,6 @@ namespace Task5.WEB.Controllers
             }).CreateMapper();
 
             IEnumerable<OrderViewModel> orders = mapper.Map<IEnumerable<OrderDTO>, List<OrderViewModel>>(orderDtos);
-
-            if (!string.IsNullOrEmpty(manager) && !manager.Equals("All"))
-            {
-                orders = orders.Where(o => o.Manager.Lastname == manager);
-            }
-            if (!string.IsNullOrEmpty(client) && !client.Equals("All"))
-            {
-                orders = orders.Where(o => o.Client.Lastname == client);
-            }
-            if (!string.IsNullOrEmpty(product) && !product.Equals("All"))
-            {
-                orders = orders.Where(o => o.Product.Name == product);
-            }
 
             IList<ManagerViewModel> managers = orders.Select(o => o.Manager).DistinctBy(m => m.Lastname).ToList();
             managers.Insert(0, new ManagerViewModel { Lastname = "All", Id = 0 });

@@ -26,6 +26,12 @@ namespace Task5.BL.Services
             return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(_productRepository.GetAll());
         }
 
+        public IEnumerable<ProductDTO> GetProductsByName(string name)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(_productRepository.GetFilteredByName(name));
+        }
+
         public ProductDTO GetProductById(int id)
         {
             if (id < 0)
