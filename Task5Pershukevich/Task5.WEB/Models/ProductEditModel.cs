@@ -6,16 +6,12 @@ using System.Web;
 
 namespace Task5.WEB.Models
 {
-    public class ClientEditModel
+    public class ProductEditModel
     {
         public int Id { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        public string Firstname { get; set; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        public string Lastname { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using Task5.DAL.Entities;
 
 namespace Task5.DAL.Repositories
 {
-    public class ClientRepository : Repository//, IRepository<Client>
+    public class ClientRepository : Repository, IRepository<Client>
     {
         private SalesContext _salesContext;
 
@@ -26,21 +26,19 @@ namespace Task5.DAL.Repositories
             return client.Id;
         }
 
-        public void Update(Client client, string firstName, string lastName)
+        public void Update(Client client)
         {
-            _salesContext.Clients.Find(client).Firstname = firstName;
-            _salesContext.Clients.Find(client).Lastname = lastName;
-
             _salesContext.Entry(client).State = EntityState.Modified;
             _salesContext.SaveChanges();
         }
 
         public void Delete(Client client)
         {
-            client = _salesContext.Clients.Find(client);
-            if (client != null)
+            Client clientToDelete = _salesContext.Clients.FirstOrDefault(c => c.Id == client.Id);
+
+            if (clientToDelete != null)
             {
-                _salesContext.Clients.Remove(client);
+                _salesContext.Clients.Remove(clientToDelete);
             }
             _salesContext.SaveChanges();
         }
@@ -59,7 +57,7 @@ namespace Task5.DAL.Repositories
             return _salesContext.Clients.Where(c => c.Lastname == lastName).ToList();
         }
 
-        public Client GetById(int id)
+        public Client GetById(int? id)
         {
             return _salesContext.Clients.Find(id);
         }

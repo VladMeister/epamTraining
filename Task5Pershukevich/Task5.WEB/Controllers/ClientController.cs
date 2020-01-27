@@ -11,6 +11,7 @@ using Task5.WEB.Models;
 
 namespace Task5.WEB.Controllers
 {
+    [Authorize]
     public class ClientController : Controller
     {
         private string _connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
@@ -22,7 +23,6 @@ namespace Task5.WEB.Controllers
             _clientService = new ClientService(_connectionString);
         }
 
-        [Authorize]
         public ActionResult Index(string searchString)
         {
             IEnumerable<ClientDTO> clientDtos = _clientService.GetClientsByLastname(searchString);
@@ -33,21 +33,35 @@ namespace Task5.WEB.Controllers
             return View(clients);
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            ClientDTO clientDTO = _clientService.GetClientById(id);
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientEditModel>()).CreateMapper();
+            ClientEditModel client  = mapper.Map<ClientDTO, ClientEditModel>(clientDTO);
+
+            if (client != null)
+            {
+                return View(client);
+            }
+
+            return HttpNotFound();
         }
 
         [HttpPost]
-        public ActionResult Edit(string id, ClientEditModel clientModel)
+        public ActionResult Edit(ClientEditModel clientModel)
         {
-            IEnumerable<ClientDTO> clients = _clientService.GetClientsByLastname(id);
-
             if (ModelState.IsValid)
             {
-                ClientDTO client = clients.FirstOrDefault(c => c.Lastname == id);
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientEditModel, ClientDTO>()).CreateMapper();
+                ClientDTO client = mapper.Map<ClientEditModel, ClientDTO>(clientModel);
 
-                _clientService.UpdateClient(client, clientModel.Firstname, clientModel.Lastname);
+                _clientService.UpdateClient(client);
 
                 return RedirectToAction("Index", "Client");
             }
@@ -55,14 +69,18 @@ namespace Task5.WEB.Controllers
             return View(clientModel);
         }
 
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
-            IEnumerable<ClientDTO> clients = _clientService.GetClientsByLastname(id);
-            ClientDTO client = clients.FirstOrDefault(c => c.Lastname == id);
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            ClientDTO client = _clientService.GetClientById(id);
 
             _clientService.DeleteClient(client);
 
-            return View();
+            return RedirectToAction("Index", "Client");
         }
 
         protected override void Dispose(bool disposing)

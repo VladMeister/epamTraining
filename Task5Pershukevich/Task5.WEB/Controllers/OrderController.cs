@@ -12,6 +12,7 @@ using Task5.WEB.Models;
 
 namespace Task5.WEB.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private string _connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
@@ -23,7 +24,6 @@ namespace Task5.WEB.Controllers
             _orderService = new OrderService(_connectionString);
         }
 
-        [Authorize]
         public ActionResult Index(string manager, string client, string product)
         {
             var orderDtos = _orderService.GetOrdersByProperties(manager, client, product);
@@ -49,7 +49,7 @@ namespace Task5.WEB.Controllers
 
             IEnumerable<OrderViewModel> orders = mapper.Map<IEnumerable<OrderDTO>, List<OrderViewModel>>(orderDtos);
 
-            IList<ManagerViewModel> managers = orders.Select(o => o.Manager).DistinctBy(m => m.Lastname).ToList();
+            IList<ManagerViewModel> managers = orders.Select(o => o.Manager).DistinctBy(c => c.Lastname).ToList();
             managers.Insert(0, new ManagerViewModel { Lastname = "All", Id = 0 });
 
             IList<ClientViewModel> clients = orders.Select(o => o.Client).DistinctBy(c => c.Lastname).ToList();
@@ -67,6 +67,20 @@ namespace Task5.WEB.Controllers
             };
 
             return View(orderList);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            OrderDTO order = _orderService.GetOrderById(id);
+
+            _orderService.DeleteOrder(order);
+
+            return RedirectToAction("Index", "Order");
         }
 
         protected override void Dispose(bool disposing)

@@ -20,7 +20,7 @@ namespace Task5.DAL.EF
 
         public SalesContext(string connectionString) : base(connectionString)
         {
-
+            Database.SetInitializer(new RoleDbInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

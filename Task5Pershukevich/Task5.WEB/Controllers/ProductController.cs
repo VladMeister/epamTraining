@@ -11,6 +11,7 @@ using Task5.WEB.Models;
 
 namespace Task5.WEB.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private string _connectionString = ConfigurationManager.ConnectionStrings["Sales"].ConnectionString;
@@ -22,7 +23,6 @@ namespace Task5.WEB.Controllers
             _productService = new ProductService(_connectionString);
         }
 
-        [Authorize]
         public ActionResult Index(string searchString)
         {
             IEnumerable<ProductDTO> productDtos = _productService.GetProductsByName(searchString);
@@ -31,6 +31,56 @@ namespace Task5.WEB.Controllers
             var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
 
             return View(products);
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            ProductDTO productDTO = _productService.GetProductById(id);
+
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductEditModel>()).CreateMapper();
+            ProductEditModel product = mapper.Map<ProductDTO, ProductEditModel>(productDTO);
+
+            if (product != null)
+            {
+                return View(product);
+            }
+
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ProductEditModel productModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductEditModel, ProductDTO>()).CreateMapper();
+                ProductDTO product = mapper.Map<ProductEditModel, ProductDTO>(productModel);
+
+                _productService.UpdateProduct(product);
+
+                return RedirectToAction("Index", "Product");
+            }
+
+            return View(productModel);
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            ProductDTO product = _productService.GetProductById(id);
+
+            _productService.DeleteProduct(product);
+
+            return RedirectToAction("Index", "Product");
         }
 
         protected override void Dispose(bool disposing)

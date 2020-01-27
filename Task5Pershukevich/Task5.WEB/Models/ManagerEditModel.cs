@@ -6,13 +6,9 @@ using System.Web;
 
 namespace Task5.WEB.Models
 {
-    public class ClientEditModel
+    public class ManagerEditModel
     {
         public int Id { get; set; }
-
-        [Required]
-        [DataType(DataType.Text)]
-        public string Firstname { get; set; }
 
         [Required]
         [DataType(DataType.Text)]

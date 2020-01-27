@@ -34,10 +34,11 @@ namespace Task5.DAL.Repositories
 
         public void Delete(Manager manager)
         {
-            manager = _salesContext.Managers.Find(manager);
-            if (manager != null)
+            Manager managerToDelete = _salesContext.Managers.FirstOrDefault(m => m.Id == manager.Id);
+
+            if (managerToDelete != null)
             {
-                _salesContext.Managers.Remove(manager);
+                _salesContext.Managers.Remove(managerToDelete);
             }
             _salesContext.SaveChanges();
         }
@@ -56,7 +57,7 @@ namespace Task5.DAL.Repositories
             return _salesContext.Managers.Where(m => m.Lastname == lastName).ToList();
         }
 
-        public Manager GetById(int id)
+        public Manager GetById(int? id)
         {
             return _salesContext.Managers.Find(id);
         }

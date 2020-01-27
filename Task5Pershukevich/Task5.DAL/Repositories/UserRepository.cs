@@ -44,7 +44,7 @@ namespace Task5.DAL.Repositories
 
         public IEnumerable<Role> GetRoles()
         {
-            return _salesContext.Roles;
+            return _salesContext.Roles.ToList();
         }
 
         public IEnumerable<User> GetAll()

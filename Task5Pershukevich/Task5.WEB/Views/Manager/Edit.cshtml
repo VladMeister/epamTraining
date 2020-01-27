@@ -1,4 +1,4 @@
-﻿@model Task5.WEB.Models.ClientEditModel
+﻿@model Task5.WEB.Models.ManagerEditModel
 
 @{
     ViewBag.Title = "Edit";
@@ -10,14 +10,6 @@
     @Html.ValidationSummary()
     @*@Html.HiddenFor(m => m.Id)*@
     <table class="table">
-        <tr>
-            <th>
-                Firstname:
-            </th>
-            <th>
-                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { autocomplete = "off", maxlength = 30 } })
-            </th>
-        </tr>
         <tr>
             <th>
                 Lastname:

@@ -34,10 +34,11 @@ namespace Task5.DAL.Repositories
 
         public void Delete(Order order)
         {
-            order = _salesContext.Orders.Find(order);
-            if (order != null)
+            Order orderToDelete = _salesContext.Orders.FirstOrDefault(o => o.Id == order.Id);
+
+            if (orderToDelete != null)
             {
-                _salesContext.Orders.Remove(order);
+                _salesContext.Orders.Remove(orderToDelete);
             }
             _salesContext.SaveChanges();
         }
@@ -70,7 +71,7 @@ namespace Task5.DAL.Repositories
             return orders;
         }
 
-        public Order GetById(int id)
+        public Order GetById(int? id)
         {
             return _salesContext.Orders.Find(id);
         }

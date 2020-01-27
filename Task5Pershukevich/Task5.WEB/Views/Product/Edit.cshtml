@@ -1,4 +1,4 @@
-﻿@model Task5.WEB.Models.ClientEditModel
+﻿@model Task5.WEB.Models.ProductEditModel
 
 @{
     ViewBag.Title = "Edit";
@@ -12,18 +12,10 @@
     <table class="table">
         <tr>
             <th>
-                Firstname:
+                Product name:
             </th>
             <th>
-                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { autocomplete = "off", maxlength = 30 } })
-            </th>
-        </tr>
-        <tr>
-            <th>
-                Lastname:
-            </th>
-            <th>
-                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { autocomplete = "off", maxlength = 30 } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { autocomplete = "off", maxlength = 30 } })
             </th>
         </tr>
         <tr>

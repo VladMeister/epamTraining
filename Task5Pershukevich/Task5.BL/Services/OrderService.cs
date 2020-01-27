@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task5.BL.DTO;
-using Task5.BL.Exceptions;
 using Task5.DAL.Entities;
 using Task5.DAL.Repositories;
 
@@ -72,18 +71,10 @@ namespace Task5.BL.Services
             return mapper.Map<IEnumerable<Order>, List<OrderDTO>>(ordersList);
         }
 
-        public OrderDTO GetOrderById(int id)
+        public OrderDTO GetOrderById(int? id)
         {
-            if (id < 0)
-            {
-                return null;
-                throw new InvalidIdException("Invalid id input!");
-            }
-            else
-            {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()).CreateMapper();
-                return mapper.Map<Order, OrderDTO>(_orderRepository.GetById(id));
-            }
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Order, OrderDTO>()).CreateMapper();
+            return mapper.Map<Order, OrderDTO>(_orderRepository.GetById(id));
         }
 
         public int AddOrder(OrderDTO orderDTO)

@@ -12,9 +12,9 @@ using Task5.WEB.Models;
 
 namespace Task5.WEB.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        [Authorize]
         public ActionResult Index()
         {
             return View();

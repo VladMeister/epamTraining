@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task5.BL.DTO;
-using Task5.BL.Exceptions;
 using Task5.DAL.Entities;
 using Task5.DAL.Repositories;
 
@@ -32,18 +31,10 @@ namespace Task5.BL.Services
             return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(_productRepository.GetFilteredByName(name));
         }
 
-        public ProductDTO GetProductById(int id)
+        public ProductDTO GetProductById(int? id)
         {
-            if (id < 0)
-            {
-                return null;
-                throw new InvalidIdException("Invalid id input!");
-            }
-            else
-            {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
-                return mapper.Map<Product, ProductDTO>(_productRepository.GetById(id));
-            }
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
+            return mapper.Map<Product, ProductDTO>(_productRepository.GetById(id));
         }
 
         public int AddProduct(ProductDTO productDTO)

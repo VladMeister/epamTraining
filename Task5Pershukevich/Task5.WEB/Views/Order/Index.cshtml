@@ -43,9 +43,6 @@
         <th>
 
         </th>
-        <th>
-
-        </th>
     </tr>
 
     @foreach (var item in Model.Orders)
@@ -67,10 +64,7 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditOrder", new { id = item.Id }, new { @class = "btn btn-secondary" })
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "DeleteOrder", new { id = item.Id }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-secondary" })
             </td>
         </tr>
     }

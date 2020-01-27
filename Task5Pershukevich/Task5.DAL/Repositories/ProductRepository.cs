@@ -34,10 +34,11 @@ namespace Task5.DAL.Repositories
 
         public void Delete(Product product)
         {
-            product = _salesContext.Products.Find(product);
-            if (product != null)
+            Product productToDelete = _salesContext.Products.FirstOrDefault(p => p.Id == product.Id);
+
+            if (productToDelete != null)
             {
-                _salesContext.Products.Remove(product);
+                _salesContext.Products.Remove(productToDelete);
             }
             _salesContext.SaveChanges();
         }
@@ -56,7 +57,7 @@ namespace Task5.DAL.Repositories
             return _salesContext.Products.Where(p => p.Name == name).ToList();
         }
 
-        public Product GetById(int id)
+        public Product GetById(int? id)
         {
             return _salesContext.Products.Find(id);
         }

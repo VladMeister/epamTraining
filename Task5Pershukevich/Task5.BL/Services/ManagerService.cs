@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task5.BL.DTO;
-using Task5.BL.Exceptions;
 using Task5.DAL.Entities;
 using Task5.DAL.Repositories;
 
@@ -32,18 +31,10 @@ namespace Task5.BL.Services
             return mapper.Map<IEnumerable<Manager>, List<ManagerDTO>>(_managerRepository.GetFilteredByLastname(lastName));
         }
 
-        public ManagerDTO GetManagerById(int id)
+        public ManagerDTO GetManagerById(int? id)
         {
-            if (id < 0)
-            {
-                return null;
-                throw new InvalidIdException("Invalid id input!");
-            }
-            else
-            {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Manager, ManagerDTO>()).CreateMapper();
-                return mapper.Map<Manager, ManagerDTO>(_managerRepository.GetById(id));
-            }
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Manager, ManagerDTO>()).CreateMapper();
+            return mapper.Map<Manager, ManagerDTO>(_managerRepository.GetById(id));
         }
 
         public int AddManager(ManagerDTO managerDTO)
