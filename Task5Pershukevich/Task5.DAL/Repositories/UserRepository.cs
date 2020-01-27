@@ -36,20 +36,9 @@ namespace Task5.DAL.Repositories
             return userExists;
         }
 
-        public void AddRole(Role role)
-        {
-            _salesContext.Roles.Add(role);
-            _salesContext.SaveChanges();
-        }
-
-        public IEnumerable<Role> GetRoles()
-        {
-            return _salesContext.Roles.ToList();
-        }
-
         public IEnumerable<User> GetAll()
         {
-            return _salesContext.Users.ToList();
+            return _salesContext.Users.Include(u => u.Role).ToList();
         }
     }
 }

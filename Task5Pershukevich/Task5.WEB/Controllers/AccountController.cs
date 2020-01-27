@@ -42,7 +42,7 @@ namespace Task5.WEB.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "User with this login does not exist!");
+                    ModelState.AddModelError("", "Check your login or password!");
                 }
             }
 
@@ -66,13 +66,13 @@ namespace Task5.WEB.Controllers
                 if (!userInDb)
                 {
                     user = new UserModel();
+                    int userRoleId;
 
                     user.Email = regModel.Email;
                     user.Password = regModel.Password;
-                    user.Role = _userService.GetUserRoles().FirstOrDefault(r => r.Name == "user");
+                    userRoleId = _userService.GetUserRoles().FirstOrDefault(r => r.Name == "user").Id;
 
-                    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<UserModel, UserDTO>()).CreateMapper();
-                    UserDTO userDTO = mapper.Map<UserModel, UserDTO>(user);
+                    UserDTO userDTO = new UserDTO() { Email = user.Email, Password = user.Password, RoleId = userRoleId }; 
 
                     _userService.RegisterUser(userDTO);
 
@@ -94,6 +94,11 @@ namespace Task5.WEB.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account");
+        }
+
+        private bool CheckForExistingUserRole(UserService userService, string roleName)
+        {
+            return userService.GetUserRoles().Any(r => r.Name == roleName);
         }
     }
 }

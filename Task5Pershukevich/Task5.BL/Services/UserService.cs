@@ -13,10 +13,12 @@ namespace Task5.BL.Services
     public class UserService : ISalesService<UserDTO>
     {
         private UserRepository _userRepository;
+        private RoleRepository _roleRepository;
 
         public UserService(string connectionString)
         {
             _userRepository = new UserRepository(connectionString);
+            _roleRepository = new RoleRepository(connectionString);
         }
 
         public IEnumerable<UserDTO> GetAll()
@@ -61,13 +63,13 @@ namespace Task5.BL.Services
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<RoleDTO, Role>()).CreateMapper();
             Role role = mapper.Map<RoleDTO, Role>(roleDTO);
 
-            _userRepository.AddRole(role);
+            _roleRepository.AddRole(role);
         }
 
         public IEnumerable<RoleDTO> GetUserRoles()
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Role, RoleDTO>()).CreateMapper();
-            return mapper.Map<IEnumerable<Role>, List<RoleDTO>>(_userRepository.GetRoles());
+            return mapper.Map<IEnumerable<Role>, List<RoleDTO>>(_roleRepository.GetRoles());
         }
 
         public void Dispose()
