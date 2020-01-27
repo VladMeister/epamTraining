@@ -33,6 +33,38 @@ namespace Task5.WEB.Controllers
             return View(clients);
         }
 
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(string id, ClientEditModel clientModel)
+        {
+            IEnumerable<ClientDTO> clients = _clientService.GetClientsByLastname(id);
+
+            if (ModelState.IsValid)
+            {
+                ClientDTO client = clients.FirstOrDefault(c => c.Lastname == id);
+
+                _clientService.UpdateClient(client, clientModel.Firstname, clientModel.Lastname);
+
+                return RedirectToAction("Index", "Client");
+            }
+
+            return View(clientModel);
+        }
+
+        public ActionResult Delete(string id)
+        {
+            IEnumerable<ClientDTO> clients = _clientService.GetClientsByLastname(id);
+            ClientDTO client = clients.FirstOrDefault(c => c.Lastname == id);
+
+            _clientService.DeleteClient(client);
+
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             _clientService.Dispose();

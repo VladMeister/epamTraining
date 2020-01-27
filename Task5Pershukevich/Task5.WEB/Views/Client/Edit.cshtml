@@ -1,0 +1,38 @@
+﻿@model Task5.WEB.Models.ClientEditModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    <table class="table">
+        <tr>
+            <th>
+                New firstname:
+            </th>
+            <th>
+                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { autocomplete = "off", maxlength = 30 } })
+            </th>
+        </tr>
+        <tr>
+            <th>
+                New lastname:
+            </th>
+            <th>
+                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { autocomplete = "off", maxlength = 30 } })
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.ActionLink("Back", "Index", "Home", new { @class = "btn btn-secondary" })
+            </th>
+            <th>
+                <input type="submit" value="Edit" class="btn btn-secondary" />
+            </th>
+        </tr>
+    </table>
+}
+

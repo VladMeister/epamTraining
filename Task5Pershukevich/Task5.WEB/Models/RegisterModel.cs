@@ -9,6 +9,7 @@ namespace Task5.WEB.Models
     public class RegisterModel
     {
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required]

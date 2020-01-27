@@ -56,12 +56,12 @@ namespace Task5.BL.Services
             return clientId;
         }
 
-        public void UpdateClient(ClientDTO clientDTO)
+        public void UpdateClient(ClientDTO clientDTO, string firstName, string lastName)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, Client>()).CreateMapper();
             Client client = mapper.Map<ClientDTO, Client>(clientDTO);
 
-            _clientRepository.Update(client);
+            _clientRepository.Update(client, firstName, lastName);
         }
 
         public void DeleteClient(ClientDTO clientDTO)

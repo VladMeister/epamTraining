@@ -9,7 +9,7 @@ using Task5.DAL.Entities;
 
 namespace Task5.DAL.Repositories
 {
-    public class ClientRepository : Repository, IRepository<Client>
+    public class ClientRepository : Repository//, IRepository<Client>
     {
         private SalesContext _salesContext;
 
@@ -26,8 +26,11 @@ namespace Task5.DAL.Repositories
             return client.Id;
         }
 
-        public void Update(Client client)
+        public void Update(Client client, string firstName, string lastName)
         {
+            _salesContext.Clients.Find(client).Firstname = firstName;
+            _salesContext.Clients.Find(client).Lastname = lastName;
+
             _salesContext.Entry(client).State = EntityState.Modified;
             _salesContext.SaveChanges();
         }
