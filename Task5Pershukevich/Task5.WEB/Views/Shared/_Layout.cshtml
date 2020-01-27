@@ -2,6 +2,7 @@
 <html>
 <head>
     <link href="../../Content/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../../Content/layout.css" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -9,20 +10,20 @@
     <div class="container body-content">
         @if (User.Identity.IsAuthenticated)
         {
-            <input type="button" value="Logout", class="btn btn-secondary" onclick="location.href='@Url.Action("Logout", "Account")'" />
+            <input type="button" value="Logout" class="btn btn-secondary" onclick="location.href='@Url.Action("Logout", "Account")'" />
         }
         <header>
-            <p style="text-align: center;
-        font-style: oblique;
-        font-family: 'Times New Roman', Times, serif;
-        font-size: x-large;
-        text-decoration: underline">@ViewBag.Title</p>
-    </header>
-    @RenderBody()
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year  @Html.ActionLink("Task5 - Pershukevich", "Index", "Home")</p>
-    </footer>
+            <div class="maintitle">
+                <h3>@ViewBag.Title</h3>
+            </div>
+            <br />
+        </header>
+        @RenderBody()
+        <br />
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year  @Html.ActionLink("Task5 - Pershukevich", "Index", "Home", null, new { style = "text-decoration:none;" })</p>
+        </footer>
     </div>
 </body>
 </html>
