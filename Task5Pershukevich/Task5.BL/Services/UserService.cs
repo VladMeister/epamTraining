@@ -72,6 +72,16 @@ namespace Task5.BL.Services
             return mapper.Map<IEnumerable<Role>, List<RoleDTO>>(_roleRepository.GetRoles());
         }
 
+        public string GetUserRole(string userEmail)
+        {
+            return _userRepository.GetUserRole(userEmail);
+        }
+
+        public bool IsUserInRole(string userEmail, string roleName)
+        {
+            return _userRepository.IsUserInRole(userEmail, roleName);
+        }
+
         public void Dispose()
         {
             _userRepository.Dispose();

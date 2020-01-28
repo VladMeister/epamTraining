@@ -33,6 +33,7 @@ namespace Task5.WEB.Controllers
             return View(clients);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -69,6 +70,7 @@ namespace Task5.WEB.Controllers
             return View(clientModel);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

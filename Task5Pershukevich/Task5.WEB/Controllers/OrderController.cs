@@ -69,6 +69,7 @@ namespace Task5.WEB.Controllers
             return View(orderList);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

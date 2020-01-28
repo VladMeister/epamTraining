@@ -11,6 +11,11 @@
         @if (User.Identity.IsAuthenticated)
         {
             <input type="button" value="Logout" class="btn btn-secondary" onclick="location.href='@Url.Action("Logout", "Account")'" />
+            <p style="font-style:italic">@User.Identity.Name</p>
+            if(this.User.IsInRole("admin"))
+            {
+                <h6>Admin</h6>
+            }
         }
         <header>
             <div class="maintitle">

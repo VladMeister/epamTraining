@@ -63,9 +63,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-secondary" })
-            </td>
+            @if (this.User.IsInRole("admin"))
+            {
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-secondary" })
+                </td>
+            }
+            else
+            {
+                <th>
+
+                </th>
+            }
         </tr>
     }
 

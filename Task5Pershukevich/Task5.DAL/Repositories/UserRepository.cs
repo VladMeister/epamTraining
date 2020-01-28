@@ -36,6 +36,25 @@ namespace Task5.DAL.Repositories
             return userExists;
         }
 
+        public string GetUserRole(string userEmail)
+        {
+            User user = _salesContext.Users.Include(u => u.Role).FirstOrDefault(u => u.Email == userEmail);
+
+            if (user != null && user.Role != null)
+            {
+                return user.Role.Name;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public bool IsUserInRole(string userEmail, string roleName)
+        {
+            return _salesContext.Users.Include(u => u.Role).Any(u => u.Email == userEmail && u.Role.Name == roleName);
+        }
+
         public IEnumerable<User> GetAll()
         {
             return _salesContext.Users.Include(u => u.Role).ToList();

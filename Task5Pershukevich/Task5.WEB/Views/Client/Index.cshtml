@@ -13,41 +13,53 @@
     </p>
 }
 
-<table class="table">
-    <tr>
-        <th>
-            First name
-        </th>
-        <th>
-            Last name
-        </th>
-        <th>
-
-        </th>
-        <th>
-
-        </th>
-    </tr>
-
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastname)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-secondary" })
-            </td>
-            <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-secondary" })
-            </td>
+            <th>
+                First name
+            </th>
+            <th>
+                Last name
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                @if (this.User.IsInRole("admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-secondary" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-secondary" })
+                    </td>
+                }
+                else
+                {
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                }
+            </tr>
+        }
+
+    </table>
 
 
 
