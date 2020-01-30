@@ -25,7 +25,7 @@ namespace Task5.WEB.Providers
             string[] roles = new string[] { };
 
             roles = new string[] { _userService.GetUserRole(username) };
-            
+
             return roles;
         }
         public override void CreateRole(string roleName)

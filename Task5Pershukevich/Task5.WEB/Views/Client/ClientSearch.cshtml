@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Task5.WEB.Models.ClientViewModel>
+
+<div id="results">
+    <table class="table">
+        <tr>
+            <th>
+                First name
+            </th>
+            <th>
+                Last name
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                @if (this.User.IsInRole("admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-secondary" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-secondary" })
+                    </td>
+                }
+                else
+                {
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                }
+            </tr>
+        }
+
+    </table>
+</div>
+

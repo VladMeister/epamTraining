@@ -23,14 +23,20 @@ namespace Task5.WEB.Controllers
             _clientService = new ClientService(_connectionString);
         }
 
-        public ActionResult Index(string searchString)
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ClientSearch(string searchString)
         {
             IEnumerable<ClientDTO> clientDtos = _clientService.GetClientsByLastname(searchString);
 
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ClientDTO, ClientViewModel>()).CreateMapper();
             var clients = mapper.Map<IEnumerable<ClientDTO>, List<ClientViewModel>>(clientDtos);
 
-            return View(clients);
+            return PartialView(clients);
         }
 
         [Authorize(Roles = "admin")]
